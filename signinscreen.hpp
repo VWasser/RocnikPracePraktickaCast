@@ -10,6 +10,6 @@ public:
     ~SignInScreen();
 
 private:
-    API api;
+    BackendlessAPI api;
 };
 
