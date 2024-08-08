@@ -7,7 +7,7 @@ class SignInScreen: public QWidget
 
 public:
     SignInScreen(QWidget *parent = nullptr);
-    ~SignInScreen();
+    //~SignInScreen();
 
 private:
     BackendlessAPI api;

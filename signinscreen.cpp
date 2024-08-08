@@ -4,7 +4,7 @@
 SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
     api(BackendlessAPI("", "")) {
 
-    QObject::connect(&api.userAPI, &BackendlessUserAPI::userRegistered, &api.userAPI, [&](){
+    /*QObject::connect(&api.userAPI, &BackendlessUserAPI::userRegistered, &api.userAPI, [&](){
         api.userAPI.signInUser("something@new.com", "Password");
         qDebug() << "Signing in";
     });
@@ -19,11 +19,11 @@ SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
     });
     QObject::connect(&api, &BackendlessAPI::tableItemsLoaded, &api, [&](auto response){
         qDebug() << "Loaded " << response;
-    });
+    })*/
 
-    api.userAPI.registerUser(BackendlessUser("something@new.com", "Roman", "Password"));
+    //api.userAPI.registerUser(BackendlessUser("something@new.com", "Roman", "Password"));
 }
 
-SignInScreen::~SignInScreen() {
+/*SignInScreen::~SignInScreen() {
 
-}
+}*/
