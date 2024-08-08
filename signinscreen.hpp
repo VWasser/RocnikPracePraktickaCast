@@ -1,12 +1,8 @@
 #include <QWidget>
-<<<<<<< HEAD
-#include "BackendlessQt/BackendlessAPI.hpp"
-=======
-#include "BackendlessQt/API.hpp"
 #include <QPushButton>
 #include <QLineEdit>
 #include <QLabel>
->>>>>>> main
+#include "BackendlessQt/BackendlessAPI.hpp"
 
 class SignInScreen: public QWidget
 {
@@ -30,7 +26,5 @@ private:
     QPushButton resetPasswordButton;
     QPushButton teacherButton;
     QPushButton studentButton;
-    
-
 };
 
