@@ -1,5 +1,5 @@
 #include <QWidget>
-#include "BackendlessQt/API.hpp"
+#include "BackendlessQt/BackendlessAPI.hpp"
 
 class SignInScreen: public QWidget
 {
@@ -7,7 +7,7 @@ class SignInScreen: public QWidget
 
 public:
     SignInScreen(QWidget *parent = nullptr);
-    //~SignInScreen();
+    ~SignInScreen();
 
 private:
     BackendlessAPI api;
