@@ -11,6 +11,9 @@ SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
     QObject::connect(&api.userAPI, &BackendlessUserAPI::userSignedIn, this, [&](){
         api.userAPI.validateUserToken();
     });
+    QObject::connect(&api.userAPI, &BackendlessUserAPI::userSignInError, this, [&](auto error){
+        qDebug() << "Error!!!";
+    });
     QObject::connect(&api.userAPI, &BackendlessUserAPI::userTokenValidated, this, [&](auto isValid){
         qDebug() << isValid;
     });
