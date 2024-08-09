@@ -2,6 +2,7 @@
 #include <QApplication>
 
 SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
+    email(this), password(this), signInButton(this), registerButton(this), resetPasswordButton(this), teacherButton(this), studentButton(this),
     api(BackendlessAPI("", "")) {
 
     QObject::connect(&api.userAPI, &BackendlessUserAPI::userRegistered, this, [&](){
