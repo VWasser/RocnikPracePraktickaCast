@@ -1,6 +1,6 @@
 QT += core gui widgets network
 
-CONFIG += c++20
+CONFIG += c++23
 
 SOURCES += \
     main.cpp \
