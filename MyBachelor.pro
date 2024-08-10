@@ -22,5 +22,10 @@ android {
     DISTFILES += \
         android/AndroidManifest.xml \
         android/build.gradle \
-        android/res/values/libs.xml
+        android/res/values/libs.xml \
+        android/gradle.properties \
+        android/gradle/wrapper/gradle-wrapper.jar \
+        android/gradle/wrapper/gradle-wrapper.properties \
+        android/gradlew \
+        android/gradlew.bat
 }
