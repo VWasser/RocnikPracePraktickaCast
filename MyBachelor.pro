@@ -1,6 +1,6 @@
 QT += core gui widgets network
 
-CONFIG += c++20
+CONFIG += c++23
 
 SOURCES += \
     main.cpp \
@@ -29,4 +29,3 @@ android {
         android/gradlew \
         android/gradlew.bat
 }
-android: include(/Users/romanpodymov/Library/Android/sdk/android_openssl/openssl.pri)
