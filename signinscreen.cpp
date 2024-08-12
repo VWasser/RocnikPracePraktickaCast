@@ -2,8 +2,8 @@
 #include <QApplication>
 
 SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
-    email(this), password(this), signInButton(this), registerButton(this), resetPasswordButton(this), teacherButton(this), studentButton(this),
-    api(BackendlessAPI("", "")) {
+    api(BackendlessAPI("7D2C33DB-05E2-4FD9-B26B-46FDB17F56D6", "19CB95DB-0235-4134-B1FB-C64750DE49E2")), email(this), password(this), signInButton(this), registerButton(this), resetPasswordButton(this), teacherButton(this),
+    studentButton(this) {
 
     QObject::connect(&api.userAPI, &BackendlessUserAPI::registerUserResult, this, [&](){
         api.userAPI.signInUser("something@new.com", "Password");
