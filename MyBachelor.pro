@@ -1,6 +1,6 @@
 QT += core gui widgets network
 
-CONFIG += c++23
+CONFIG += c++20
 
 SOURCES += \
     main.cpp \
@@ -28,4 +28,9 @@ android {
         android/gradle/wrapper/gradle-wrapper.properties \
         android/gradlew \
         android/gradlew.bat
+}
+
+contains(ANDROID_TARGET_ARCH,) {
+    ANDROID_PACKAGE_SOURCE_DIR = \
+        $$PWD/android
 }
