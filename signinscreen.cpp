@@ -29,12 +29,12 @@ SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
 
     ///UI
     //Textový pole
-    email.setGeometry(210 , 100, 200 , 50);
-    password.setGeometry(210 , 160, 200 , 50);
+    email.setGeometry(110 , 100, 200 , 50);
+    password.setGeometry(110 , 160, 200 , 50);
 
     //tlačítka
-    teacherButton.setGeometry(210, 40, 100, 50);
-    teacherButton.setText("Učitel");
+    teacherButton.setGeometry(110, 40, 100, 50);
+    teacherButton.setText("???Učitel");
 
     studentButton.setGeometry(310, 40, 100, 50);
     studentButton.setText("Student");

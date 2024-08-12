@@ -29,8 +29,3 @@ android {
         android/gradlew \
         android/gradlew.bat
 }
-
-contains(ANDROID_TARGET_ARCH,) {
-    ANDROID_PACKAGE_SOURCE_DIR = \
-        $$PWD/android
-}
