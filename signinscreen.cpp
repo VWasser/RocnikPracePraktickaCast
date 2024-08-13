@@ -3,7 +3,7 @@
 
 SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
     api(BackendlessAPI("7D2C33DB-05E2-4FD9-B26B-46FDB17F56D6", "19CB95DB-0235-4134-B1FB-C64750DE49E2")), email(this), password(this), signInButton(this), registerButton(this), resetPasswordButton(this), teacherButton(this),
-    studentButton(this) {
+    studentButton(this), errorWin(this) {
 
     QObject::connect(&api.userAPI, &BackendlessUserAPI::registerUserResult, this, [&](){
         api.userAPI.signInUser("something@new.com", "Password");
@@ -14,6 +14,7 @@ SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
     });
     QObject::connect(&api.userAPI, &BackendlessUserAPI::signInUserErrorBackendless, this, [&](auto error){
         qDebug() << "Error!!!";
+        errorWin.exec();
     });
     QObject::connect(&api.userAPI, &BackendlessUserAPI::validateUserTokenSuccess, this, [&](auto isValid){
         qDebug() << isValid;
@@ -25,7 +26,6 @@ SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
         qDebug() << "Loaded " << response;
     });
     api.userAPI.registerUser(BackendlessRegisterUser("something@new.com", "Roman", "Password"));
-
 
     ///UI
     //Textový pole
@@ -49,6 +49,9 @@ SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
     resetPasswordButton.setGeometry(220 , 270, 180, 50);
     resetPasswordButton.setText("Resetovat Heslo");
     //resetPasswordButton.hide();
+
+    errorWin.setText("Incorect Email/Password");
+    errorWin.setInformativeText("Please try againg or change your password");
 
 
 
