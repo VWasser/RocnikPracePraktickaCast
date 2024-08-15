@@ -4,6 +4,7 @@
 #include <QLabel>
 #include <QMessageBox>
 #include "BackendlessQt/BackendlessAPI.hpp"
+#include "qboxlayout.h"
 
 class SignInScreen: public QWidget
 {
@@ -29,5 +30,8 @@ private:
     QPushButton studentButton;
 
     QMessageBox errorWin;
+    QVBoxLayout signInLayout;
+    QHBoxLayout teachStudentLayout;
+
 };
 
