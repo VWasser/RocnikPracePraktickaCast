@@ -3,7 +3,7 @@
 #include <QLineEdit>
 #include <QLabel>
 #include <QMessageBox>
-#include "BackendlessQt/BackendlessAPI.hpp"
+#include "BackendlessAPI.hpp"
 
 class SignInScreen: public QWidget
 {

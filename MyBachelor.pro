@@ -1,31 +1,11 @@
 QT += core gui widgets network
 
-CONFIG += c++20
+CONFIG += c++20 ordered
 
-SOURCES += \
-    main.cpp \
-    signinscreen.cpp \
-    BackendlessQt/BasicAPI.cpp \
-    BackendlessQt/BackendlessAPI.cpp \
-    BackendlessQt/BackendlessUserAPI.cpp
+TEMPLATE = subdirs
 
-HEADERS += \
-    signinscreen.hpp \
-    BackendlessQt/BasicAPI.hpp \
-    BackendlessQt/BackendlessAPI.hpp \
-    BackendlessQt/BackendlessUserAPI.hpp \
-    BackendlessQt/BackendlessUser.hpp \
+SUBDIRS = \
+    BackendlessQt \
+    App
 
-android {
-    ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
-
-    DISTFILES += \
-        android/AndroidManifest.xml \
-        android/build.gradle \
-        android/res/values/libs.xml \
-        android/gradle.properties \
-        android/gradle/wrapper/gradle-wrapper.jar \
-        android/gradle/wrapper/gradle-wrapper.properties \
-        android/gradlew \
-        android/gradlew.bat
-}
+App.depends = BackendlessQt
