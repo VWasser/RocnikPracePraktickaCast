@@ -14,5 +14,5 @@ HEADERS += \
 INCLUDEPATH += \
     ../BackendlessQt
 
-LIBS += \
-    -L../BackendlessQt -lBackendlessQt
+#LIBS += \
+#    -L../BackendlessQt -lBackendlessQt
