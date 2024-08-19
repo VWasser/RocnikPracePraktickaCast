@@ -34,7 +34,7 @@ SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
     studentButton.setText("Student");
     signInButton.setText("Přihlásit se");
     registerButton.setText("Zaregistrovat se");
-    //ukáže se puze když user zadá špatně heslo
+    //ukáže se puze když user zadá špatně heslo dada
     resetPasswordButton.setText("Resetovat Heslo");
     //resetPasswordButton.hide();
     errorWin.setText("Incorect Email/Password");
