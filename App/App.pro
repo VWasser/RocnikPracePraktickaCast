@@ -17,17 +17,7 @@ INCLUDEPATH += \
 DEPENDPATH += \
     ../BackendlessQt
 
-ios {
-    LIBS += \
-       -L../BackendlessQt -lBackendlessQt
-}
-
-macos {
-    LIBS += \
-       -L../BackendlessQt -lBackendlessQt
-}
-
-win32 {
+unix {
     LIBS += \
        -L../BackendlessQt -lBackendlessQt
 }
