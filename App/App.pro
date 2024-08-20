@@ -17,12 +17,14 @@ INCLUDEPATH += \
 DEPENDPATH += \
     ../BackendlessQt
 
-unix {
-    LIBS += \
-       -L../BackendlessQt -lBackendlessQt
-}
+#unix {
+#    LIBS += \
+#       -L../BackendlessQt -lBackendlessQt
+#}
 
 android {
+    QMAKE_LFLAGS += -lc++
+
     QMAKE_LINK += -nostdlib++
 
     ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
