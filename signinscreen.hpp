@@ -33,5 +33,8 @@ private:
     QVBoxLayout signInLayout;
     QHBoxLayout teachStudentLayout;
 
+private:
+    void onClickRegisterButton();
+
 };
 

@@ -1,3 +1,4 @@
+#include "registerscreen.hpp"
 #include "signinscreen.hpp"
 #include <QApplication>
 
@@ -7,6 +8,9 @@ int main(int argc, char *argv[])
 
     SignInScreen myWindow;
     myWindow.show();
+
+    registerscreen myWindow2;
+    myWindow2.hide();
 
     return myApp.exec();
 }
