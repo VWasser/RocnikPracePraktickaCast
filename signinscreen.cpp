@@ -51,6 +51,7 @@ SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
     signInLayout.addWidget(&signInButton);
     signInLayout.addWidget(&registerButton);
     signInLayout.addWidget(&resetPasswordButton);
+    signInLayout.addStretch();
 
     setLayout(&signInLayout);
     signInLayout.addLayout(&teachStudentLayout);
