@@ -42,8 +42,6 @@ SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
     errorWin.setText("Incorect Email/Password");
     errorWin.setInformativeText("Please try againg or change your password");
 
-    QWidget::setFixedSize(200, 200);
-
     //dodělat
     teachStudentLayout.addWidget(&studentButton);
     teachStudentLayout.addWidget(&teacherButton);
@@ -59,6 +57,9 @@ SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
     setLayout(&signInLayout);
     signInLayout.addLayout(&teachStudentLayout);
 
+#if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS)
+    setFixedSize(640, 480);
+#endif
 }
 
 SignInScreen::~SignInScreen() {
