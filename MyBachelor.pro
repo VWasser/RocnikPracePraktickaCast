@@ -4,12 +4,14 @@ CONFIG += c++20
 
 SOURCES += \
     main.cpp \
+    registerscreen.cpp \
     signinscreen.cpp \
     BackendlessQt/BasicAPI.cpp \
     BackendlessQt/BackendlessAPI.cpp \
     BackendlessQt/BackendlessUserAPI.cpp
 
 HEADERS += \
+    registerscreen.hpp \
     signinscreen.hpp \
     BackendlessQt/BasicAPI.hpp \
     BackendlessQt/BackendlessAPI.hpp \
