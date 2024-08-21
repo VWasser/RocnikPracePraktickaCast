@@ -5,6 +5,8 @@
 registerscreen::registerscreen(QWidget *parent): QWidget(parent),
     email(this), name(this), password(this), regist(this), logIn(this), logInLabel(this)
 {
+
+
     regist.setText("Zaregistrovat se");
     logIn.setText("Přihlásit se");
     logInLabel.setText("jste už zaregistrováni? ");

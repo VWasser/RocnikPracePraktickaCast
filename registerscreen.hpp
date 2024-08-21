@@ -7,6 +7,7 @@
 #include <QLabel>
 #include <QBoxLayout>
 
+
 class registerscreen : public QWidget
 {
     Q_OBJECT

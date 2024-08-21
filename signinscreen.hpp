@@ -5,6 +5,10 @@
 #include <QMessageBox>
 #include "BackendlessQt/BackendlessAPI.hpp"
 #include "qboxlayout.h"
+#include "registerscreen.hpp"
+
+extern registerscreen* myWindow2;
+
 
 class SignInScreen: public QWidget
 {
@@ -32,9 +36,6 @@ private:
     QMessageBox errorWin;
     QVBoxLayout signInLayout;
     QHBoxLayout teachStudentLayout;
-
-private:
-    void onClickRegisterButton();
 
 };
 

@@ -30,7 +30,11 @@ SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
     });
     api.userAPI.registerUser(BackendlessRegisterUser("something@new.com", "Roman", "Password"));
 
-    QObject::connect(&registerButton, SIGNAL(clicked()), this, SLOT(onClickRegisterButton()));
+    QObject::connect(&registerButton, &QPushButton::clicked, this, [&]() {
+        myWindow2->show();
+        hide();
+    });
+
     ///UI
     teacherButton.setText("Učitel");
     studentButton.setText("Student");
@@ -66,5 +70,3 @@ SignInScreen::~SignInScreen() {
 
 }
 
-void SignInScreen::onClickRegisterButton(){
- };

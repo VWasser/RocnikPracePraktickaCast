@@ -2,15 +2,19 @@
 #include "signinscreen.hpp"
 #include <QApplication>
 
+SignInScreen* myWindow;
+registerscreen* myWindow2;
+
+
+
 int main(int argc, char *argv[])
 {
     QApplication myApp(argc, argv);
+    myWindow = new SignInScreen();
+    myWindow2 = new registerscreen();
 
-    SignInScreen myWindow;
-    myWindow.show();
+    myWindow->show();
 
-    registerscreen myWindow2;
-    myWindow2.hide();
 
     return myApp.exec();
 }
