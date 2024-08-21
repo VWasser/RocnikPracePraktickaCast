@@ -16,6 +16,10 @@ registerscreen::registerscreen(QWidget *parent): QWidget(parent),
     registLayout.addWidget(&logInLabel);
     registLayout.addStretch();
     setLayout(&registLayout);
+
+    #if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS)
+    setFixedSize(640, 400);
+#endif
 }
 registerscreen::~registerscreen()
 {}
