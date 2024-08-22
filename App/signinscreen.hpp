@@ -5,6 +5,9 @@
 #include <QMessageBox>
 #include <QBoxLayout>
 #include "BackendlessAPI.hpp"
+#include "registerscreen.hpp"
+
+extern registerscreen* myWindow2;
 
 class SignInScreen: public QWidget
 {

@@ -1,4 +1,5 @@
 #include "signinscreen.hpp"
+#include "registerscreen.hpp"
 #include <QApplication>
 #include <QBoxLayout>
 
@@ -28,6 +29,11 @@ SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
         qDebug() << "Loaded " << response;
     });
     api.userAPI.registerUser(BackendlessRegisterUser("something@new.com", "Roman", "Password"));*/
+
+    QObject::connect(&registerButton, &QPushButton::clicked, this, [&]() {
+        myWindow2->show();
+        hide();
+    });
 
     ///UI
     teacherButton.setText("Učitel");
@@ -63,3 +69,4 @@ SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
 SignInScreen::~SignInScreen() {
 
 }
+
