@@ -6,10 +6,12 @@ CONFIG += c++20
 
 SOURCES += \
     main.cpp \
-    signinscreen.cpp
+    signinscreen.cpp \
+    registerscreen.cpp
 
 HEADERS += \
-    signinscreen.hpp
+    signinscreen.hpp \
+    registerscreen.hpp
 
 INCLUDEPATH += \
     ../BackendlessQt
