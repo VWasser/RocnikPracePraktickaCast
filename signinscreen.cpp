@@ -35,6 +35,8 @@ SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
         hide();
     });
 
+    api.userAPI.restorePassword();
+
     ///UI
     teacherButton.setText("Učitel");
     studentButton.setText("Student");
