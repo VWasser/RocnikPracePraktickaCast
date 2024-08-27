@@ -31,7 +31,7 @@ SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
     QObject::connect(&api, &BackendlessAPI::tableItemsLoaded, this, [&](auto response){
         qDebug() << "Loaded " << response;
     });
-    api.userAPI.registerUser(BackendlessRegisterUser("something@new.com", "Roman", "Password"));
+    // api.userAPI.registerUser(BackendlessRegisterUser("something@new.com", "Roman", "Password"));
 
     QObject::connect(&registerButton, &QPushButton::clicked, this, [&]() {
         myWindow2->show();
