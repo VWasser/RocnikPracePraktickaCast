@@ -22,18 +22,23 @@ SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
     QObject::connect(&api.userAPI, &BackendlessUserAPI::validateUserTokenSuccess, this, [&](auto isValid){
         qDebug() << isValid;
     });
+    QObject::connect(&api.userAPI, &BackendlessUserAPI::restorePasswordSuccess, this, [&](auto reply){
+        qDebug() << reply;
+    });
     QObject::connect(&api, &BackendlessAPI::itemAdded, this, [&](){
         api.loadTableItems("Product");
     });
     QObject::connect(&api, &BackendlessAPI::tableItemsLoaded, this, [&](auto response){
         qDebug() << "Loaded " << response;
     });
-    api.userAPI.registerUser(BackendlessRegisterUser("something@new.com", "Roman", "Password"));
+    // api.userAPI.registerUser(BackendlessRegisterUser("something@new.com", "Roman", "Password"));
 
     QObject::connect(&registerButton, &QPushButton::clicked, this, [&]() {
         myWindow2->show();
         hide();
     });
+
+    api.userAPI.restorePassword("podymov.gp@gmail.com");
 
     ///UI
     teacherButton.setText("Učitel");
