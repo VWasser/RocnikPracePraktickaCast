@@ -2,6 +2,10 @@
 #include "registerscreen.hpp"
 #include <QApplication>
 #include <QBoxLayout>
+#include <cstdlib>
+#include <windows.h>
+
+
 
 SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
     api(BackendlessAPI("7D2C33DB-05E2-4FD9-B26B-46FDB17F56D6", "19CB95DB-0235-4134-B1FB-C64750DE49E2")),
@@ -18,6 +22,7 @@ SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
     QObject::connect(&api.userAPI, &BackendlessUserAPI::signInUserErrorBackendless, this, [&](auto error){
         qDebug() << "Error!!!";
         errorWin.exec();
+        resetPasswordButton.show();
     });
     QObject::connect(&api.userAPI, &BackendlessUserAPI::validateUserTokenSuccess, this, [&](auto isValid){
         qDebug() << isValid;
@@ -28,25 +33,30 @@ SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
     QObject::connect(&api, &BackendlessAPI::tableItemsLoaded, this, [&](auto response){
         qDebug() << "Loaded " << response;
     });
+    /*QObject::connect(&api, &BackendlessUserAPI::resetPasswordResult, this,[&](){
+        qDebug() << "email sent";
+    });*/
     api.userAPI.registerUser(BackendlessRegisterUser("something@new.com", "Roman", "Password"));
+    api.userAPI.registerUser(BackendlessRegisterUser("w4ss3rv7@gmail.com", "Vojta", "Password"));
+
 
     QObject::connect(&registerButton, &QPushButton::clicked, this, [&]() {
         myWindow2->show();
         hide();
     });
 
+
     ///UI
     teacherButton.setText("Učitel");
     studentButton.setText("Student");
     signInButton.setText("Přihlásit se");
     registerButton.setText("Zaregistrovat se");
-    //ukáže se puze když user zadá špatně heslo dada
     resetPasswordButton.setText("Resetovat Heslo");
-    //resetPasswordButton.hide();
+    resetPasswordButton.hide();
     errorWin.setText("Incorect Email/Password");
     errorWin.setInformativeText("Please try againg or change your password");
 
-    //dodělat
+
     teachStudentLayout.addWidget(&studentButton);
     teachStudentLayout.addWidget(&teacherButton);
     signInLayout.addLayout(&teachStudentLayout);
@@ -70,3 +80,4 @@ SignInScreen::~SignInScreen() {
 
 }
 
+//"https://earthydrop-eu.backendless.app/api/users/restorepassword/w4ss3rv7@gmail.com"
