@@ -1,0 +1,7 @@
+BackendlessQt.pro.user
+CMakeLists.txt.user
+BackendlessQt.xcodeproj
+.xcode/
+.qmake.stash
+Debug
+Release
