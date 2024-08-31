@@ -7,18 +7,18 @@
 #include <QTableWidget>
 #include <QHeaderView>
 
-class schedule : public QWidget
+class Schedule : public QWidget
 {
 public:
-    schedule(QWidget *parent = nullptr);
-    ~schedule();
+    Schedule(QWidget *parent = nullptr);
+    ~Schedule();
 
 private:
 
 
 
     QHBoxLayout *table = new QHBoxLayout;
-    QVector<QPushButton>dayButtons;
+    QVector<QPushButton*> dayButtons;
 
 };
 

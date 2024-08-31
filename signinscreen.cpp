@@ -3,9 +3,6 @@
 #include <QApplication>
 #include <QBoxLayout>
 #include <cstdlib>
-#include <windows.h>
-
-
 
 SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
     api(BackendlessAPI("7D2C33DB-05E2-4FD9-B26B-46FDB17F56D6", "19CB95DB-0235-4134-B1FB-C64750DE49E2")),
@@ -27,24 +24,27 @@ SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
     QObject::connect(&api.userAPI, &BackendlessUserAPI::validateUserTokenSuccess, this, [&](auto isValid){
         qDebug() << isValid;
     });
+    QObject::connect(&api.userAPI, &BackendlessUserAPI::restorePasswordSuccess, this, [&](auto reply){
+        qDebug() << reply;
+    });
     QObject::connect(&api, &BackendlessAPI::itemAdded, this, [&](){
         api.loadTableItems("Product");
     });
     QObject::connect(&api, &BackendlessAPI::tableItemsLoaded, this, [&](auto response){
         qDebug() << "Loaded " << response;
     });
-    /*QObject::connect(&api, &BackendlessUserAPI::resetPasswordResult, this,[&](){
+    QObject::connect(&api, &BackendlessUserAPI::resetPasswordSuccess, this,[&](){
         qDebug() << "email sent";
-    });*/
+    });
     api.userAPI.registerUser(BackendlessRegisterUser("something@new.com", "Roman", "Password"));
     api.userAPI.registerUser(BackendlessRegisterUser("w4ss3rv7@gmail.com", "Vojta", "Password"));
-
 
     QObject::connect(&registerButton, &QPushButton::clicked, this, [&]() {
         myWindow2->show();
         hide();
     });
 
+    api.userAPI.restorePassword("podymov.gp@gmail.com");
 
     ///UI
     teacherButton.setText("Učitel");
