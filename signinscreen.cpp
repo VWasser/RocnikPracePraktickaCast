@@ -33,7 +33,7 @@ SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
     QObject::connect(&api, &BackendlessAPI::tableItemsLoaded, this, [&](auto response){
         qDebug() << "Loaded " << response;
     });
-    QObject::connect(&api, &BackendlessUserAPI::resetPasswordSuccess, this,[&](){
+    QObject::connect(&api.userAPI, &BackendlessUserAPI::restorePasswordSuccess, this, [&](auto response){
         qDebug() << "email sent";
     });
     api.userAPI.registerUser(BackendlessRegisterUser("something@new.com", "Roman", "Password"));
