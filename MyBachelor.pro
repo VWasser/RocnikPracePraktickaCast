@@ -33,3 +33,10 @@ android {
         android/gradlew \
         android/gradlew.bat
 }
+
+RESOURCES += \
+    bachelorresources.qrc
+
+TRANSLATIONS += \
+    MyBachelor_cs_CZ.ts \
+    MyBachelor_en_GB.ts

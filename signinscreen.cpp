@@ -47,7 +47,7 @@ SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
     api.userAPI.restorePassword("podymov.gp@gmail.com");
 
     ///UI
-    teacherButton.setText("Učitel");
+    teacherButton.setText(SignInScreen::tr("Teacher"));
     studentButton.setText("Student");
     signInButton.setText("Přihlásit se");
     registerButton.setText("Zaregistrovat se");
