@@ -12,6 +12,8 @@ SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
     QObject::connect(&api.userAPI, &BackendlessUserAPI::registerUserResult, this, [&](){
         api.userAPI.signInUser("something@new.com", "Password");
         qDebug() << "Signing in";
+        myWindow3->show();
+        hide();
     });
     QObject::connect(&api.userAPI, &BackendlessUserAPI::signInUserSuccess, this, [&](){
         api.userAPI.validateUserToken();

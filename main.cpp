@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
 
     myWindow = new SignInScreen();
     myWindow2 = new registerscreen();
-    //myWindow3 = new Schedule();
+    myWindow3 = new Schedule();
 
     myWindow->show();
     // myWindow3->show();

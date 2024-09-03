@@ -6,6 +6,7 @@
 #include <QPushButton>
 #include <QTableWidget>
 #include <QHeaderView>
+#include <QCalendarWidget>
 
 class Schedule : public QWidget
 {
@@ -16,6 +17,7 @@ public:
 private:
 
 
+    QCalendarWidget* calendar = new QCalendarWidget;
 
     QHBoxLayout *table = new QHBoxLayout;
     QVector<QPushButton*> dayButtons;
