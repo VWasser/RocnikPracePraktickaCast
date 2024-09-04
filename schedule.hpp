@@ -8,6 +8,7 @@
 #include <QHeaderView>
 #include <QCalendarWidget>
 
+
 class Schedule : public QWidget
 {
 public:
@@ -17,11 +18,19 @@ public:
 private:
 
 
-    QCalendarWidget* calendar = new QCalendarWidget;
+    QTableWidget* calendar = new QTableWidget(5,10);
 
     QHBoxLayout *table = new QHBoxLayout;
     QVector<QPushButton*> dayButtons;
 
+    QTableWidgetItem *monday = new QTableWidgetItem(tr("MONDAY"));
+    QTableWidgetItem *tuesday = new QTableWidgetItem(tr("TUESDAY"));
+    QTableWidgetItem *wednesday = new QTableWidgetItem(tr("WEDNESDAY"));
+    QTableWidgetItem *thursday = new QTableWidgetItem(tr("THURDAY"));
+    QTableWidgetItem *friday = new QTableWidgetItem(tr("FRIDAY"));
+
+
 };
 
 #endif // SCHEDULE_H
+
