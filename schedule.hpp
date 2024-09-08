@@ -7,7 +7,9 @@
 #include <QTableWidget>
 #include <QHeaderView>
 #include <QCalendarWidget>
+#include "BackendlessQt/BackendlessAPI.hpp"
 
+extern BackendlessAPI* api;
 
 class Schedule : public QWidget
 {

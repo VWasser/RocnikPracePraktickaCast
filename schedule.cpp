@@ -1,6 +1,31 @@
 #include "schedule.hpp"
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonArray>
 
 Schedule::Schedule(QWidget*parent): QWidget(parent)  {
+    QObject::connect(api, &BackendlessAPI::tableItemsLoaded, this, [&](auto replyValue){
+        qDebug() << "Loaded " << replyValue;
+
+        QJsonParseError jsonError;
+        auto jsonResponse = QJsonDocument::fromJson(replyValue.toUtf8(), &jsonError);
+
+        switch (jsonError.error) {
+        case QJsonParseError::NoError:
+            break;
+        default:
+            // onJSONError(jsonError);
+            return;
+        }
+
+        auto jsonObject = jsonResponse.array();
+        for (const auto& item : jsonObject) {
+            auto desc = item.toObject()["lessonDescription"].toString();
+            QTableWidgetItem* someItem = new QTableWidgetItem(desc, QTableWidgetItem::Type);
+            calendar->setItem(0, 0, someItem);
+        }
+    });
+
     calendar->setVisible(true);
 
     table ->addWidget(calendar);
@@ -22,7 +47,7 @@ Schedule::Schedule(QWidget*parent): QWidget(parent)  {
 
     calendar->setDisabled(true);
 
-
+    api->loadTableItems("Schedules");
 }
 
 Schedule::~Schedule(){}

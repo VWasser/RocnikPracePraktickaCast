@@ -21,9 +21,6 @@ public:
     ~SignInScreen();
 
 private:
-    BackendlessAPI api;
-
-private:
     //UI
     QLineEdit email;
     QLineEdit password;

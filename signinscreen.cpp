@@ -5,7 +5,6 @@
 #include <cstdlib>
 
 SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
-    api(BackendlessAPI("7D2C33DB-05E2-4FD9-B26B-46FDB17F56D6", "19CB95DB-0235-4134-B1FB-C64750DE49E2")),
     email(this), password(this), signInButton(this), registerButton(this), resetPasswordButton(this), teacherButton(this),
     studentButton(this), errorWin(this), signInLayout(this), teachStudentLayout(this) {
 
@@ -16,21 +15,21 @@ SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
         myWindow3->show();
         hide();
     });*/
-    QObject::connect(&api.userAPI, &BackendlessUserAPI::signInUserSuccess, this, [&](){
+    QObject::connect(&(api->userAPI), &BackendlessUserAPI::signInUserSuccess, this, [&](){
         // api.userAPI.validateUserToken();
 
         myWindow3->show();
         hide();
     });
-    QObject::connect(&api.userAPI, &BackendlessUserAPI::signInUserErrorBackendless, this, [&](auto error){
+    QObject::connect(&(api->userAPI), &BackendlessUserAPI::signInUserErrorBackendless, this, [&](auto error){
         qDebug() << "Error!!!";
         errorWin.exec();
         resetPasswordButton.show();
     });
-    QObject::connect(&api.userAPI, &BackendlessUserAPI::validateUserTokenSuccess, this, [&](auto isValid){
+    QObject::connect(&(api->userAPI), &BackendlessUserAPI::validateUserTokenSuccess, this, [&](auto isValid){
         qDebug() << isValid;
     });
-    QObject::connect(&api.userAPI, &BackendlessUserAPI::restorePasswordSuccess, this, [&](auto reply){
+    QObject::connect(&(api->userAPI), &BackendlessUserAPI::restorePasswordSuccess, this, [&](auto reply){
         qDebug() << reply;
     });
     // For now commented, later you can use it to load schedule
@@ -40,18 +39,16 @@ SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
     QObject::connect(&api, &BackendlessAPI::tableItemsLoaded, this, [&](auto response){
         qDebug() << "Loaded " << response;
     });*/
-    QObject::connect(&api.userAPI, &BackendlessUserAPI::restorePasswordSuccess, this, [&](auto response){
+    QObject::connect(&(api->userAPI), &BackendlessUserAPI::restorePasswordSuccess, this, [&](auto response){
         qDebug() << "email sent";
     });
     QObject::connect(&signInButton, &QPushButton::clicked, this, [&]() {
-        api.userAPI.signInUser(email.text(), password.text());
+        api->userAPI.signInUser(email.text(), password.text());
     });
     QObject::connect(&registerButton, &QPushButton::clicked, this, [&]() {
         myWindow2->show();
         hide();
     });
-
-    api.userAPI.restorePassword("podymov.gp@gmail.com");
 
     ///UI
     teacherButton.setText(SignInScreen::tr("Teacher"));
