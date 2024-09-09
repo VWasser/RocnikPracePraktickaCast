@@ -8,6 +8,8 @@
 #include <QHeaderView>
 #include <QCalendarWidget>
 #include "BackendlessQt/BackendlessAPI.hpp"
+#include "qlabel.h"
+#include <ctime>
 
 extern BackendlessAPI* api;
 
@@ -22,8 +24,12 @@ private:
 
     QTableWidget* calendar = new QTableWidget(5,10);
 
-    QHBoxLayout *table = new QHBoxLayout;
+    QVBoxLayout *table = new QVBoxLayout;
+    QHBoxLayout *dateLay = new QHBoxLayout;
     QVector<QPushButton*> dayButtons;
+
+    QLabel* date = new QLabel;
+    time_t timestamp;
 
     QTableWidgetItem *monday = new QTableWidgetItem(tr("MONDAY"));
     QTableWidgetItem *tuesday = new QTableWidgetItem(tr("TUESDAY"));

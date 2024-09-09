@@ -23,8 +23,7 @@ int main(int argc, char *argv[])
     myWindow2 = new registerscreen();
     myWindow3 = new Schedule();
 
-    // myWindow->show();
-    myWindow3->show();
+    myWindow->show();
 
     return myApp.exec();
 }

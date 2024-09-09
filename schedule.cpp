@@ -28,6 +28,9 @@ Schedule::Schedule(QWidget*parent): QWidget(parent)  {
 
     calendar->setVisible(true);
 
+    dateLay->addWidget(date);
+    dateLay->addSpacing(350);
+    table->addLayout(dateLay);
     table ->addWidget(calendar);
     setLayout(table);
 
@@ -43,9 +46,12 @@ Schedule::Schedule(QWidget*parent): QWidget(parent)  {
     calendar->setRowHeight(3, 75);
     calendar->setRowHeight(4, 75);
 
-    calendar->setFixedSize(1090,410);
+    calendar->setFixedSize(1082,402);
 
     calendar->setDisabled(true);
+
+    time(&timestamp);
+    date->setText(ctime(&timestamp));
 
     api->loadTableItems("Schedules");
 }
