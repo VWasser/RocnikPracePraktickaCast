@@ -16,7 +16,7 @@ public:
     ~registerscreen();
 
 private:
-    QLineEdit email;
+    QLineEdit school;
     QLineEdit name;
     QLineEdit password;
 

@@ -5,6 +5,7 @@ CONFIG += c++20
 SOURCES += \
     main.cpp \
     registerscreen.cpp \
+    schedule.cpp \
     signinscreen.cpp \
     BackendlessQt/BasicAPI.cpp \
     BackendlessQt/BackendlessAPI.cpp \
@@ -12,11 +13,17 @@ SOURCES += \
 
 HEADERS += \
     registerscreen.hpp \
+    schedule.hpp \
     signinscreen.hpp \
     BackendlessQt/BasicAPI.hpp \
     BackendlessQt/BackendlessAPI.hpp \
     BackendlessQt/BackendlessUserAPI.hpp \
     BackendlessQt/BackendlessUser.hpp \
+
+ios {
+    QMAKE_TARGET_BUNDLE_PREFIX = com.bachelor
+    QMAKE_DEVELOPMENT_TEAM = 96D9Q2BEQH
+}
 
 android {
     ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
@@ -31,3 +38,10 @@ android {
         android/gradlew \
         android/gradlew.bat
 }
+
+RESOURCES += \
+    bachelorresources.qrc
+
+TRANSLATIONS += \
+    MyBachelor_cs_CZ.ts \
+    MyBachelor_en_GB.ts

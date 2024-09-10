@@ -6,8 +6,10 @@
 #include "BackendlessQt/BackendlessAPI.hpp"
 #include "qboxlayout.h"
 #include "registerscreen.hpp"
+#include "schedule.hpp"
 
 extern registerscreen* myWindow2;
+extern Schedule* myWindow3;
 
 
 class SignInScreen: public QWidget
@@ -17,9 +19,6 @@ class SignInScreen: public QWidget
 public:
     SignInScreen(QWidget *parent = nullptr);
     ~SignInScreen();
-
-private:
-    BackendlessAPI api;
 
 private:
     //UI

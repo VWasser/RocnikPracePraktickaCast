@@ -1,0 +1,8 @@
+<RCC>
+    <qresource lang="cs">
+        <file alias="strings">MyBachelor_cs_CZ.qm</file>
+    </qresource>
+    <qresource>
+        <file alias="strings">MyBachelor_en_GB.qm</file>
+    </qresource>
+</RCC>
