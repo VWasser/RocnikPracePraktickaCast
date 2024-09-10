@@ -20,6 +20,11 @@ HEADERS += \
     BackendlessQt/BackendlessUserAPI.hpp \
     BackendlessQt/BackendlessUser.hpp \
 
+ios {
+    QMAKE_TARGET_BUNDLE_PREFIX = com.bachelor
+    QMAKE_DEVELOPMENT_TEAM = 96D9Q2BEQH
+}
+
 android {
     ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
 
