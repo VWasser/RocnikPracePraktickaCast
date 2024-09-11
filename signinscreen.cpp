@@ -5,7 +5,7 @@
 #include <cstdlib>
 
 SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
-    email(this), password(this), signInButton(this), registerButton(this), resetPasswordButton(this), teacherButton(this),
+     signInButton(this), registerButton(this), resetPasswordButton(this), teacherButton(this),
     studentButton(this), errorWin(this), signInLayout(this), teachStudentLayout(this) {
 
     // Sign in screen should not register a new user, we already have registerscreen.cpp for it
@@ -43,7 +43,7 @@ SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
         qDebug() << "email sent";
     });
     QObject::connect(&signInButton, &QPushButton::clicked, this, [&]() {
-        api->userAPI.signInUser(email.text(), password.text());
+        api->userAPI.signInUser(email->text(), password->text());
     });
     QObject::connect(&registerButton, &QPushButton::clicked, this, [&]() {
         myWindow2->show();
@@ -65,8 +65,8 @@ SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
     teachStudentLayout.addWidget(&teacherButton);
     signInLayout.addLayout(&teachStudentLayout);
 
-    signInLayout.addWidget(&email);
-    signInLayout.addWidget(&password);
+    signInLayout.addWidget(email);
+    signInLayout.addWidget(password);
     signInLayout.addWidget(&signInButton);
     signInLayout.addWidget(&registerButton);
     signInLayout.addWidget(&resetPasswordButton);
@@ -74,6 +74,10 @@ SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
 
     setLayout(&signInLayout);
     signInLayout.addLayout(&teachStudentLayout);
+
+    email->setPlaceholderText("email");
+    password->setPlaceholderText("heslo");
+    password->setEchoMode(QLineEdit::Password);
 
 #if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS)
     setFixedSize(640, 480);
