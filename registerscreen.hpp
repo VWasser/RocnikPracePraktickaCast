@@ -16,7 +16,6 @@ public:
     ~registerscreen();
 
 private:
-    QLineEdit* school = new QLineEdit;
     QLineEdit* name = new QLineEdit;
     QLineEdit* password = new QLineEdit;
 

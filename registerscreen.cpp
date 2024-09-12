@@ -9,11 +9,9 @@ registerscreen::registerscreen(QWidget *parent): QWidget(parent),
     logIn.setText("Přihlásit se");
     logInLabel.setText("jste už zaregistrováni? ");
 
-    school->setPlaceholderText("Škola");
     name->setPlaceholderText("Jméno");
     password->setPlaceholderText("heslo");
 
-    registLayout.addWidget(school);
     registLayout.addWidget(name);
     registLayout.addWidget(password);
     registLayout.addWidget(&regist);
