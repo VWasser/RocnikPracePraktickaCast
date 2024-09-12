@@ -16,9 +16,8 @@ public:
     ~registerscreen();
 
 private:
-    QLineEdit school;
-    QLineEdit name;
-    QLineEdit password;
+    QLineEdit* name = new QLineEdit;
+    QLineEdit* password = new QLineEdit;
 
     QPushButton regist;
     QPushButton logIn;

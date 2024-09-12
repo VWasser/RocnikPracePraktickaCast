@@ -22,8 +22,8 @@ public:
 
 private:
     //UI
-    QLineEdit email;
-    QLineEdit password;
+    QLineEdit* email= new QLineEdit;
+    QLineEdit* password = new QLineEdit;
     QLabel emailLabel;
     QLabel passwordLabel;
     QPushButton signInButton;

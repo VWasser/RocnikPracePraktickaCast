@@ -3,15 +3,17 @@
 #include <QBoxLayout>
 
 registerscreen::registerscreen(QWidget *parent): QWidget(parent),
-    school(this), name(this), password(this), regist(this), logIn(this), logInLabel(this)
+     regist(this), logIn(this), logInLabel(this)
 {
     regist.setText("Zaregistrovat se");
     logIn.setText("Přihlásit se");
     logInLabel.setText("jste už zaregistrováni? ");
 
-    registLayout.addWidget(&school);
-    registLayout.addWidget(&name);
-    registLayout.addWidget(&password);
+    name->setPlaceholderText("Jméno");
+    password->setPlaceholderText("heslo");
+
+    registLayout.addWidget(name);
+    registLayout.addWidget(password);
     registLayout.addWidget(&regist);
     registLayout.addWidget(&logInLabel);
     registLayout.addWidget(&logIn);
