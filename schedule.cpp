@@ -1,9 +1,19 @@
+//Side Note
+//hourStart will be the number of the class
+//in sense that class 0 starts 7:55
+//class 2 starts 9:40
+//class 3 starts 10:50
+//etc....
+
+
 #include "schedule.hpp"
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
 
 Schedule::Schedule(QWidget*parent): QWidget(parent)  {
+
+
     QObject::connect(api, &BackendlessAPI::tableItemsLoaded, this, [&](auto replyValue){
         qDebug() << "Loaded " << replyValue;
 
@@ -24,7 +34,7 @@ Schedule::Schedule(QWidget*parent): QWidget(parent)  {
             auto dayOfWeek = lessonObject["dayOfWeek"].toInt();
             auto hourStart = lessonObject["hourStart"].toInt();
             QTableWidgetItem* someItem = new QTableWidgetItem(desc, QTableWidgetItem::Type);
-            calendar->setItem(0, 0, someItem);
+            calendar->setItem(dayOfWeek, hourStart, someItem);
         }
     });
 
