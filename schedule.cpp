@@ -14,13 +14,15 @@ Schedule::Schedule(QWidget*parent): QWidget(parent)  {
         case QJsonParseError::NoError:
             break;
         default:
-            // onJSONError(jsonError);
             return;
         }
 
         auto jsonObject = jsonResponse.array();
         for (const auto& item : jsonObject) {
-            auto desc = item.toObject()["lessonDescription"].toString();
+            auto lessonObject = item.toObject();
+            auto desc = lessonObject["lessonDescription"].toString();
+            auto dayOfWeek = lessonObject["dayOfWeek"].toInt();
+            auto hourStart = lessonObject["hourStart"].toInt();
             QTableWidgetItem* someItem = new QTableWidgetItem(desc, QTableWidgetItem::Type);
             calendar->setItem(0, 0, someItem);
         }
