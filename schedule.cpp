@@ -1,9 +1,19 @@
+//Side Note
+//hourStart will be the number of the class
+//in sense that class 0 starts 7:55
+//class 2 starts 9:40
+//class 3 starts 10:50
+//etc....
+
+
 #include "schedule.hpp"
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
 
 Schedule::Schedule(QWidget*parent): QWidget(parent)  {
+
+
     QObject::connect(api, &BackendlessAPI::tableItemsLoaded, this, [&](auto replyValue){
         qDebug() << "Loaded " << replyValue;
 
@@ -24,7 +34,7 @@ Schedule::Schedule(QWidget*parent): QWidget(parent)  {
             auto dayOfWeek = lessonObject["dayOfWeek"].toInt();
             auto hourStart = lessonObject["hourStart"].toInt();
             QTableWidgetItem* someItem = new QTableWidgetItem(desc, QTableWidgetItem::Type);
-            calendar->setItem(0, 0, someItem);
+            calendar->setItem(dayOfWeek, hourStart, someItem);
         }
     });
 
@@ -34,6 +44,7 @@ Schedule::Schedule(QWidget*parent): QWidget(parent)  {
     dateLay->addSpacing(350);
     table->addLayout(dateLay);
     table ->addWidget(calendar);
+    table->addStretch();
     setLayout(table);
 
     calendar->setVerticalHeaderItem(0, monday);
@@ -42,13 +53,26 @@ Schedule::Schedule(QWidget*parent): QWidget(parent)  {
     calendar->setVerticalHeaderItem(3, thursday);
     calendar->setVerticalHeaderItem(4, friday);
 
+    calendar->setHorizontalHeaderItem(0, zero);
+    calendar->setHorizontalHeaderItem(1, one);
+    calendar->setHorizontalHeaderItem(2, two);
+    calendar->setHorizontalHeaderItem(3, three);
+    calendar->setHorizontalHeaderItem(4, four);
+    calendar->setHorizontalHeaderItem(5, five);
+    calendar->setHorizontalHeaderItem(6, six);
+    calendar->setHorizontalHeaderItem(7, seven);
+    calendar->setHorizontalHeaderItem(8, eight);
+    calendar->setHorizontalHeaderItem(9, nine);
+
+
+
     calendar->setRowHeight(0, 75);
     calendar->setRowHeight(1, 75);
     calendar->setRowHeight(2, 75);
     calendar->setRowHeight(3, 75);
     calendar->setRowHeight(4, 75);
 
-    calendar->setFixedSize(1082,402);
+    calendar->setFixedSize(1086,402);
 
     calendar->setDisabled(true);
 
