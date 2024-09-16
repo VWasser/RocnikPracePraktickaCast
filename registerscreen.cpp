@@ -2,10 +2,26 @@
 #include <QWidget>
 #include <QBoxLayout>
 #include <QPushButton>
+#include "BackendlessQt/BackendlessAPI.hpp"
+#include "schedule.hpp"
+
 
 registerscreen::registerscreen(QWidget *parent): QWidget(parent),
      regist(this), logIn(this), logInLabel(this)
 {
+
+    QObject::connect(&regist, &QPushButton::clicked, this , [&](){
+            if(password->text() != password2->text()){
+                password->clear();
+                password2->clear();
+
+            }else{
+                api->userAPI.registerUser(BackendlessRegisterUser(email->text(), name->text(), password->text()));
+            }
+
+
+    });
+
     regist.setText("Zaregistrovat se");
     logIn.setText("Přihlásit se");
     logInLabel.setText("jste už zaregistrováni? ");
@@ -32,13 +48,7 @@ registerscreen::registerscreen(QWidget *parent): QWidget(parent),
     registLayout.addStretch();
     setLayout(&registLayout);
 
-    QObject::connect(&regist, &QPushButton::clicked, this,[&](){
-        if(password->text() != password2->text()){
-            password->clear();
-            password2->clear();
 
-        }
-    });
 
 
 
