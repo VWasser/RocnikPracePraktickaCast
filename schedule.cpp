@@ -10,6 +10,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
+#include "BackendlessQt/BackendlessAPI.hpp"
 
 Schedule::Schedule(QWidget*parent): QWidget(parent)  {
 
