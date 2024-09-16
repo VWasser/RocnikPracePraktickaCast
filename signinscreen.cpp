@@ -5,8 +5,8 @@
 #include <cstdlib>
 
 SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
-     signInButton(this), registerButton(this), resetPasswordButton(this), teacherButton(this),
-    studentButton(this), errorWin(this), signInLayout(this), teachStudentLayout(this) {
+     signInButton(this), registerButton(this), resetPasswordButton(this),
+     errorWin(this), signInLayout(this) {
 
     // Sign in screen should not register a new user, we already have registerscreen.cpp for it
     /*QObject::connect(&api.userAPI, &BackendlessUserAPI::registerUserResult, this, [&](){
@@ -49,31 +49,33 @@ SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
         myWindow2->show();
         hide();
     });
-
+    QObject::connect(&showPassword, &QCheckBox::clicked, this, [&]() {
+        passwordShow(password->echoMode());
+    });
     ///UI
-    teacherButton.setText(SignInScreen::tr("Teacher"));
-    studentButton.setText("Student");
     signInButton.setText("Přihlásit se");
     registerButton.setText("Zaregistrovat se");
     resetPasswordButton.setText("Resetovat Heslo");
     resetPasswordButton.hide();
     errorWin.setText("Incorect Email/Password");
     errorWin.setInformativeText("Please try againg or change your password");
+    showPasswordLabel.setText("zobrazit heslo");
 
 
-    teachStudentLayout.addWidget(&studentButton);
-    teachStudentLayout.addWidget(&teacherButton);
-    signInLayout.addLayout(&teachStudentLayout);
+    showPasswordLayout.addWidget(&showPassword);
+    showPasswordLayout.addWidget(&showPasswordLabel);
+    showPasswordLayout.addStretch();
+
 
     signInLayout.addWidget(email);
     signInLayout.addWidget(password);
+    signInLayout.addLayout(&showPasswordLayout);
     signInLayout.addWidget(&signInButton);
     signInLayout.addWidget(&registerButton);
     signInLayout.addWidget(&resetPasswordButton);
     signInLayout.addStretch();
 
     setLayout(&signInLayout);
-    signInLayout.addLayout(&teachStudentLayout);
 
     email->setPlaceholderText("email");
     password->setPlaceholderText("heslo");
@@ -88,4 +90,11 @@ SignInScreen::~SignInScreen() {
 
 }
 
-//"https://earthydrop-eu.backendless.app/api/users/restorepassword/w4ss3rv7@gmail.com"
+void SignInScreen::passwordShow(auto type){
+    if(type == QLineEdit::Password){
+        password->setEchoMode(QLineEdit::Normal);
+    }else{
+        password->setEchoMode(QLineEdit::Password);
+    }
+}
+
