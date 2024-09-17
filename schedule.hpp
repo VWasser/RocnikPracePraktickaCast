@@ -9,21 +9,24 @@
 #include <QCalendarWidget>
 #include "BackendlessQt/BackendlessAPI.hpp"
 #include "qlabel.h"
+#include "qlineedit.h"
 #include <ctime>
 
 extern BackendlessAPI* api;
+
 
 class Schedule : public QWidget
 {
 public:
     Schedule(QWidget *parent = nullptr);
-    ~Schedule();
+    ~Schedule();    
 
 private:
 
 
     QTableWidget* calendar = new QTableWidget(5,10);
 
+    QPushButton* editMode = new QPushButton("Edit Mode");
     QVBoxLayout *table = new QVBoxLayout;
     QHBoxLayout *dateLay = new QHBoxLayout;
     QVector<QPushButton*> dayButtons;
@@ -48,6 +51,25 @@ private:
     QTableWidgetItem *seven = new QTableWidgetItem(tr("14:20 - 15:05"));
     QTableWidgetItem *eight = new QTableWidgetItem(tr("15:10 - 15:55"));
     QTableWidgetItem *nine = new QTableWidgetItem(tr("16:00 - 16:45"));
+
+
+};
+
+
+class editModeWindow : public QWidget{
+public:
+
+    editModeWindow(QWidget *parent = nullptr);
+    ~editModeWindow();
+private:
+    QLineEdit* nameOfClass = new QLineEdit;
+    QLineEdit* classRow = new QLineEdit;
+    QLineEdit* classCollumn = new QLineEdit;
+
+    QHBoxLayout* rowsAndCollums = new QHBoxLayout;
+    QVBoxLayout* mainLayout = new QVBoxLayout;
+
+
 
 
 };

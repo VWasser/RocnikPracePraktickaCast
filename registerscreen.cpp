@@ -16,7 +16,7 @@ registerscreen::registerscreen(QWidget *parent): QWidget(parent),
                 password2->clear();
 
             }else{
-                api->userAPI.registerUser(BackendlessRegisterUser(email->text(), name->text(), password->text()));
+                //api->userAPI.BasicBackendlessRegisterUser(email->text(), password->text());
             }
 
 
