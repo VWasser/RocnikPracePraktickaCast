@@ -4,6 +4,8 @@
 #include <QBoxLayout>
 #include <cstdlib>
 
+extern BackendlessAPI* api;
+
 SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
      signInButton(this), registerButton(this), resetPasswordButton(this),
      errorWin(this), signInLayout(this) {
@@ -18,7 +20,7 @@ SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
     QObject::connect(&(api->userAPI), &BackendlessUserAPI::signInUserSuccess, this, [&](){
         // api.userAPI.validateUserToken();
 
-        myWindow3->show();
+        // myWindow3->show();
         hide();
     });
     QObject::connect(&(api->userAPI), &BackendlessUserAPI::signInUserErrorBackendless, this, [&](auto error){

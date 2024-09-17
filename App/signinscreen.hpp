@@ -6,10 +6,10 @@
 #include <QBoxLayout>
 #include "BackendlessAPI.hpp"
 #include "registerscreen.hpp"
-#include "schedule.hpp"
+//#include "schedule.hpp"
 
 extern registerscreen* myWindow2;
-extern Schedule* myWindow3;
+//extern Schedule* myWindow3;
 
 class SignInScreen: public QWidget
 {

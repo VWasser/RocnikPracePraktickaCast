@@ -6,10 +6,12 @@ CONFIG += c++20
 
 SOURCES += \
     main.cpp \
+    #schedule.cpp \
     signinscreen.cpp \
     registerscreen.cpp
 
 HEADERS += \
+    #schedule.hpp \
     signinscreen.hpp \
     registerscreen.hpp
 

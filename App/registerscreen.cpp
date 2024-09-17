@@ -2,9 +2,10 @@
 #include <QWidget>
 #include <QBoxLayout>
 #include <QPushButton>
-#include "BackendlessQt/BackendlessAPI.hpp"
-#include "schedule.hpp"
+#include "BackendlessAPI.hpp"
+// #include "schedule.hpp"
 
+extern BackendlessAPI* api;
 
 registerscreen::registerscreen(QWidget *parent): QWidget(parent),
      regist(this), logIn(this), logInLabel(this)
