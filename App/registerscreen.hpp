@@ -6,6 +6,7 @@
 #include <QPushButton>
 #include <QLabel>
 #include <QBoxLayout>
+#include <QCheckBox>
 
 
 class registerscreen : public QWidget
@@ -16,14 +17,21 @@ public:
     ~registerscreen();
 
 private:
-    QLineEdit school;
-    QLineEdit name;
-    QLineEdit password;
+    QLineEdit* name = new QLineEdit;
+    QLineEdit* password = new QLineEdit;
+    QLineEdit* password2 = new QLineEdit;
+    QLineEdit* email = new QLineEdit;
+
+
+    QCheckBox isTeacher;
+    QLabel isTeacherLabel;
+    QLabel passwordError;
 
     QPushButton regist;
     QPushButton logIn;
     QLabel logInLabel;
 
+    QHBoxLayout teachStudentLayout;
     QVBoxLayout registLayout;
 
 

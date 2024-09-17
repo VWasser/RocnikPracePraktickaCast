@@ -21,19 +21,23 @@ public:
 
 private:
     //UI
-    QLineEdit email;
-    QLineEdit password;
+    QLineEdit* email= new QLineEdit;
+    QLineEdit* password = new QLineEdit;
+
+    QCheckBox showPassword;
+    QLabel showPasswordLabel;
+    QHBoxLayout showPasswordLayout;
+
     QLabel emailLabel;
     QLabel passwordLabel;
     QPushButton signInButton;
     QPushButton registerButton;
     QPushButton resetPasswordButton;
-    QPushButton teacherButton;
-    QPushButton studentButton;
+
 
     QMessageBox errorWin;
     QVBoxLayout signInLayout;
-    QHBoxLayout teachStudentLayout;
-
+private:
+    void passwordShow(auto type);
 };
 
