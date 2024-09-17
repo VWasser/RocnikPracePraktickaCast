@@ -16,7 +16,8 @@ registerscreen::registerscreen(QWidget *parent): QWidget(parent),
                 password2->clear();
 
             }else{
-                api->userAPI.registerUser(BackendlessRegisterUser(email->text(), name->text(), password->text()));
+                // TODO: implement your own BackendlessRegisterUser, see https://github.com/RomanPodymov/FinanceTracker/blob/main/App/registerscreen.hpp
+                //api->userAPI.registerUser(BackendlessRegisterUser(email->text(), name->text(), password->text()));
             }
 
 
