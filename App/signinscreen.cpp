@@ -4,7 +4,7 @@
 #include <QBoxLayout>
 #include <cstdlib>
 
-extern BackendlessAPI* api;
+//extern BackendlessAPI* api;
 
 SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
      signInButton(this), registerButton(this), resetPasswordButton(this),
@@ -17,7 +17,7 @@ SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
         myWindow3->show();
         hide();
     });*/
-    QObject::connect(&(api->userAPI), &BackendlessUserAPI::signInUserSuccess, this, [&](){
+    /*QObject::connect(&(api->userAPI), &BackendlessUserAPI::signInUserSuccess, this, [&](){
         // api.userAPI.validateUserToken();
 
         // myWindow3->show();
@@ -41,12 +41,12 @@ SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
     QObject::connect(&api, &BackendlessAPI::tableItemsLoaded, this, [&](auto response){
         qDebug() << "Loaded " << response;
     });*/
-    QObject::connect(&(api->userAPI), &BackendlessUserAPI::restorePasswordSuccess, this, [&](auto response){
+    /*QObject::connect(&(api->userAPI), &BackendlessUserAPI::restorePasswordSuccess, this, [&](auto response){
         qDebug() << "email sent";
     });
     QObject::connect(&signInButton, &QPushButton::clicked, this, [&]() {
         api->userAPI.signInUser(email->text(), password->text());
-    });
+    });*/
     QObject::connect(&registerButton, &QPushButton::clicked, this, [&]() {
         myWindow2->show();
         hide();

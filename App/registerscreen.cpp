@@ -5,7 +5,7 @@
 #include "BackendlessAPI.hpp"
 // #include "schedule.hpp"
 
-extern BackendlessAPI* api;
+//extern BackendlessAPI* api;
 
 registerscreen::registerscreen(QWidget *parent): QWidget(parent),
      regist(this), logIn(this), logInLabel(this)
@@ -17,7 +17,7 @@ registerscreen::registerscreen(QWidget *parent): QWidget(parent),
                 password2->clear();
 
             }else{
-                api->userAPI.registerUser(BackendlessRegisterUser(email->text(), name->text(), password->text()));
+                // api->userAPI.registerUser(BackendlessRegisterUser(email->text(), name->text(), password->text()));
             }
 
 
