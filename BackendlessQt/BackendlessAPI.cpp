@@ -22,6 +22,10 @@ BackendlessAPI::BackendlessAPI(QString _appId, QString _apiKey, QString _endpoin
 
 }
 
+BackendlessAPI::~BackendlessAPI() {
+
+}
+
 void BackendlessAPI::addItemToTable(QString tableName, QMap<QString, QString> params) {
     return request(
         &networkAccessManager,
@@ -45,7 +49,11 @@ void BackendlessAPI::loadTableItems(QString tableName) {
         }, false, [&](QNetworkReply* reply){
             auto replyValue = reply->readAll();
             qDebug() << replyValue;
-            emit tableItemsLoaded(replyValue);
+#ifdef BACKENDLESS_VARIANT_RESPONSE
+
+#else
+            emit loadTableItemsSuccess(replyValue);
+#endif
         }
     );
 }

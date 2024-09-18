@@ -14,17 +14,29 @@
 #include <QNetworkAccessManager>
 #include "BackendlessUserAPI.hpp"
 
-class BackendlessAPI: public QObject, public BasicAPI {
+#if defined MAKE_BACKENDLESS_LIB
+#define BACKENDLESS_LIB_EXPORT Q_DECL_EXPORT
+#else
+#define BACKENDLESS_LIB_EXPORT Q_DECL_IMPORT
+#endif
+
+class BACKENDLESS_LIB_EXPORT BackendlessAPI: public QObject, public BasicAPI {
     Q_OBJECT
 
 public:
     BackendlessAPI(QString _appId, QString _apiKey, QString _endpoint = "https://eu-api.backendless.com/");
     void addItemToTable(QString, QMap<QString, QString>);
     void loadTableItems(QString);
+    ~BackendlessAPI();
 
 signals:
     void itemAdded();
-    void tableItemsLoaded(QString);
+#ifdef BACKENDLESS_VARIANT_RESPONSE
+
+#else
+    void loadTableItemsSuccess(QString);
+    void loadTableItemsError(BackendlessErrorCode);
+#endif
 
 public:
     BackendlessUserAPI userAPI;

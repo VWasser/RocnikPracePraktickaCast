@@ -9,18 +9,26 @@
 #ifndef BACKENDLESS_USER_H
 #define BACKENDLESS_USER_H
 
+#include <QMap>
 #include <QString>
 
-struct BackendlessRegisterUser {
-    QString email;
-    QString name;
-    QString password;
+class BackendlessRegisterUserRepresentable {
+public:
+    virtual QMap<QString, QString> getAllParams() = 0;
+};
 
-    BackendlessRegisterUser(
+struct BasicBackendlessRegisterUser: BackendlessRegisterUserRepresentable {
+public:
+    BasicBackendlessRegisterUser(
         QString _email,
-        QString _name,
         QString _password
-    ): email(_email), name(_name), password(_password) { }
+    );
+
+    QMap<QString, QString> getAllParams() override;
+
+protected:
+    QString email;
+    QString password;
 };
 
 struct BackendlessSignInUser {

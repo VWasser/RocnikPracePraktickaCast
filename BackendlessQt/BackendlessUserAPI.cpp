@@ -22,16 +22,14 @@ BackendlessUserAPI::BackendlessUserAPI(QNetworkAccessManager* _networkAccessMana
 
 }
 
-void BackendlessUserAPI::registerUser(BackendlessRegisterUser user) {
+void BackendlessUserAPI::registerUser(BackendlessRegisterUserRepresentable& user) {
     return request(
         networkAccessManager,
         this,
         endpoint + appId + "/" + apiKey + "/users/register",
-        {
-            {"email", user.email},
-            {"name", user.name},
-            {"password", user.password}
-        }, true, [&](QNetworkReply* reply){
+        user.getAllParams(),
+        true,
+        [&](QNetworkReply* reply){
             auto replyValue = reply->readAll();
             qDebug() << replyValue;
 
@@ -66,7 +64,7 @@ void BackendlessUserAPI::signInUser(QString login, QString password) {
                 }
             );
             #else
-            extractResult(
+            extractResult<BackendlessSignInUser>(
                 replyValue,
                 [&](auto user) {
                     emit signInUserSuccess(user);
@@ -129,37 +127,4 @@ void BackendlessUserAPI::restorePassword(QString email) {
             emit restorePasswordSuccess(replyValue);
         }
     );
-}
-
-void BackendlessUserAPI::extractResult(
-    QByteArray replyValue,
-    std::function<void(BackendlessSignInUser)> const& onUser,
-    std::function<void(BackendlessError)> const& onBEError,
-    std::function<void(QJsonParseError)> const& onJSONError
-) {
-    QJsonParseError jsonError;
-    auto jsonResponse = QJsonDocument::fromJson(replyValue, &jsonError);
-
-    switch (jsonError.error) {
-    case QJsonParseError::NoError:
-        break;
-    default:
-        onJSONError(jsonError);
-        return;
-    }
-
-    auto jsonObject = jsonResponse.object();
-    auto code = static_cast<BackendlessErrorCode>(jsonObject["code"].toInt());
-    switch (code) {
-        case BackendlessErrorCode::noError:
-            onUser(BackendlessSignInUser(
-                jsonObject["user-token"].toString()
-            ));
-            break;
-        default:
-            onBEError(BackendlessError(
-                code,
-                jsonObject["message"].toString()
-            ));
-    }
 }
