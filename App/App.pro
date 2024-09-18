@@ -44,7 +44,7 @@ android {
         $$PWD/android/gradlew.bat
 
     ANDROID_EXTRA_LIBS += \
-        /Users/romanpodymov/RocnikPracePraktickaCast/BackendlessQt/build/Android_Qt_6_8_0_Clang-Vydu00e1nu00ed/libBackendlessQt_arm64-v8a.so
-        #/Users/romanpodymov/RocnikPracePraktickaCast/build/Android_Qt_6_8_0_Clang_arm64_v8a-Vydu00e1nu00ed/BackendlessQt/libBackendlessQt_arm64-v8a.so
+        $$PWD/libBackendlessQt_arm64-v8a.so
 }
+
 android: include(/Users/romanpodymov/Library/Android/sdk/android_openssl/openssl.pri)

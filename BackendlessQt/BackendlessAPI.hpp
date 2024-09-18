@@ -20,6 +20,11 @@
 #define BACKENDLESS_LIB_EXPORT Q_DECL_IMPORT
 #endif
 
+template<typename T>
+void foo() {
+    qDebug() << "wefwefwefwe";
+}
+
 class BACKENDLESS_LIB_EXPORT BackendlessAPI: public QObject, public BasicAPI {
     Q_OBJECT
 
