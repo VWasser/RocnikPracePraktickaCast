@@ -14,17 +14,18 @@ public:
     BackendlessRegisterUser(
         QString _email,
         QString _password,
-        bool _someCustomField
-    ): BasicBackendlessRegisterUser(_email, _password), someCustomField(_someCustomField) { }
+        QString _name,
+        bool _teacher
+    ): BasicBackendlessRegisterUser(_email, _name, _password), teacher(_teacher) { }
 
     QMap<QString, QString> getAllParams() override {
-        QMap<QString, QString> result = {{"someCustomField", someCustomField ? "true" : "false"}};
+        QMap<QString, QString> result = {{"teacher", teacher ? "true" : "false"}};
         result.insert(BasicBackendlessRegisterUser::getAllParams());
         return result;
     }
 
 protected:
-    bool someCustomField;
+    bool teacher;
 };
 
 class registerscreen : public QWidget
@@ -35,6 +36,7 @@ public:
     ~registerscreen();
 
 private:
+
     QLineEdit* name = new QLineEdit;
     QLineEdit* password = new QLineEdit;
     QLineEdit* password2 = new QLineEdit;
@@ -52,7 +54,7 @@ private:
     QHBoxLayout teachStudentLayout;
     QVBoxLayout registLayout;
 
-
+    BackendlessRegisterUserRepresentable* currentUser;
 };
 
 #endif // REGISTERSCREEN_H

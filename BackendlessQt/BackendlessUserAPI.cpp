@@ -21,7 +21,8 @@ BackendlessUserAPI::BackendlessUserAPI(QNetworkAccessManager* _networkAccessMana
     endpoint(_endpoint) {
 
 }
-
+//is this correct, because i want to register one more parameter, the Teacher boolean
+//but BackendlessRegisterUserRepresantable only provides 3 that must be QString
 void BackendlessUserAPI::registerUser(BackendlessRegisterUserRepresentable& user) {
     return request(
         networkAccessManager,
