@@ -16,7 +16,7 @@ public:
         QString _password,
         QString _name,
         bool _teacher
-    ): BasicBackendlessRegisterUser(_email, _name, _password), teacher(_teacher) { }
+    ): BasicBackendlessRegisterUser(_email, _password), name(_name), teacher(_teacher) { }
 
     QMap<QString, QString> getAllParams() override {
         QMap<QString, QString> result = {{"teacher", teacher ? "true" : "false"}};
