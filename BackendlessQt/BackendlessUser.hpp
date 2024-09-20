@@ -21,7 +21,6 @@ struct BasicBackendlessRegisterUser: BackendlessRegisterUserRepresentable {
 public:
     BasicBackendlessRegisterUser(
         QString _email,
-        QString _name,
         QString _password
     );
 
@@ -29,7 +28,6 @@ public:
 
 protected:
     QString email;
-    QString name;
     QString password;
 };
 

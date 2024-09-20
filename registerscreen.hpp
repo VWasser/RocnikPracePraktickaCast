@@ -19,12 +19,13 @@ public:
     ): BasicBackendlessRegisterUser(_email, _password), name(_name), teacher(_teacher) { }
 
     QMap<QString, QString> getAllParams() override {
-        QMap<QString, QString> result = {{"teacher", teacher ? "true" : "false"}};
+        QMap<QString, QString> result = {{"name", name},{"teacher", teacher ? "true" : "false"}};
         result.insert(BasicBackendlessRegisterUser::getAllParams());
         return result;
     }
 
 protected:
+    QString name;
     bool teacher;
 };
 
