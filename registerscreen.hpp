@@ -7,7 +7,27 @@
 #include <QLabel>
 #include <QBoxLayout>
 #include <QCheckBox>
+#include "BackendlessQt/BackendlessUser.hpp"
 
+struct BackendlessRegisterUser: BasicBackendlessRegisterUser {
+public:
+    BackendlessRegisterUser(
+        QString _email,
+        QString _password,
+        QString _name,
+        bool _teacher
+    ): BasicBackendlessRegisterUser(_email, _password), name(_name), teacher(_teacher) { }
+
+    QMap<QString, QString> getAllParams() override {
+        QMap<QString, QString> result = {{"name", name},{"teacher", teacher ? "true" : "false"}};
+        result.insert(BasicBackendlessRegisterUser::getAllParams());
+        return result;
+    }
+
+protected:
+    QString name;
+    bool teacher;
+};
 
 class registerscreen : public QWidget
 {
@@ -17,6 +37,7 @@ public:
     ~registerscreen();
 
 private:
+
     QLineEdit* name = new QLineEdit;
     QLineEdit* password = new QLineEdit;
     QLineEdit* password2 = new QLineEdit;
@@ -34,7 +55,7 @@ private:
     QHBoxLayout teachStudentLayout;
     QVBoxLayout registLayout;
 
-
+    BackendlessRegisterUserRepresentable* currentUser;
 };
 
 #endif // REGISTERSCREEN_H

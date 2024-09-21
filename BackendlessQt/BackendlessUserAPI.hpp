@@ -44,6 +44,7 @@ public:
     BackendlessUserAPI(QNetworkAccessManager*, QString _appId, QString _apiKey, QString _endpoint = "https://eu-api.backendless.com/");
 
     void registerUser(BackendlessRegisterUserRepresentable&);
+
     void signInUser(QString, QString);
     void validateUserToken();
     void restorePassword(QString);

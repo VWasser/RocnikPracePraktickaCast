@@ -9,7 +9,8 @@ SOURCES += \
     signinscreen.cpp \
     BackendlessQt/BasicAPI.cpp \
     BackendlessQt/BackendlessAPI.cpp \
-    BackendlessQt/BackendlessUserAPI.cpp
+    BackendlessQt/BackendlessUserAPI.cpp \
+    BackendlessQt/BackendlessUser.cpp
 
 HEADERS += \
     registerscreen.hpp \
