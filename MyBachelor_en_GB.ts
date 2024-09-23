@@ -2,11 +2,11 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="en">
 <context>
-    <name>SignInScreen</name >
+    <name>Schedule</name>
     <message>
-        <location filename="signinscreen.cpp" line="50"/>
-        <source>Teacher</source>
-        <translation>Some Teacher</translation>
+        <location filename="schedule.cpp" line="83"/>
+        <source>MONDAY</source>
+        <translation>CHECKING</translation>
     </message>
 </context>
 </TS>

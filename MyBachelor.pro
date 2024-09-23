@@ -7,6 +7,7 @@ SOURCES += \
     registerscreen.cpp \
     schedule.cpp \
     signinscreen.cpp \
+    editmodescreen.cpp \
     BackendlessQt/BasicAPI.cpp \
     BackendlessQt/BackendlessAPI.cpp \
     BackendlessQt/BackendlessUserAPI.cpp \
@@ -16,6 +17,7 @@ HEADERS += \
     registerscreen.hpp \
     schedule.hpp \
     signinscreen.hpp \
+    editmodescreen.hpp \
     BackendlessQt/BasicAPI.hpp \
     BackendlessQt/BackendlessAPI.hpp \
     BackendlessQt/BackendlessUserAPI.hpp \
