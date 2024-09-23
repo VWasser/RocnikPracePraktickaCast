@@ -6,8 +6,10 @@
 #include "qpushbutton.h"
 #include <QWidget>
 
-class editModeScreen
+class editModeScreen: public QWidget
 {
+    Q_OBJECT
+
 public:
     editModeScreen(QWidget *parent = nullptr);
     ~editModeScreen();

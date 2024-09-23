@@ -11,13 +11,12 @@ editModeScreen::editModeScreen(QWidget* parent): QWidget(parent) {
     mainLayout->addWidget(addButt);
     rowsAndCollums->addWidget(classRow);
     rowsAndCollums->addWidget(classCollumn);
-    QLayout(mainLayout);
+    setLayout(mainLayout);
     QObject::connect(addButt, &QPushButton::clicked, this, [&](){
         nameOfClass->text();
         classRow->text();
         classCollumn->text();
-
-        popUpWindow->close();
+        close();
     });
 }
 
