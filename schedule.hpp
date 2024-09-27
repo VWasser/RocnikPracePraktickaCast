@@ -9,21 +9,26 @@
 #include <QCalendarWidget>
 #include "BackendlessQt/BackendlessAPI.hpp"
 #include "qlabel.h"
+#include "qlineedit.h"
 #include <ctime>
 
 extern BackendlessAPI* api;
 
+
 class Schedule : public QWidget
 {
+    Q_OBJECT
+
 public:
     Schedule(QWidget *parent = nullptr);
-    ~Schedule();
+    ~Schedule();    
 
 private:
 
 
     QTableWidget* calendar = new QTableWidget(5,10);
 
+    QPushButton* editMode = new QPushButton("Edit Mode");
     QVBoxLayout *table = new QVBoxLayout;
     QHBoxLayout *dateLay = new QHBoxLayout;
     QVector<QPushButton*> dayButtons;

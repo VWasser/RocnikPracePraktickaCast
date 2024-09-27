@@ -20,5 +20,4 @@ editModeScreen::editModeScreen(QWidget* parent): QWidget(parent) {
     });
 }
 
-
 editModeScreen::~editModeScreen() {}
