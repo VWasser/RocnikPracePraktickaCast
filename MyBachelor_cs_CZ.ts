@@ -4,13 +4,15 @@
 <context>
     <name>Schedule</name>
     <message>
+        <location filename="schedule.hpp" line="39"/>
         <source>MONDAY</source>
-        <translation type="vanished">ZKOUSKA</translation>
+        <translation>ZKOUSKA</translation>
     </message>
     <message>
         <location filename="schedule.hpp" line="39"/>
-        <source>MONDAY1</source>
-        <translation type="unfinished"></translation>
+        <source>MONDAY</source>
+        <oldsource>MONDAY1</oldsource>
+        <translation type="unfinished">ZKOUSKA</translation>
     </message>
     <message>
         <location filename="schedule.hpp" line="40"/>

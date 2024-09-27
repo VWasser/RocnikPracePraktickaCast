@@ -36,7 +36,7 @@ private:
     QLabel* date = new QLabel;
     time_t timestamp;
 
-    QTableWidgetItem *monday = new QTableWidgetItem(tr("MONDAY1"));
+    QTableWidgetItem *monday = new QTableWidgetItem(tr("MONDAY"));
     QTableWidgetItem *tuesday = new QTableWidgetItem(tr("TUESDAY"));
     QTableWidgetItem *wednesday = new QTableWidgetItem(tr("WEDNESDAY"));
     QTableWidgetItem *thursday = new QTableWidgetItem(tr("THURDAY"));
