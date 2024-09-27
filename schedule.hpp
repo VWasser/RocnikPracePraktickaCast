@@ -14,9 +14,7 @@
 #include <ctime>
 
 extern BackendlessAPI* api;
-extern editModeScreen* popUpWindow1;
-
-
+extern editModeScreen* popUpWindow;
 
 class Schedule : public QWidget
 {
@@ -38,8 +36,6 @@ private:
 
     QLabel* date = new QLabel;
     time_t timestamp;
-
-    QPushButton *editModeButt = new QPushButton;
 
     QTableWidgetItem *monday = new QTableWidgetItem(tr("MONDAY"));
     QTableWidgetItem *tuesday = new QTableWidgetItem(tr("TUESDAY"));

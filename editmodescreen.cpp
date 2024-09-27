@@ -18,10 +18,10 @@ editModeScreen::editModeScreen(QWidget* parent): QWidget(parent) {
     rowsAndCollums->addWidget(classCollumn);
     setLayout(mainLayout);
     QObject::connect(addButt, &QPushButton::clicked, this, [&](){
-        QString name = nameOfClass->text();
-        QString row = classRow->text();
-        QString collumn = classCollumn->text();
-
+        auto name = new StringPostParam(nameOfClass->text());
+        bool isOK;
+        auto row =  new IntPostParam(classRow->text().toInt(&isOK));
+        auto collumn = new IntPostParam(classCollumn->text().toInt(&isOK));
 
         api->addItemToTable(
             "Schedules",
@@ -32,6 +32,10 @@ editModeScreen::editModeScreen(QWidget* parent): QWidget(parent) {
             }
             );
         close();
+
+        delete name;
+        delete row;
+        delete collumn;
     });
 
 

@@ -18,8 +18,8 @@ void BasicAPI::request(
     QNetworkAccessManager* networkAccessManager,
     const QObject* context,
     QString urlString,
-    QMap<QString, QString> customParams,
-    bool isPost,
+    QMap<QString, PostParam*> customParams,
+    BERequestMethod method,
     std::function<void(QNetworkReply*)> const& handleRequest
 ) {
     QUrl url(urlString);
@@ -34,9 +34,9 @@ void BasicAPI::request(
         params += key;
         params += "\"";
         params += ":";
-        params += "\"";
-        params += value;
-        params += "\"";
+        //params += "\"";
+        params += value->asParam();
+        //params += "\"";
         params += ",";
     }
 
@@ -46,10 +46,19 @@ void BasicAPI::request(
     QObject::connect(networkAccessManager, &QNetworkAccessManager::finished, context, [handleRequest](QNetworkReply* reply) {
         handleRequest(reply);
     }, Qt::SingleShotConnection);
-    if (isPost) {
-        networkAccessManager->post(request, params.toUtf8());
-    } else {
+    switch (method) {
+    case BERequestMethod::get:
         networkAccessManager->get(request);
+        break;
+    case BERequestMethod::post:
+        networkAccessManager->post(request, params.toUtf8());
+        break;
+    case BERequestMethod::deleteResource:
+        networkAccessManager->deleteResource(request);
+        break;
+    case BERequestMethod::put:
+        networkAccessManager->put(request, params.toUtf8());
+        break;
     }
 }
 

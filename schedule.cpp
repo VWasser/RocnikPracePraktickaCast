@@ -16,7 +16,7 @@
 Schedule::Schedule(QWidget*parent): QWidget(parent)  {
 
 
-    QObject::connect(api, &BackendlessAPI::tableItemsLoaded, this, [&](auto replyValue){
+    QObject::connect(api, &BackendlessAPI::loadTableItemsSuccess, this, [&](auto replyValue){
         qDebug() << "Loaded " << replyValue;
 
         QJsonParseError jsonError;
@@ -39,8 +39,8 @@ Schedule::Schedule(QWidget*parent): QWidget(parent)  {
             calendar->setItem(dayOfWeek, hourStart, someItem);
         }
     });
-    QObject::connect(editModeButt, &QPushButton::clicked, this, [&](){
-        popUpWindow1->show();
+    QObject::connect(editMode, &QPushButton::clicked, this, [&](){
+        popUpWindow->show();
     });
 
     calendar->setVisible(true);
@@ -51,7 +51,6 @@ Schedule::Schedule(QWidget*parent): QWidget(parent)  {
     dateLay->addWidget(editMode);
     table->addLayout(dateLay);
     dateLay->addSpacing(350);
-    dateLay->addWidget(editModeButt);
     table ->addWidget(calendar);
     table->addStretch();
     setLayout(table);

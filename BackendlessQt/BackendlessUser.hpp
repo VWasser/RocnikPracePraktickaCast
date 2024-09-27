@@ -9,11 +9,13 @@
 #ifndef BACKENDLESS_USER_H
 #define BACKENDLESS_USER_H
 
+#include <QJsonObject>
 #include <QMap>
 #include <QString>
 
 class BackendlessRegisterUserRepresentable {
 public:
+    virtual ~BackendlessRegisterUserRepresentable() = default;
     virtual QMap<QString, QString> getAllParams() = 0;
 };
 
@@ -35,8 +37,10 @@ struct BackendlessSignInUser {
     QString userToken;
 
     BackendlessSignInUser(
-        QString _userToken
-    ): userToken(_userToken) { }
+        QJsonObject jsonObject
+    ): userToken(jsonObject["user-token"].toString()) {
+
+    }
 };
 
 #endif
