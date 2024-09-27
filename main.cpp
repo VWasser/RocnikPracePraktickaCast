@@ -9,6 +9,7 @@ BackendlessAPI* api;
 SignInScreen* myWindow;
 registerscreen* myWindow2;
 Schedule* myWindow3;
+editModeScreen* popUpWindow1;
 
 int main(int argc, char *argv[])
 {
@@ -22,6 +23,7 @@ int main(int argc, char *argv[])
     myWindow = new SignInScreen();
     myWindow2 = new registerscreen();
     myWindow3 = new Schedule();
+    popUpWindow1 = new editModeScreen();
 
     myWindow->show();
 

@@ -8,13 +8,17 @@
 #include <QHeaderView>
 #include <QCalendarWidget>
 #include "BackendlessQt/BackendlessAPI.hpp"
+#include "editmodescreen.hpp"
 #include "qlabel.h"
 #include <ctime>
 
 extern BackendlessAPI* api;
+extern editModeScreen* popUpWindow1;
+
 
 class Schedule : public QWidget
 {
+    Q_OBJECT
 public:
     Schedule(QWidget *parent = nullptr);
     ~Schedule();
@@ -30,6 +34,8 @@ private:
 
     QLabel* date = new QLabel;
     time_t timestamp;
+
+    QPushButton *editModeButt = new QPushButton;
 
     QTableWidgetItem *monday = new QTableWidgetItem(tr("MONDAY"));
     QTableWidgetItem *tuesday = new QTableWidgetItem(tr("TUESDAY"));

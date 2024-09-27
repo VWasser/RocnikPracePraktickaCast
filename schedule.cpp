@@ -12,6 +12,7 @@
 #include <QJsonArray>
 #include "BackendlessQt/BackendlessAPI.hpp"
 
+
 Schedule::Schedule(QWidget*parent): QWidget(parent)  {
 
 
@@ -38,12 +39,17 @@ Schedule::Schedule(QWidget*parent): QWidget(parent)  {
             calendar->setItem(dayOfWeek, hourStart, someItem);
         }
     });
+    QObject::connect(editModeButt, &QPushButton::clicked, this, [&](){
+        popUpWindow1->show();
+    });
 
     calendar->setVisible(true);
 
     dateLay->addWidget(date);
     dateLay->addSpacing(350);
     table->addLayout(dateLay);
+    dateLay->addSpacing(350);
+    dateLay->addWidget(editModeButt);
     table ->addWidget(calendar);
     table->addStretch();
     setLayout(table);
