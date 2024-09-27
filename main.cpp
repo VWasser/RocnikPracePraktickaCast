@@ -1,6 +1,7 @@
 #include "registerscreen.hpp"
 #include "schedule.hpp"
 #include "signinscreen.hpp"
+#include "editmodescreen.hpp"
 #include <QApplication>
 #include <QTranslator>
 #include "BackendlessQt/BackendlessAPI.hpp"
@@ -14,7 +15,10 @@ editModeScreen* popUpWindow1;
 int main(int argc, char *argv[])
 {
     QTranslator translator;
-    translator.load(":/strings");
+    auto loadResult = translator.load(":/strings");
+    if (!loadResult) {
+        exit(1);
+    }
 
     QApplication myApp(argc, argv);
     myApp.installTranslator(&translator);

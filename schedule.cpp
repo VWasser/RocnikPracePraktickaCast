@@ -7,11 +7,11 @@
 
 
 #include "schedule.hpp"
+#include "editmodescreen.hpp"
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
 #include "BackendlessQt/BackendlessAPI.hpp"
-
 
 Schedule::Schedule(QWidget*parent): QWidget(parent)  {
 
@@ -45,8 +45,10 @@ Schedule::Schedule(QWidget*parent): QWidget(parent)  {
 
     calendar->setVisible(true);
 
+    dateLay->addSpacing(400);
     dateLay->addWidget(date);
-    dateLay->addSpacing(350);
+    dateLay->addSpacing(400);
+    dateLay->addWidget(editMode);
     table->addLayout(dateLay);
     dateLay->addSpacing(350);
     dateLay->addWidget(editModeButt);
