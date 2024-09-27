@@ -17,6 +17,8 @@ extern BackendlessAPI* api;
 
 class Schedule : public QWidget
 {
+    Q_OBJECT
+
 public:
     Schedule(QWidget *parent = nullptr);
     ~Schedule();    
@@ -34,7 +36,7 @@ private:
     QLabel* date = new QLabel;
     time_t timestamp;
 
-    QTableWidgetItem *monday = new QTableWidgetItem(tr("MONDAY"));
+    QTableWidgetItem *monday = new QTableWidgetItem(tr("MONDAY1"));
     QTableWidgetItem *tuesday = new QTableWidgetItem(tr("TUESDAY"));
     QTableWidgetItem *wednesday = new QTableWidgetItem(tr("WEDNESDAY"));
     QTableWidgetItem *thursday = new QTableWidgetItem(tr("THURDAY"));
@@ -51,27 +53,6 @@ private:
     QTableWidgetItem *seven = new QTableWidgetItem(tr("14:20 - 15:05"));
     QTableWidgetItem *eight = new QTableWidgetItem(tr("15:10 - 15:55"));
     QTableWidgetItem *nine = new QTableWidgetItem(tr("16:00 - 16:45"));
-
-
-};
-
-
-class editModeWindow : public QWidget{
-public:
-
-    editModeWindow(QWidget *parent = nullptr);
-    ~editModeWindow();
-private:
-    QLineEdit* nameOfClass = new QLineEdit;
-    QLineEdit* classRow = new QLineEdit;
-    QLineEdit* classCollumn = new QLineEdit;
-
-    QHBoxLayout* rowsAndCollums = new QHBoxLayout;
-    QVBoxLayout* mainLayout = new QVBoxLayout;
-
-    QPushButton* addButt = new QPushButton("add");
-
-
 
 
 };

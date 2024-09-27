@@ -7,12 +7,13 @@
 
 
 #include "schedule.hpp"
+#include "editmodescreen.hpp"
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
 #include "BackendlessQt/BackendlessAPI.hpp"
 
-extern editModeWindow* popUpWindow;
+extern editModeScreen* popUpWindow;
 
 Schedule::Schedule(QWidget*parent): QWidget(parent)  {
 
@@ -92,34 +93,3 @@ Schedule::Schedule(QWidget*parent): QWidget(parent)  {
 }
 
 Schedule::~Schedule(){}
-
-
-
-//------------------------------------------------------------------
-//Edit mode window
-//For now i will do it so we can understand it, it won't be user friendly
-//later i will create methods so that everyone can edit it
-//and the reason why i'm doing this is that
-//the qtablewidget signals dont really work on specific non static cells
-
-editModeWindow::editModeWindow(QWidget* parent) : QWidget(parent){
-    nameOfClass->setPlaceholderText("Jméno hodiny");
-    classRow->setPlaceholderText("Hodina");
-    classCollumn->setPlaceholderText("Den");
-
-    mainLayout->addWidget(nameOfClass);
-    mainLayout->addLayout(rowsAndCollums);
-    mainLayout->addWidget(addButt);
-    rowsAndCollums->addWidget(classRow);
-    rowsAndCollums->addWidget(classCollumn);
-    setLayout(mainLayout);
-    QObject::connect(addButt, &QPushButton::clicked, this, [&](){
-        nameOfClass->text();
-        classRow->text();
-        classCollumn->text();
-
-        popUpWindow->close();
-    });
-}
-
-editModeWindow::~editModeWindow(){}
