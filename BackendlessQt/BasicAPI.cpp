@@ -18,7 +18,7 @@ void BasicAPI::request(
     QNetworkAccessManager* networkAccessManager,
     const QObject* context,
     QString urlString,
-    QMap<QString, PostParam*> customParams,
+    PostParams customParams,
     BERequestMethod method,
     std::function<void(QNetworkReply*)> const& handleRequest
 ) {
@@ -34,9 +34,7 @@ void BasicAPI::request(
         params += key;
         params += "\"";
         params += ":";
-        //params += "\"";
         params += value->asParam();
-        //params += "\"";
         params += ",";
     }
 

@@ -20,6 +20,8 @@ public:
     virtual QString asParam() = 0;
 };
 
+typedef QMap<QString, PostParam*> PostParams;
+
 class StringPostParam: public PostParam {
 public:
     StringPostParam(QString _value): value(_value) { }
@@ -114,7 +116,7 @@ protected:
         QNetworkAccessManager*,
         const QObject*,
         QString,
-        QMap<QString, PostParam*>,
+        PostParams,
         BERequestMethod,
         std::function<void(QNetworkReply*)> const&
     );

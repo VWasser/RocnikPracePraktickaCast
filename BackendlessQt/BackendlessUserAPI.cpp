@@ -30,7 +30,7 @@ void BackendlessUserAPI::registerUser(BackendlessRegisterUserRepresentable& user
         networkAccessManager,
         this,
         endpoint + appId + "/" + apiKey + "/users/register",
-        {{}},//user.getAllParams(),
+        user.getAllParams(),
         BERequestMethod::post,
         [&](QNetworkReply* reply){
             auto replyValue = reply->readAll();

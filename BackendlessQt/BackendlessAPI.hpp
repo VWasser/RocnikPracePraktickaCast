@@ -26,7 +26,7 @@ class BackendlessAPI: public QObject, public BasicAPI {
 
 public:
     BackendlessAPI(QString _appId, QString _apiKey, QString _endpoint = "https://eu-api.backendless.com/");
-    void addItemToTable(QString, QMap<QString, PostParam*>);
+    void addItemToTable(QString, PostParams);
     void deleteItemFromTable(QString, QString);
     void loadTableItems(QString);
 

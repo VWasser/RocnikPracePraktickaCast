@@ -14,9 +14,9 @@ BasicBackendlessRegisterUser::BasicBackendlessRegisterUser(
 ): email(_email), password(_password) {
 }
 
-QMap<QString, QString> BasicBackendlessRegisterUser::getAllParams() {
+PostParams BasicBackendlessRegisterUser::getAllParams() {
     return {
-        {"email", email},
-        {"password", password}
+        {"email", new StringPostParam(email)},
+        {"password", new StringPostParam(password)}
     };
 }

@@ -12,11 +12,13 @@
 #include <QJsonObject>
 #include <QMap>
 #include <QString>
+#include <QJsonParseError>
+#include "BasicAPI.hpp"
 
 class BackendlessRegisterUserRepresentable {
 public:
     virtual ~BackendlessRegisterUserRepresentable() = default;
-    virtual QMap<QString, QString> getAllParams() = 0;
+    virtual PostParams getAllParams() = 0;
 };
 
 struct BasicBackendlessRegisterUser: BackendlessRegisterUserRepresentable {
@@ -26,7 +28,7 @@ public:
         QString _password
     );
 
-    QMap<QString, QString> getAllParams() override;
+    PostParams getAllParams() override;
 
 protected:
     QString email;
