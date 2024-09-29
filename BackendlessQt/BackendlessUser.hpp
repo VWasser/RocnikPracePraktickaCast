@@ -27,12 +27,13 @@ public:
         QString _email,
         QString _password
     );
+    ~BasicBackendlessRegisterUser() override;
 
     PostParams getAllParams() override;
 
 protected:
-    QString email;
-    QString password;
+    StringPostParam* email;
+    StringPostParam* password;
 };
 
 struct BackendlessSignInUser {
