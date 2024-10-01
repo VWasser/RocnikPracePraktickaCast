@@ -22,7 +22,7 @@ BackendlessUserAPI::BackendlessUserAPI(QNetworkAccessManager* _networkAccessMana
     apiKey(_apiKey),
     endpoint(_endpoint) {
     readTokenFromDisk();
-    qDebug() << userToken;
+    qDebug() << userTokenValue;
 }
 
 void BackendlessUserAPI::registerUser(BackendlessRegisterUserRepresentable& user) {
@@ -72,7 +72,7 @@ void BackendlessUserAPI::signInUser(QString login, QString password) {
             extractResult<BackendlessSignInUser>(
                 replyValue,
                 [&](auto user) {
-                    userToken = user.userToken;
+                    userTokenValue = user.userToken;
                     saveTokenOnDisk();
                     emit signInUserSuccess(user);
                 },
@@ -88,24 +88,25 @@ void BackendlessUserAPI::signInUser(QString login, QString password) {
     );
 }
 
+QString BackendlessUserAPI::tokenFilePath() {
+    auto path = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+    return path + "/backendless_token.txt";
+}
+
 void BackendlessUserAPI::readTokenFromDisk() {
-    auto path = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
-    auto fileName = path + "/backendless_token.txt";
-    QFile file(fileName);
+    QFile file(tokenFilePath());
     if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         QTextStream stream(&file);
-        stream >> userToken;
+        stream >> userTokenValue;
     }
     file.close();
 }
 
 void BackendlessUserAPI::saveTokenOnDisk() {
-    auto path = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
-    auto fileName = path + "/backendless_token.txt";
-    QFile file(fileName);
+    QFile file(tokenFilePath());
     if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
         QTextStream stream(&file);
-        stream << userToken;
+        stream << userTokenValue;
     }
     file.close();
 }
@@ -114,7 +115,7 @@ void BackendlessUserAPI::validateUserToken() {
     request(
         networkAccessManager,
         this,
-        endpoint + appId + "/" + apiKey + "/users/isvalidusertoken/" + userToken,
+        endpoint + appId + "/" + apiKey + "/users/isvalidusertoken/" + userTokenValue,
         {
 
         },
@@ -160,4 +161,8 @@ void BackendlessUserAPI::restorePassword(QString email) {
             emit restorePasswordSuccess(replyValue);
         }
     );
+}
+
+QString BackendlessUserAPI::userToken() {
+    return userTokenValue;
 }
