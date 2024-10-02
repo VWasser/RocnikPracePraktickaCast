@@ -13,12 +13,10 @@
 #include <QJsonArray>
 #include "BackendlessQt/BackendlessAPI.hpp"
 
-extern editModeScreen* popUpWindow;
-
 Schedule::Schedule(QWidget*parent): QWidget(parent)  {
 
 
-    QObject::connect(api, &BackendlessAPI::tableItemsLoaded, this, [&](auto replyValue){
+    QObject::connect(api, &BackendlessAPI::loadTableItemsSuccess, this, [&](auto replyValue){
         qDebug() << "Loaded " << replyValue;
 
         QJsonParseError jsonError;
@@ -45,7 +43,6 @@ Schedule::Schedule(QWidget*parent): QWidget(parent)  {
         popUpWindow->show();
     });
 
-
     calendar->setVisible(true);
 
     dateLay->addSpacing(400);
@@ -53,6 +50,7 @@ Schedule::Schedule(QWidget*parent): QWidget(parent)  {
     dateLay->addSpacing(400);
     dateLay->addWidget(editMode);
     table->addLayout(dateLay);
+    dateLay->addSpacing(350);
     table ->addWidget(calendar);
     table->addStretch();
     setLayout(table);

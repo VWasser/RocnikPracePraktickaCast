@@ -16,17 +16,22 @@ public:
         QString _password,
         QString _name,
         bool _teacher
-    ): BasicBackendlessRegisterUser(_email, _password), name(_name), teacher(_teacher) { }
+    ): BasicBackendlessRegisterUser(_email, _password), name(new StringPostParam(_name)), teacher(new StringPostParam(_teacher ? "true" : "false")) { }
 
-    QMap<QString, QString> getAllParams() override {
-        QMap<QString, QString> result = {{"name", name},{"teacher", teacher ? "true" : "false"}};
+    ~BackendlessRegisterUser() {
+        delete name;
+        delete teacher;
+    }
+
+    PostParams getAllParams() override {
+        PostParams result = {{"name", name},{"teacher", teacher}};
         result.insert(BasicBackendlessRegisterUser::getAllParams());
         return result;
     }
 
 protected:
-    QString name;
-    bool teacher;
+    StringPostParam* name;
+    StringPostParam* teacher;
 };
 
 class registerscreen : public QWidget

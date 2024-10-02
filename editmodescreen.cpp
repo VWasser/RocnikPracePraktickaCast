@@ -1,6 +1,11 @@
 #include "editmodescreen.hpp"
+#include "BackendlessQt/BackendlessAPI.hpp"
+#include "schedule.hpp"
 
 editModeScreen::editModeScreen(QWidget* parent): QWidget(parent) {
+    QObject::connect(api, &BackendlessAPI::itemAdded, this, [&](){
+        // Item is added
+    });
 
     nameOfClass->setPlaceholderText("Jméno hodiny");
     classRow->setPlaceholderText("Hodina");
@@ -13,11 +18,27 @@ editModeScreen::editModeScreen(QWidget* parent): QWidget(parent) {
     rowsAndCollums->addWidget(classCollumn);
     setLayout(mainLayout);
     QObject::connect(addButt, &QPushButton::clicked, this, [&](){
-        nameOfClass->text();
-        classRow->text();
-        classCollumn->text();
+        auto name = new StringPostParam(nameOfClass->text());
+        bool isOK;
+        auto row =  new IntPostParam(classRow->text().toInt(&isOK));
+        auto collumn = new IntPostParam(classCollumn->text().toInt(&isOK));
+
+        api->addItemToTable(
+            "Schedules",
+            {
+                {"lessonDescription", name},
+                {"dayOfWeek", row},
+                {"hourStart",collumn}
+            }
+            );
         close();
+
+        delete name;
+        delete row;
+        delete collumn;
     });
+
+
 }
 
 editModeScreen::~editModeScreen() {}

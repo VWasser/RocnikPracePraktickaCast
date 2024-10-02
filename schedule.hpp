@@ -8,12 +8,13 @@
 #include <QHeaderView>
 #include <QCalendarWidget>
 #include "BackendlessQt/BackendlessAPI.hpp"
+#include "editmodescreen.hpp"
 #include "qlabel.h"
 #include "qlineedit.h"
 #include <ctime>
 
 extern BackendlessAPI* api;
-
+extern editModeScreen* popUpWindow;
 
 class Schedule : public QWidget
 {

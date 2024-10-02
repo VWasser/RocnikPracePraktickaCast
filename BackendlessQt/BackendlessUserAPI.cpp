@@ -12,6 +12,8 @@
 #include <QNetworkReply>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QStandardPaths>
+#include <QFile>
 #include "BackendlessUserAPI.hpp"
 
 BackendlessUserAPI::BackendlessUserAPI(QNetworkAccessManager* _networkAccessManager, QString _appId, QString _apiKey, QString _endpoint): QObject(),
@@ -19,16 +21,17 @@ BackendlessUserAPI::BackendlessUserAPI(QNetworkAccessManager* _networkAccessMana
     appId(_appId),
     apiKey(_apiKey),
     endpoint(_endpoint) {
-
+    readTokenFromDisk();
+    qDebug() << userTokenValue;
 }
 
 void BackendlessUserAPI::registerUser(BackendlessRegisterUserRepresentable& user) {
-    return request(
+    request(
         networkAccessManager,
         this,
         endpoint + appId + "/" + apiKey + "/users/register",
         user.getAllParams(),
-        true,
+        BERequestMethod::post,
         [&](QNetworkReply* reply){
             auto replyValue = reply->readAll();
             qDebug() << replyValue;
@@ -39,14 +42,16 @@ void BackendlessUserAPI::registerUser(BackendlessRegisterUserRepresentable& user
 }
 
 void BackendlessUserAPI::signInUser(QString login, QString password) {
-    return request(
+    request(
         networkAccessManager,
         this,
         endpoint + appId + "/" + apiKey + "/users/login",
         {
-            {"login", login},
-            {"password", password}
-        }, true, [&](QNetworkReply* reply){
+            {"login", new StringPostParam(login)},
+            {"password", new StringPostParam(password)}
+        },
+        BERequestMethod::post,
+        [&](QNetworkReply* reply){
             auto replyValue = reply->readAll();
             qDebug() << replyValue;
 
@@ -64,9 +69,11 @@ void BackendlessUserAPI::signInUser(QString login, QString password) {
                 }
             );
             #else
-            extractResult(
+            extractResult<BackendlessSignInUser>(
                 replyValue,
                 [&](auto user) {
+                    userTokenValue = user.userToken;
+                    saveTokenOnDisk();
                     emit signInUserSuccess(user);
                 },
                 [&](auto beError) {
@@ -81,14 +88,39 @@ void BackendlessUserAPI::signInUser(QString login, QString password) {
     );
 }
 
+QString BackendlessUserAPI::tokenFilePath() {
+    auto path = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+    return path + "/backendless_token.txt";
+}
+
+void BackendlessUserAPI::readTokenFromDisk() {
+    QFile file(tokenFilePath());
+    if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        QTextStream stream(&file);
+        stream >> userTokenValue;
+    }
+    file.close();
+}
+
+void BackendlessUserAPI::saveTokenOnDisk() {
+    QFile file(tokenFilePath());
+    if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        QTextStream stream(&file);
+        stream << userTokenValue;
+    }
+    file.close();
+}
+
 void BackendlessUserAPI::validateUserToken() {
-    return request(
+    request(
         networkAccessManager,
         this,
-        endpoint + appId + "/" + apiKey + "/users/isvalidusertoken/" + userToken,
+        endpoint + appId + "/" + apiKey + "/users/isvalidusertoken/" + userTokenValue,
         {
 
-        }, false, [&](QNetworkReply* reply){
+        },
+        BERequestMethod::get,
+        [&](QNetworkReply* reply){
             auto replyValue = reply->readAll();
             qDebug() << replyValue;
 
@@ -114,13 +146,15 @@ void BackendlessUserAPI::validateUserToken() {
 }
 
 void BackendlessUserAPI::restorePassword(QString email) {
-    return request(
+    request(
         networkAccessManager,
         this,
         endpoint + appId + "/" + apiKey + "/users/restorepassword/" + email,
         {
 
-        }, false, [&](QNetworkReply* reply){
+        },
+        BERequestMethod::get,
+        [&](QNetworkReply* reply){
             auto replyValue = reply->readAll();
             qDebug() << replyValue;
 
@@ -129,35 +163,6 @@ void BackendlessUserAPI::restorePassword(QString email) {
     );
 }
 
-void BackendlessUserAPI::extractResult(
-    QByteArray replyValue,
-    std::function<void(BackendlessSignInUser)> const& onUser,
-    std::function<void(BackendlessError)> const& onBEError,
-    std::function<void(QJsonParseError)> const& onJSONError
-) {
-    QJsonParseError jsonError;
-    auto jsonResponse = QJsonDocument::fromJson(replyValue, &jsonError);
-
-    switch (jsonError.error) {
-    case QJsonParseError::NoError:
-        break;
-    default:
-        onJSONError(jsonError);
-        return;
-    }
-
-    auto jsonObject = jsonResponse.object();
-    auto code = static_cast<BackendlessErrorCode>(jsonObject["code"].toInt());
-    switch (code) {
-        case BackendlessErrorCode::noError:
-            onUser(BackendlessSignInUser(
-                jsonObject["user-token"].toString()
-            ));
-            break;
-        default:
-            onBEError(BackendlessError(
-                code,
-                jsonObject["message"].toString()
-            ));
-    }
+QString BackendlessUserAPI::userToken() {
+    return userTokenValue;
 }

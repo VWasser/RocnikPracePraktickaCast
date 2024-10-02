@@ -9,12 +9,16 @@
 #ifndef BACKENDLESS_USER_H
 #define BACKENDLESS_USER_H
 
+#include <QJsonObject>
 #include <QMap>
 #include <QString>
+#include <QJsonParseError>
+#include "BasicAPI.hpp"
 
 class BackendlessRegisterUserRepresentable {
 public:
-    virtual QMap<QString, QString> getAllParams() = 0;
+    virtual ~BackendlessRegisterUserRepresentable() = default;
+    virtual PostParams getAllParams() = 0;
 };
 
 struct BasicBackendlessRegisterUser: BackendlessRegisterUserRepresentable {
@@ -23,20 +27,23 @@ public:
         QString _email,
         QString _password
     );
+    ~BasicBackendlessRegisterUser() override;
 
-    QMap<QString, QString> getAllParams() override;
+    PostParams getAllParams() override;
 
 protected:
-    QString email;
-    QString password;
+    StringPostParam* email;
+    StringPostParam* password;
 };
 
 struct BackendlessSignInUser {
     QString userToken;
 
     BackendlessSignInUser(
-        QString _userToken
-    ): userToken(_userToken) { }
+        QJsonObject jsonObject
+    ): userToken(jsonObject["user-token"].toString()) {
+
+    }
 };
 
 #endif

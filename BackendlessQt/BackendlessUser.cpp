@@ -11,10 +11,15 @@
 BasicBackendlessRegisterUser::BasicBackendlessRegisterUser(
     QString _email,
     QString _password
-): email(_email), password(_password) {
+): email(new StringPostParam(_email)), password(new StringPostParam(_password)) {
 }
 
-QMap<QString, QString> BasicBackendlessRegisterUser::getAllParams() {
+BasicBackendlessRegisterUser::~BasicBackendlessRegisterUser() {
+    delete email;
+    delete password;
+}
+
+PostParams BasicBackendlessRegisterUser::getAllParams() {
     return {
         {"email", email},
         {"password", password}
