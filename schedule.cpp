@@ -45,6 +45,7 @@ Schedule::Schedule(QWidget*parent): QWidget(parent)  {
 
     calendar->setVisible(true);
 
+    editMode->setText(Schedule::tr("Edit Mode"));
     dateLay->addSpacing(400);
     dateLay->addWidget(date);
     dateLay->addSpacing(400);

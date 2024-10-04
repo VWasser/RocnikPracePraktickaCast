@@ -29,7 +29,7 @@ private:
 
     QTableWidget* calendar = new QTableWidget(5,10);
 
-    QPushButton* editMode = new QPushButton("Edit Mode");
+    QPushButton* editMode = new QPushButton;
     QVBoxLayout *table = new QVBoxLayout;
     QHBoxLayout *dateLay = new QHBoxLayout;
     QVector<QPushButton*> dayButtons;

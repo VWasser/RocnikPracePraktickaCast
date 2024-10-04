@@ -21,7 +21,7 @@ private:
     QHBoxLayout* rowsAndCollums = new QHBoxLayout;
     QVBoxLayout* mainLayout = new QVBoxLayout;
 
-    QPushButton* addButt = new QPushButton("add");
+    QPushButton* addButt = new QPushButton;
 
 };
 
