@@ -53,13 +53,13 @@ SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
         passwordShow(password->echoMode());
     });
     ///UI
-    signInButton.setText("Přihlásit se");
-    registerButton.setText("Zaregistrovat se");
-    resetPasswordButton.setText("Resetovat Heslo");
+    signInButton.setText(tr("Přihlásit se"));
+    registerButton.setText(tr("Zaregistrovat se"));
+    resetPasswordButton.setText(tr("Resetovat Heslo"));
     resetPasswordButton.hide();
-    errorWin.setText("Incorect Email/Password");
-    errorWin.setInformativeText("Please try againg or change your password");
-    showPasswordLabel.setText("zobrazit heslo");
+    errorWin.setText(tr("Incorect Email/Password"));
+    errorWin.setInformativeText(tr("Please try againg or change your password"));
+    showPasswordLabel.setText(tr("zobrazit heslo"));
 
 
     showPasswordLayout.addWidget(&showPassword);
@@ -77,8 +77,8 @@ SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
 
     setLayout(&signInLayout);
 
-    email->setPlaceholderText("email");
-    password->setPlaceholderText("heslo");
+    email->setPlaceholderText(tr("email"));
+    password->setPlaceholderText(tr("heslo"));
     password->setEchoMode(QLineEdit::Password);
 
 #if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS)
