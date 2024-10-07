@@ -26,3 +26,4 @@ private:
 };
 
 #endif // EDITMODESCREEN_H
+

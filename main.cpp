@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
     myWindow3 = new Schedule();
     popUpWindow = new editModeScreen();
 
-    myWindow3->show();
+    myWindow->show();
 
 
     return myApp.exec();
