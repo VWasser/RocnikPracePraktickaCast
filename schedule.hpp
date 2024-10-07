@@ -29,7 +29,7 @@ private:
 
     QTableWidget* calendar = new QTableWidget(5,10);
 
-    QPushButton* editMode = new QPushButton("Edit Mode");
+    QPushButton* editMode = new QPushButton;
     QVBoxLayout *table = new QVBoxLayout;
     QHBoxLayout *dateLay = new QHBoxLayout;
     QVector<QPushButton*> dayButtons;
@@ -37,11 +37,11 @@ private:
     QLabel* date = new QLabel;
     time_t timestamp;
 
-    QTableWidgetItem *monday = new QTableWidgetItem(tr("MONDAY"));
-    QTableWidgetItem *tuesday = new QTableWidgetItem(tr("TUESDAY"));
-    QTableWidgetItem *wednesday = new QTableWidgetItem(tr("WEDNESDAY"));
-    QTableWidgetItem *thursday = new QTableWidgetItem(tr("THURDAY"));
-    QTableWidgetItem *friday = new QTableWidgetItem(tr("FRIDAY"));
+    QTableWidgetItem *monday = new QTableWidgetItem(tr("Monday"));
+    QTableWidgetItem *tuesday = new QTableWidgetItem(tr("Tuesday"));
+    QTableWidgetItem *wednesday = new QTableWidgetItem(tr("Wednesday"));
+    QTableWidgetItem *thursday = new QTableWidgetItem(tr("Thursday"));
+    QTableWidgetItem *friday = new QTableWidgetItem(tr("Friday"));
 
 
     QTableWidgetItem *zero = new QTableWidgetItem(tr("7:55 - 8:40"));

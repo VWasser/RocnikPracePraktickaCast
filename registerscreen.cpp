@@ -23,15 +23,15 @@ registerscreen::registerscreen(QWidget *parent): QWidget(parent),
             }
     });
 
-    regist.setText("Zaregistrovat se");
-    logIn.setText("Přihlásit se");
-    logInLabel.setText("jste už zaregistrováni? ");
+    regist.setText(registerscreen::tr("logIn"));
+    logIn.setText(registerscreen::tr("signIn"));
+    logInLabel.setText(registerscreen::tr("registeredYet"));
 
-    email->setPlaceholderText("Email");
-    name->setPlaceholderText("Jméno");
-    password->setPlaceholderText("heslo");
-    password2->setPlaceholderText("heslo znovu");
-    isTeacherLabel.setText("Jste Učitel?");
+    email->setPlaceholderText(registerscreen::tr("email"));
+    name->setPlaceholderText(registerscreen::tr("name"));
+    password->setPlaceholderText(registerscreen::tr("password"));
+    password2->setPlaceholderText(registerscreen::tr("passwordAgain"));
+    isTeacherLabel.setText(registerscreen::tr("youTeacher"));
 
     teachStudentLayout.addWidget(&isTeacher);
     teachStudentLayout.addWidget(&isTeacherLabel);
