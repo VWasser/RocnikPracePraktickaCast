@@ -53,13 +53,13 @@ SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
         passwordShow(password->echoMode());
     });
     ///UI
-    signInButton.setText(SignInScreen::tr("Přihlásit se"));
-    registerButton.setText(SignInScreen::tr("Zaregistrovat se"));
-    resetPasswordButton.setText(SignInScreen::tr("Resetovat Heslo"));
+    signInButton.setText(SignInScreen::tr("signIn"));
+    registerButton.setText(SignInScreen::tr("logIn"));
+    resetPasswordButton.setText(SignInScreen::tr("resetPassword"));
     resetPasswordButton.hide();
-    errorWin.setText(SignInScreen::tr("Incorect Email/Password"));
-    errorWin.setInformativeText(SignInScreen::tr("Please try againg or change your password"));
-    showPasswordLabel.setText(SignInScreen::tr("zobrazit heslo"));
+    errorWin.setText(SignInScreen::tr("incorectEmail/Password"));
+    errorWin.setInformativeText(SignInScreen::tr("passwordErrorMsg"));
+    showPasswordLabel.setText(SignInScreen::tr("showPassword"));
 
 
     showPasswordLayout.addWidget(&showPassword);
@@ -78,7 +78,7 @@ SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
     setLayout(&signInLayout);
 
     email->setPlaceholderText(SignInScreen::tr("email"));
-    password->setPlaceholderText(SignInScreen::tr("heslo"));
+    password->setPlaceholderText(SignInScreen::tr("password"));
     password->setEchoMode(QLineEdit::Password);
 
 #if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS)

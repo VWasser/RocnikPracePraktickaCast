@@ -5,27 +5,27 @@
     <name>Schedule</name>
     <message>
         <location filename="schedule.hpp" line="40"/>
-        <source>MONDAY</source>
+        <source>Monday</source>
         <translation>Monday</translation>
     </message>
     <message>
         <location filename="schedule.hpp" line="41"/>
-        <source>TUESDAY</source>
+        <source>Tuesday</source>
         <translation>Tuesday</translation>
     </message>
     <message>
         <location filename="schedule.hpp" line="42"/>
-        <source>WEDNESDAY</source>
+        <source>Wednesday</source>
         <translation>Wednesday</translation>
     </message>
     <message>
         <location filename="schedule.hpp" line="43"/>
-        <source>THURDAY</source>
+        <source>Thursday</source>
         <translation>Thursday</translation>
     </message>
     <message>
         <location filename="schedule.hpp" line="44"/>
-        <source>FRIDAY</source>
+        <source>Friday</source>
         <translation>Friday</translation>
     </message>
     <message>
@@ -88,32 +88,32 @@
     <name>SignInScreen</name>
     <message>
         <location filename="signinscreen.cpp" line="56"/>
-        <source>Přihlásit se</source>
+        <source>signIn</source>
         <translation>Sign In</translation>
     </message>
     <message>
         <location filename="signinscreen.cpp" line="57"/>
-        <source>Zaregistrovat se</source>
+        <source>logIn</source>
         <translation>Log In</translation>
     </message>
     <message>
         <location filename="signinscreen.cpp" line="58"/>
-        <source>Resetovat Heslo</source>
+        <source>resetPassword</source>
         <translation>Reset Password</translation>
     </message>
     <message>
         <location filename="signinscreen.cpp" line="60"/>
-        <source>Incorect Email/Password</source>
+        <source>IncorectEmail/Password</source>
         <translation>Incorect Email/Password</translation>
     </message>
     <message>
         <location filename="signinscreen.cpp" line="61"/>
-        <source>Please try againg or change your password</source>
+        <source>passwordErrorMsg</source>
         <translation>Please try againg or change your password</translation>
     </message>
     <message>
         <location filename="signinscreen.cpp" line="62"/>
-        <source>zobrazit heslo</source>
+        <source>showPassword</source>
         <translation>Show Password</translation>
     </message>
     <message>
@@ -123,7 +123,7 @@
     </message>
     <message>
         <location filename="signinscreen.cpp" line="81"/>
-        <source>heslo</source>
+        <source>password</source>
         <translation>Password</translation>
     </message>
 </context>
@@ -131,17 +131,17 @@
     <name>editModeScreen</name>
     <message>
         <location filename="editmodescreen.cpp" line="10"/>
-        <source>Jméno hodiny</source>
+        <source>className</source>
         <translation>Name of the Class</translation>
     </message>
     <message>
         <location filename="editmodescreen.cpp" line="11"/>
-        <source>Hodina</source>
+        <source>hour</source>
         <translation>Hour</translation>
     </message>
     <message>
         <location filename="editmodescreen.cpp" line="12"/>
-        <source>Den</source>
+        <source>day</source>
         <translation>Day</translation>
     </message>
     <message>
@@ -154,42 +154,42 @@
     <name>registerscreen</name>
     <message>
         <location filename="registerscreen.cpp" line="26"/>
-        <source>Zaregistrovat se</source>
+        <source>logIn</source>
         <translation>Log In</translation>
     </message>
     <message>
         <location filename="registerscreen.cpp" line="27"/>
-        <source>Přihlásit se</source>
+        <source>signIn</source>
         <translation>Sign In</translation>
     </message>
     <message>
         <location filename="registerscreen.cpp" line="28"/>
-        <source>jste už zaregistrováni? </source>
+        <source>registeredYet</source>
         <translation>Are you registered?</translation>
     </message>
     <message>
         <location filename="registerscreen.cpp" line="30"/>
-        <source>Email</source>
+        <source>email</source>
         <translation>Email</translation>
     </message>
     <message>
         <location filename="registerscreen.cpp" line="31"/>
-        <source>Jméno</source>
+        <source>name</source>
         <translation>Name</translation>
     </message>
     <message>
         <location filename="registerscreen.cpp" line="32"/>
-        <source>heslo</source>
+        <source>password</source>
         <translation>Password</translation>
     </message>
     <message>
         <location filename="registerscreen.cpp" line="33"/>
-        <source>heslo znovu</source>
+        <source>passwordAgain</source>
         <translation>Password again</translation>
     </message>
     <message>
         <location filename="registerscreen.cpp" line="34"/>
-        <source>Jste Učitel?</source>
+        <source>youTeacher</source>
         <translation>Are you a teacher?</translation>
     </message>
 </context>

@@ -7,9 +7,9 @@ editModeScreen::editModeScreen(QWidget* parent): QWidget(parent) {
         // Item is added
     });
 
-    nameOfClass->setPlaceholderText(editModeScreen::tr("Jméno hodiny"));
-    classRow->setPlaceholderText(editModeScreen::tr("Hodina"));
-    classCollumn->setPlaceholderText(editModeScreen::tr("Den"));
+    nameOfClass->setPlaceholderText(editModeScreen::tr("className"));
+    classRow->setPlaceholderText(editModeScreen::tr("hour"));
+    classCollumn->setPlaceholderText(editModeScreen::tr("day"));
     addButt->setText(editModeScreen::tr("add"));
 
     mainLayout->addWidget(nameOfClass);
