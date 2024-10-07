@@ -9,20 +9,10 @@ static inline qint32 ArrayToInt(QByteArray source);
 SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
     signInButton(this), registerButton(this), resetPasswordButton(this),
     errorWin(this), signInLayout(this),
-    server(this),
     client(this)
 {
-
-    QObject::connect(&server, &Server::dataReceived, this, [&](auto data) {
-        qDebug() << data;
-    });
     client.connectToHost("cs.wikipedia.org");
-    QString dataToSendToServer = QString("GET /wiki/Wikipedie HTTP/1.1\n"); //+
-                                 //QString("Host: cs.wikipedia.org");
-                                //"GET / ";                                //; //+
-                                 //QString("Host: cs.wikipedia.org\n") +
-                                 //QString("User-Agent: Opera/9.80 (Windows NT 5.1; U; cs) Presto/2.5.29 Version/10.60\n") +
-                                 //QString("Accept-Charset: UTF-8,*;");
+    QString dataToSendToServer = QString("GET /wiki/Wikipedie HTTP/1.1");
     client.writeData(dataToSendToServer.toUtf8());
 
     // Sign in screen should not register a new user, we already have registerscreen.cpp for it
@@ -124,7 +114,7 @@ Client::Client(QObject *parent) : QObject(parent)
 
 bool Client::connectToHost(QString host)
 {
-    socket->connectToHost(host, 443);
+    socket->connectToHost(host, 80);
     return socket->waitForConnected();
 }
 
@@ -179,66 +169,6 @@ QByteArray IntToArray(qint32 source) //Use qint32 to ensure that the number have
     QDataStream data(&temp, QIODevice::ReadWrite);
     data << source;
     return temp;
-}
-
-Server::Server(QObject *parent) : QObject(parent)
-{
-    server = new QTcpServer(this);
-    connect(server, SIGNAL(newConnection()), SLOT(newConnection()));
-    qDebug() << "Listening:" << server->listen(QHostAddress::Any, 443);
-}
-
-void Server::newConnection()
-{
-    while (server->hasPendingConnections())
-    {
-        QTcpSocket *socket = server->nextPendingConnection();
-        connect(socket, SIGNAL(readyRead()), SLOT(readyRead()));
-        connect(socket, SIGNAL(disconnected()), SLOT(disconnected()));
-        QByteArray *buffer = new QByteArray();
-        qint32 *s = new qint32(0);
-        buffers.insert(socket, buffer);
-        sizes.insert(socket, s);
-    }
-}
-
-void Server::disconnected()
-{
-    QTcpSocket *socket = static_cast<QTcpSocket*>(sender());
-    QByteArray *buffer = buffers.value(socket);
-    qint32 *s = sizes.value(socket);
-    socket->deleteLater();
-    delete buffer;
-    delete s;
-}
-
-void Server::readyRead()
-{
-    QTcpSocket *socket = static_cast<QTcpSocket*>(sender());
-    QByteArray *buffer = buffers.value(socket);
-    qint32 *s = sizes.value(socket);
-    qint32 size = *s;
-    while (socket->bytesAvailable() > 0)
-    {
-        buffer->append(socket->readAll());
-        while ((size == 0 && buffer->size() >= 4) || (size > 0 && buffer->size() >= size)) //While can process data, process it
-        {
-            if (size == 0 && buffer->size() >= 4) //if size of data has received completely, then store it on our global variable
-            {
-                size = ArrayToInt(buffer->mid(0, 4));
-                *s = size;
-                buffer->remove(0, 4);
-            }
-            if (size > 0 && buffer->size() >= size) // If data has received completely, then emit our SIGNAL with the data
-            {
-                QByteArray data = buffer->mid(0, size);
-                buffer->remove(0, size);
-                size = 0;
-                *s = size;
-                emit dataReceived(data);
-            }
-        }
-    }
 }
 
 qint32 ArrayToInt(QByteArray source)
