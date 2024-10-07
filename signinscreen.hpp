@@ -10,27 +10,10 @@
 #include "qboxlayout.h"
 #include "registerscreen.hpp"
 #include "schedule.hpp"
+#include "client.hpp"
 
 extern registerscreen* myWindow2;
 extern Schedule* myWindow3;
-
-#include <QtCore>
-#include <QtNetwork>
-
-class Client : public QObject
-{
-    Q_OBJECT
-public:
-    explicit Client(QObject *parent = 0);
-
-public slots:
-    bool connectToHost(QString host);
-    bool writeData(QByteArray data);
-    void readyRead();
-
-private:
-    QTcpSocket *socket;
-};
 
 class SignInScreen: public QWidget
 {
