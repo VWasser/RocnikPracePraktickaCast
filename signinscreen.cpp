@@ -2,11 +2,15 @@
 #include "registerscreen.hpp"
 #include <QApplication>
 #include <QBoxLayout>
-#include <cstdlib>
 
 SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
-     signInButton(this), registerButton(this), resetPasswordButton(this),
-     errorWin(this), signInLayout(this) {
+    signInButton(this), registerButton(this), resetPasswordButton(this),
+    errorWin(this), signInLayout(this),
+    client(this)
+{
+    client.connectToHost("cs.wikipedia.org");
+    QString dataToSendToServer = QString("GET /wiki/Wikipedie HTTP/1.1");
+    client.writeData(dataToSendToServer.toUtf8());
 
     // Sign in screen should not register a new user, we already have registerscreen.cpp for it
     /*QObject::connect(&api.userAPI, &BackendlessUserAPI::registerUserResult, this, [&](){
@@ -97,4 +101,3 @@ void SignInScreen::passwordShow(auto type){
         password->setEchoMode(QLineEdit::Password);
     }
 }
-
