@@ -12,6 +12,9 @@
 #include <QJsonObject>
 #include <QJsonArray>
 #include "BackendlessQt/BackendlessAPI.hpp"
+#include <QTimer>
+
+using namespace std;
 
 Schedule::Schedule(QWidget*parent): QWidget(parent)  {
 
@@ -42,6 +45,8 @@ Schedule::Schedule(QWidget*parent): QWidget(parent)  {
     QObject::connect(editMode, &QPushButton::clicked, this, [&](){
         popUpWindow->show();
     });
+
+
 
     calendar->setVisible(true);
 

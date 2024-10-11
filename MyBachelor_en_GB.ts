@@ -81,7 +81,7 @@
     <message>
         <location filename="schedule.cpp" line="48"/>
         <source>Edit Mode</source>
-        <translation >Edit Mode</translation>
+        <translation>Edit Mode</translation>
     </message>
 </context>
 <context>
@@ -103,8 +103,9 @@
     </message>
     <message>
         <location filename="signinscreen.cpp" line="60"/>
-        <source>IncorectEmail/Password</source>
-        <translation>Incorect Email/Password</translation>
+        <source>incorectEmail/Password</source>
+        <oldsource>IncorectEmail/Password</oldsource>
+        <translation type="unfinished">Incorect Email/Password</translation>
     </message>
     <message>
         <location filename="signinscreen.cpp" line="61"/>
@@ -147,7 +148,7 @@
     <message>
         <location filename="editmodescreen.cpp" line="13"/>
         <source>add</source>
-        <translation >add</translation>
+        <translation>add</translation>
     </message>
 </context>
 <context>

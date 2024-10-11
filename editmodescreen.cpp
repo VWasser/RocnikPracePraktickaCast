@@ -7,6 +7,8 @@ editModeScreen::editModeScreen(QWidget* parent): QWidget(parent) {
         // Item is added
     });
 
+
+
     nameOfClass->setPlaceholderText(editModeScreen::tr("className"));
     classRow->setPlaceholderText(editModeScreen::tr("hour"));
     classCollumn->setPlaceholderText(editModeScreen::tr("day"));
@@ -37,6 +39,7 @@ editModeScreen::editModeScreen(QWidget* parent): QWidget(parent) {
         delete name;
         delete row;
         delete collumn;
+        api->loadTableItems("Schedules");
     });
 
 

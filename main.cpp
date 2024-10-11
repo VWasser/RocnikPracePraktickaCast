@@ -20,6 +20,7 @@ int main(int argc, char *argv[])
         exit(1);
     }
 
+
     QApplication myApp(argc, argv);
     myApp.installTranslator(&translator);
 
