@@ -10,7 +10,7 @@ Client::Client(QObject *parent) : QObject(parent)
 
 bool Client::connectToHost(QString host)
 {
-    socket->connectToHost(host, 80);
+    socket->connectToHost(QHostAddress("172.64.155.249"), 443);
     return socket->waitForConnected();
 }
 

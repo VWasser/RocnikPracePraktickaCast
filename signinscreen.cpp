@@ -8,8 +8,8 @@ SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
     errorWin(this), signInLayout(this),
     client(this)
 {
-    client.connectToHost("cs.wikipedia.org");
-    QString dataToSendToServer = QString("GET /wiki/Wikipedie HTTP/1.1");
+    client.connectToHost("stackoverflow.com");
+    QString dataToSendToServer = QString("GET / HTTP/1.1 \n\r\nHost: stackoverflow.com\n\r\n");
     client.writeData(dataToSendToServer.toUtf8());
 
     // Sign in screen should not register a new user, we already have registerscreen.cpp for it
