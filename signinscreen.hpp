@@ -1,3 +1,6 @@
+#ifndef SIGNINSCREEN_HPP
+#define SIGNINSCREEN_HPP
+
 #include <QWidget>
 #include <QPushButton>
 #include <QLineEdit>
@@ -7,10 +10,10 @@
 #include "qboxlayout.h"
 #include "registerscreen.hpp"
 #include "schedule.hpp"
+#include "client.hpp"
 
 extern registerscreen* myWindow2;
 extern Schedule* myWindow3;
-
 
 class SignInScreen: public QWidget
 {
@@ -40,5 +43,9 @@ private:
     QVBoxLayout signInLayout;
 private:
     void passwordShow(auto type);
+
+private:
+    Client client;
 };
 
+#endif
