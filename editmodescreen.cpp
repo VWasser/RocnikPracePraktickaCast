@@ -2,20 +2,12 @@
 #include "BackendlessQt/BackendlessAPI.hpp"
 #include "schedule.hpp"
 
+extern Schedule* myWindow3;
+
 editModeScreen::editModeScreen(QWidget* parent): QWidget(parent) {
     QObject::connect(api, &BackendlessAPI::itemAdded, this, [&](){
         // Item is added
-        api->loadTableItems("Schedules");
-    });
-
-    QObject::connect(api, &BackendlessAPI::deleteItemFromTable, this, [&](auto replyValue){
-        QJsonParseError jsonError;
-        auto jsonResponse = QJsonDocument::fromJson(replyValue.toUtf8(), &jsonError);
-        auto name = nameOfClass->text();
-        auto indexOfClass = classRow->text();
-        auto indexOfDay = classCollumn->text();
-
-        api->deleteItemFromTable("Schedules", objID);
+        close();
     });
 
 
@@ -44,8 +36,7 @@ editModeScreen::editModeScreen(QWidget* parent): QWidget(parent) {
                 {"dayOfWeek", row},
                 {"hourStart",collumn}
             }
-            );
-        close();
+        );
 
         delete name;
         delete row;
