@@ -10,7 +10,7 @@
 #include "BackendlessQt/BackendlessAPI.hpp"
 #include "editmodescreen.hpp"
 #include "qlabel.h"
-#include "qlineedit.h"
+#include "qmessagebox.h"
 #include <ctime>
 
 extern BackendlessAPI* api;
@@ -28,10 +28,13 @@ public:
 private:
     QTableWidget* calendar = new QTableWidget(5,10);
 
-    QPushButton* editMode = new QPushButton;
+    QPushButton *deleteItemButton = new QPushButton;
+    QPushButton *editMode = new QPushButton;
     QVBoxLayout *table = new QVBoxLayout;
     QHBoxLayout *dateLay = new QHBoxLayout;
     QVector<QPushButton*> dayButtons;
+
+    QMessageBox notDeletable;
 
     QLabel* date = new QLabel;
     time_t timestamp;
