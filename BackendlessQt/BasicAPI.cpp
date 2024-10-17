@@ -29,6 +29,8 @@ void BasicAPI::request(
 
     QString params = "{";
 
+    qDebug() << "SENDING REQUEST " << urlString;
+
     for (auto [key, value] : customParams.asKeyValueRange()) {
         params += "\"";
         params += key;
@@ -40,6 +42,8 @@ void BasicAPI::request(
 
     params.removeLast();
     params += "}";
+
+    qDebug() << "REQUST PARAMS: " << params;
 
     QObject::connect(networkAccessManager, &QNetworkAccessManager::finished, context, [handleRequest](QNetworkReply* reply) {
         handleRequest(reply);

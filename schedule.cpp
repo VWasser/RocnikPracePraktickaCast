@@ -12,9 +12,14 @@
 #include <QJsonObject>
 #include <QJsonArray>
 #include "BackendlessQt/BackendlessAPI.hpp"
+#include <QTimer>
+
+using namespace std;
 
 Schedule::Schedule(QWidget*parent): QWidget(parent)  {
-
+    QObject::connect(api, &BackendlessAPI::itemAdded, this, [&](){
+        updateData();
+    });
 
     QObject::connect(api, &BackendlessAPI::loadTableItemsSuccess, this, [&](auto replyValue){
         qDebug() << "Loaded " << replyValue;
@@ -32,16 +37,35 @@ Schedule::Schedule(QWidget*parent): QWidget(parent)  {
         auto jsonObject = jsonResponse.array();
         for (const auto& item : jsonObject) {
             auto lessonObject = item.toObject();
+
+            auto objectId = lessonObject["objectId"].toString();
             auto desc = lessonObject["lessonDescription"].toString();
             auto dayOfWeek = lessonObject["dayOfWeek"].toInt();
             auto hourStart = lessonObject["hourStart"].toInt();
+
+            auto oldItem = calendar->item(dayOfWeek, hourStart);
+            delete oldItem;
+
             QTableWidgetItem* someItem = new QTableWidgetItem(desc, QTableWidgetItem::Type);
+            someItem->setData(Qt::UserRole, objectId);
             calendar->setItem(dayOfWeek, hourStart, someItem);
         }
     });
     QObject::connect(editMode, &QPushButton::clicked, this, [&](){
-        popUpWindow->show();
+        auto dayOfWeek = calendar->currentRow();
+        auto hourStart = calendar->currentColumn();
+
+        auto item = calendar->item(dayOfWeek, hourStart);
+        auto objectId = item->data(Qt::UserRole);
+
+        qDebug() << objectId;
+
+        api->deleteItemFromTable("Schedules", objectId.toString());
+
+        //popUpWindow->show();
     });
+
+
 
     calendar->setVisible(true);
 
@@ -83,12 +107,16 @@ Schedule::Schedule(QWidget*parent): QWidget(parent)  {
 
     calendar->setFixedSize(1086,402);
 
-    calendar->setDisabled(true);
+    // calendar->setDisabled(true);
 
     time(&timestamp);
     date->setText(ctime(&timestamp));
 
-    api->loadTableItems("Schedules");
+    updateData();
 }
 
 Schedule::~Schedule(){}
+
+void Schedule::updateData() {
+    api->loadTableItems("Schedules");
+}

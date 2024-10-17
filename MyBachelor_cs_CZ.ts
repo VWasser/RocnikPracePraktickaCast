@@ -80,8 +80,9 @@
     </message>
     <message>
         <location filename="schedule.cpp" line="48"/>
-        <source>editMode</source>
-        <translation>Upravit</translation>
+        <source>Edit Mode</source>
+        <oldsource>editMode</oldsource>
+        <translation type="unfinished">Upravit</translation>
     </message>
 </context>
 <context>
@@ -103,8 +104,9 @@
     </message>
     <message>
         <location filename="signinscreen.cpp" line="60"/>
-        <source>IncorectEmail/Password</source>
-        <translation>Špatný email/heslo</translation>
+        <source>incorectEmail/Password</source>
+        <oldsource>IncorectEmail/Password</oldsource>
+        <translation type="unfinished">Špatný email/heslo</translation>
     </message>
     <message>
         <location filename="signinscreen.cpp" line="61"/>
@@ -147,7 +149,7 @@
     <message>
         <location filename="editmodescreen.cpp" line="13"/>
         <source>add</source>
-        <translation >Přidat</translation>
+        <translation>Přidat</translation>
     </message>
 </context>
 <context>

@@ -22,7 +22,8 @@ class Schedule : public QWidget
 
 public:
     Schedule(QWidget *parent = nullptr);
-    ~Schedule();    
+    ~Schedule();
+    void updateData();
 
 private:
     QTableWidget* calendar = new QTableWidget(5,10);
