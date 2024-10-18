@@ -59,6 +59,7 @@ void BackendlessAPI::deleteItemFromTable(QString tableName, QString objectId) {
 
                 }
             );
+            emit itemDeleted();
         }
     );
 }
