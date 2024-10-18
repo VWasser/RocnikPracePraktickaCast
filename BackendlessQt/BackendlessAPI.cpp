@@ -84,4 +84,6 @@ void BackendlessAPI::loadTableItems(QString tableName) {
 #endif
         }
     );
+    qDebug() << "load Items URL" << endpoint + appId + "/" + apiKey + "/data/" + tableName;
+
 }

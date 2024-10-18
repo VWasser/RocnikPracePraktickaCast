@@ -26,6 +26,7 @@ public:
     void updateData();
 
 private:
+    bool isUpdating = true;
     QTableWidget* calendar = new QTableWidget(5,10);
 
     QPushButton* editMode = new QPushButton;
