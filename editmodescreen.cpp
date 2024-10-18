@@ -41,6 +41,7 @@ editModeScreen::editModeScreen(QWidget* parent): QWidget(parent) {
                 }
             );
         }
+
         delete name;
         delete row;
         delete collumn;

@@ -71,8 +71,20 @@ Schedule::Schedule(QWidget*parent): QWidget(parent)  {
     });
 
     QObject::connect(editMode, &QPushButton::clicked, this, [&](){
-        popUpWindow->show();
+        auto dayOfWeek = calendar->currentRow();
+        auto hourStart = calendar->currentColumn();
+
+        auto item = calendar->item(dayOfWeek, hourStart);
+        auto objectId = item->data(Qt::UserRole);
+
+        qDebug() << objectId;
+
+        api->deleteItemFromTable("Schedules", objectId.toString());
+
+        //popUpWindow->show();
     });
+
+
 
     calendar->setVisible(true);
 
