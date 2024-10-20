@@ -40,10 +40,11 @@ editModeScreen::editModeScreen(QWidget* parent): QWidget(parent) {
                     {"hourStart",collumn}
                 }
             );
+            delete name;
+            delete row;
+            delete collumn;
         }
-        delete name;
-        delete row;
-        delete collumn;
+
     });
 
 
