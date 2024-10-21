@@ -20,7 +20,7 @@ Schedule::Schedule(QWidget*parent): QWidget(parent)  {
     QObject::connect(api, &BackendlessAPI::itemAdded, this, [&](){
         updateData();
     });
-    QObject::connect(api, &BackendlessAPI::itemDeleted, this, [&](){
+    QObject::connect(api, &BackendlessAPI::deleteItemFromTableSuccess, this, [&](){
         updateData();
     });
 

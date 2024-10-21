@@ -51,6 +51,7 @@ void BackendlessAPI::deleteItemFromTable(QString tableName, QString objectId) {
                 replyValue,
                 [&](auto result) {
                     emit deleteItemFromTableSuccess(result);
+                    emit itemDeleted();
                 },
                 [&](auto beError) {
                     emit deleteItemFromTableError(beError);
@@ -59,7 +60,6 @@ void BackendlessAPI::deleteItemFromTable(QString tableName, QString objectId) {
 
                 }
             );
-            emit itemDeleted();
         }
     );
 }
