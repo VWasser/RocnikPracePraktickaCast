@@ -22,6 +22,7 @@ private:
     QVBoxLayout* mainLayout = new QVBoxLayout;
 
     QPushButton* addButt = new QPushButton;
+    QString objID;
 
 };
 

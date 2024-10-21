@@ -2,10 +2,15 @@
 #include "BackendlessQt/BackendlessAPI.hpp"
 #include "schedule.hpp"
 
+extern Schedule* myWindow3;
+
 editModeScreen::editModeScreen(QWidget* parent): QWidget(parent) {
     QObject::connect(api, &BackendlessAPI::itemAdded, this, [&](){
         // Item is added
+        close();
     });
+
+
 
     nameOfClass->setPlaceholderText(editModeScreen::tr("className"));
     classRow->setPlaceholderText(editModeScreen::tr("hour"));
@@ -31,8 +36,7 @@ editModeScreen::editModeScreen(QWidget* parent): QWidget(parent) {
                 {"dayOfWeek", row},
                 {"hourStart",collumn}
             }
-            );
-        close();
+        );
 
         delete name;
         delete row;

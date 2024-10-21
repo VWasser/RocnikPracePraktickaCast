@@ -20,6 +20,7 @@ int main(int argc, char *argv[])
         exit(1);
     }
 
+
     QApplication myApp(argc, argv);
     myApp.installTranslator(&translator);
 
@@ -29,7 +30,7 @@ int main(int argc, char *argv[])
     myWindow3 = new Schedule();
     popUpWindow = new editModeScreen();
 
-    myWindow->show();
+    myWindow3->show();
 
 
     return myApp.exec();

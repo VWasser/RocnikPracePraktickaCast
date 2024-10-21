@@ -51,4 +51,6 @@ RESOURCES += \
 
 TRANSLATIONS += \
     MyBachelor_cs_CZ.ts \
-    MyBachelor_en_GB.ts
+    MyBachelor_en_GB.ts \
+    MyBachelor_cs_CZ.qm \
+    MyBachelor_en_GB.qm
