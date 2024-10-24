@@ -37,10 +37,17 @@ Schedule::Schedule(QWidget*parent): QWidget(parent)  {
         default:
             return;
         }
+        auto jsonObject = jsonResponse.array();
 
         //for loop to set each item in table to "" so it doesnt crash
+        //figure out how to efficiently set 50 placeholder items to the table
+        //
+        for(int i = 0; i <= 5;i++){
+            for(int j = 0; j <= 10;j++){
+                calendar->setItem(0, 0, placeholderItem);
+            }
+        }
 
-        auto jsonObject = jsonResponse.array();
         for (const auto& item : jsonObject) {
             auto lessonObject = item.toObject();
 
@@ -62,8 +69,6 @@ Schedule::Schedule(QWidget*parent): QWidget(parent)  {
     QObject::connect(calendar, &QTableWidget::cellClicked, this, [&](){
         qDebug() << calendar->currentRow() << " Row";
         qDebug() << calendar->currentColumn() << " Column";
-        qDebug() << calendar->currentItem()->text();
-
     });
 
     QObject::connect(deleteItemButton, &QPushButton::clicked, this, [&](){
@@ -73,9 +78,14 @@ Schedule::Schedule(QWidget*parent): QWidget(parent)  {
         auto item = calendar->item(dayOfWeek, hourStart);
         auto objectId = item->data(Qt::UserRole);
 
+
         qDebug() << "objectId" << objectId;
 
-        api->deleteItemFromTable("Schedules", objectId.toString());
+        if(item->text() == ""){
+            notDeletable.exec();
+        }else{
+            api->deleteItemFromTable("Schedules", objectId.toString());
+        }
     });
     QObject::connect(editMode, &QPushButton::clicked, this, [&](){
         popUpWindow->show();
