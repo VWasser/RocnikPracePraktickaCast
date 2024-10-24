@@ -38,7 +38,7 @@ Schedule::Schedule(QWidget*parent): QWidget(parent)  {
             return;
         }
 
-        //for loop to set each item in table to "" so it doesnt crash
+        calendar->clearContents();
 
         auto jsonObject = jsonResponse.array();
         for (const auto& item : jsonObject) {
@@ -62,7 +62,7 @@ Schedule::Schedule(QWidget*parent): QWidget(parent)  {
     QObject::connect(calendar, &QTableWidget::cellClicked, this, [&](){
         qDebug() << calendar->currentRow() << " Row";
         qDebug() << calendar->currentColumn() << " Column";
-        qDebug() << calendar->currentItem()->text();
+        // qDebug() << calendar->currentItem()->text();
 
     });
 
@@ -71,6 +71,11 @@ Schedule::Schedule(QWidget*parent): QWidget(parent)  {
         auto hourStart = calendar->currentColumn();
 
         auto item = calendar->item(dayOfWeek, hourStart);
+        if (!item) {
+            qDebug() << "ITEM IS NOT SELECTED!!!";
+            notDeletable.show();
+            return;
+        }
         auto objectId = item->data(Qt::UserRole);
 
         qDebug() << "objectId" << objectId;
@@ -97,6 +102,25 @@ Schedule::Schedule(QWidget*parent): QWidget(parent)  {
     table->addStretch();
     setLayout(table);
 
+    setupUI();
+
+    calendar->setRowHeight(0, 75);
+    calendar->setRowHeight(1, 75);
+    calendar->setRowHeight(2, 75);
+    calendar->setRowHeight(3, 75);
+    calendar->setRowHeight(4, 75);
+
+    calendar->setFixedSize(1086,402);
+
+    // calendar->setDisabled(true);
+
+    time(&timestamp);
+    date->setText(ctime(&timestamp));
+
+    updateData();
+}
+
+void Schedule::setupUI() {
     calendar->setVerticalHeaderItem(0, monday);
     calendar->setVerticalHeaderItem(1, tuesday);
     calendar->setVerticalHeaderItem(2, wednesday);
@@ -113,23 +137,6 @@ Schedule::Schedule(QWidget*parent): QWidget(parent)  {
     calendar->setHorizontalHeaderItem(7, seven);
     calendar->setHorizontalHeaderItem(8, eight);
     calendar->setHorizontalHeaderItem(9, nine);
-
-
-
-    calendar->setRowHeight(0, 75);
-    calendar->setRowHeight(1, 75);
-    calendar->setRowHeight(2, 75);
-    calendar->setRowHeight(3, 75);
-    calendar->setRowHeight(4, 75);
-
-    calendar->setFixedSize(1086,402);
-
-    // calendar->setDisabled(true);
-
-    time(&timestamp);
-    date->setText(ctime(&timestamp));
-
-    updateData();
 }
 
 Schedule::~Schedule(){}

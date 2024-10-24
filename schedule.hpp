@@ -26,6 +26,9 @@ public:
     void updateData();
 
 private:
+    void setupUI();
+
+private:
     bool isUpdating = true;
     QTableWidget* calendar = new QTableWidget(5,10);
 
