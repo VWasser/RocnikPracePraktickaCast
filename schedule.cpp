@@ -37,10 +37,10 @@ Schedule::Schedule(QWidget*parent): QWidget(parent)  {
         default:
             return;
         }
+        auto jsonObject = jsonResponse.array();
 
         calendar->clearContents();
 
-        auto jsonObject = jsonResponse.array();
         for (const auto& item : jsonObject) {
             auto lessonObject = item.toObject();
 
@@ -63,7 +63,6 @@ Schedule::Schedule(QWidget*parent): QWidget(parent)  {
         qDebug() << calendar->currentRow() << " Row";
         qDebug() << calendar->currentColumn() << " Column";
         // qDebug() << calendar->currentItem()->text();
-
     });
 
     QObject::connect(deleteItemButton, &QPushButton::clicked, this, [&](){
@@ -78,9 +77,14 @@ Schedule::Schedule(QWidget*parent): QWidget(parent)  {
         }
         auto objectId = item->data(Qt::UserRole);
 
+
         qDebug() << "objectId" << objectId;
 
-        api->deleteItemFromTable("Schedules", objectId.toString());
+        if(item->text() == ""){
+            notDeletable.exec();
+        }else{
+            api->deleteItemFromTable("Schedules", objectId.toString());
+        }
     });
     QObject::connect(editMode, &QPushButton::clicked, this, [&](){
         popUpWindow->show();
