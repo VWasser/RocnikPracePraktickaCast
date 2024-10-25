@@ -118,7 +118,7 @@ protected:
         QString,
         PostParams,
         BERequestMethod,
-        std::function<void(QNetworkReply*)> const&
+        std::function<void(QByteArray)> const&
     );
 };
 

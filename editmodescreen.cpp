@@ -29,14 +29,18 @@ editModeScreen::editModeScreen(QWidget* parent): QWidget(parent) {
         auto row =  new IntPostParam(classRow->text().toInt(&isOK));
         auto collumn = new IntPostParam(classCollumn->text().toInt(&isOK));
 
-        api->addItemToTable(
-            "Schedules",
-            {
-                {"lessonDescription", name},
-                {"dayOfWeek", row},
-                {"hourStart",collumn}
-            }
-        );
+        if(nameOfClass->text() == ""){
+            close();
+        }else{
+            api->addItemToTable(
+                "Schedules",
+                {
+                    {"lessonDescription", name},
+                    {"dayOfWeek", row},
+                    {"hourStart",collumn}
+                }
+            );
+        }
 
         delete name;
         delete row;

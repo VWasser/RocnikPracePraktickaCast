@@ -20,6 +20,10 @@ Schedule::Schedule(QWidget*parent): QWidget(parent)  {
     QObject::connect(api, &BackendlessAPI::itemAdded, this, [&](){
         updateData();
     });
+    QObject::connect(api, &BackendlessAPI::deleteItemFromTableSuccess, this, [&](){
+        updateData();
+    });
+
 
     QObject::connect(api, &BackendlessAPI::loadTableItemsSuccess, this, [&](auto replyValue){
         qDebug() << "Loaded " << replyValue;
@@ -33,8 +37,10 @@ Schedule::Schedule(QWidget*parent): QWidget(parent)  {
         default:
             return;
         }
-
         auto jsonObject = jsonResponse.array();
+
+        calendar->clearContents();
+
         for (const auto& item : jsonObject) {
             auto lessonObject = item.toObject();
 
@@ -51,35 +57,74 @@ Schedule::Schedule(QWidget*parent): QWidget(parent)  {
             calendar->setItem(dayOfWeek, hourStart, someItem);
         }
     });
-    QObject::connect(editMode, &QPushButton::clicked, this, [&](){
+
+    //For debuging
+    QObject::connect(calendar, &QTableWidget::cellClicked, this, [&](){
+        qDebug() << calendar->currentRow() << " Row";
+        qDebug() << calendar->currentColumn() << " Column";
+        // qDebug() << calendar->currentItem()->text();
+    });
+
+    QObject::connect(deleteItemButton, &QPushButton::clicked, this, [&](){
         auto dayOfWeek = calendar->currentRow();
         auto hourStart = calendar->currentColumn();
 
         auto item = calendar->item(dayOfWeek, hourStart);
+        if (!item) {
+            qDebug() << "ITEM IS NOT SELECTED!!!";
+            notDeletable.show();
+            return;
+        }
         auto objectId = item->data(Qt::UserRole);
 
-        qDebug() << objectId;
 
-        api->deleteItemFromTable("Schedules", objectId.toString());
+        qDebug() << "objectId" << objectId;
 
-        //popUpWindow->show();
+        if(item->text() == ""){
+            notDeletable.exec();
+        }else{
+            api->deleteItemFromTable("Schedules", objectId.toString());
+        }
     });
-
-
+    QObject::connect(editMode, &QPushButton::clicked, this, [&](){
+        popUpWindow->show();
+    });
 
     calendar->setVisible(true);
 
     editMode->setText(Schedule::tr("Edit Mode"));
+    deleteItemButton->setText(Schedule::tr("deleteClass"));
+
     dateLay->addSpacing(400);
     dateLay->addWidget(date);
-    dateLay->addSpacing(400);
+    dateLay->addSpacing(385);
     dateLay->addWidget(editMode);
+    dateLay->addWidget(deleteItemButton);
     table->addLayout(dateLay);
     dateLay->addSpacing(350);
     table ->addWidget(calendar);
     table->addStretch();
     setLayout(table);
 
+    setupUI();
+
+    calendar->setRowHeight(0, 75);
+    calendar->setRowHeight(1, 75);
+    calendar->setRowHeight(2, 75);
+    calendar->setRowHeight(3, 75);
+    calendar->setRowHeight(4, 75);
+
+    calendar->setFixedSize(1086,402);
+
+    // calendar->setDisabled(true);
+
+    time(&timestamp);
+    date->setText(ctime(&timestamp));
+
+    updateData();
+}
+
+void Schedule::setupUI() {
     calendar->setVerticalHeaderItem(0, monday);
     calendar->setVerticalHeaderItem(1, tuesday);
     calendar->setVerticalHeaderItem(2, wednesday);
@@ -96,23 +141,6 @@ Schedule::Schedule(QWidget*parent): QWidget(parent)  {
     calendar->setHorizontalHeaderItem(7, seven);
     calendar->setHorizontalHeaderItem(8, eight);
     calendar->setHorizontalHeaderItem(9, nine);
-
-
-
-    calendar->setRowHeight(0, 75);
-    calendar->setRowHeight(1, 75);
-    calendar->setRowHeight(2, 75);
-    calendar->setRowHeight(3, 75);
-    calendar->setRowHeight(4, 75);
-
-    calendar->setFixedSize(1086,402);
-
-    // calendar->setDisabled(true);
-
-    time(&timestamp);
-    date->setText(ctime(&timestamp));
-
-    updateData();
 }
 
 Schedule::~Schedule(){}

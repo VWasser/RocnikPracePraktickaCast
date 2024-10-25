@@ -29,8 +29,7 @@ void BackendlessAPI::addItemToTable(QString tableName, PostParams params) {
         endpoint + appId + "/" + apiKey + "/data/" + tableName,
         params,
         BERequestMethod::post,
-        [&](QNetworkReply* reply){
-            auto replyValue = reply->readAll();
+        [&](QString replyValue){
             qDebug() << replyValue;
             emit itemAdded();
         }
@@ -46,19 +45,18 @@ void BackendlessAPI::deleteItemFromTable(QString tableName, QString objectId) {
 
         },
         BERequestMethod::deleteResource,
-        [&](QNetworkReply* reply){
-            auto replyValue = reply->readAll();
+        [&](QByteArray replyValue){
             qDebug() << replyValue;
             extractResult<DeletionResult>(
                 replyValue,
                 [&](auto result) {
                     emit deleteItemFromTableSuccess(result);
+                    qDebug()<< "Item Succesfuly deleted";
                 },
                 [&](auto beError) {
                     emit deleteItemFromTableError(beError);
                 },
                 [&](auto jsonError) {
-
                 }
             );
         }
@@ -69,13 +67,12 @@ void BackendlessAPI::loadTableItems(QString tableName) {
     request(
         &networkAccessManager,
         this,
-        endpoint + appId + "/" + apiKey + "/data/" + tableName,
+        endpoint + appId + "/" + apiKey + "/data/" + tableName + "?pageSize=100",
         {
 
         },
         BERequestMethod::get,
-        [&](QNetworkReply* reply){
-            auto replyValue = reply->readAll();
+        [&](QString replyValue){
             qDebug() << replyValue;
 #ifdef BACKENDLESS_VARIANT_RESPONSE
 
@@ -84,6 +81,4 @@ void BackendlessAPI::loadTableItems(QString tableName) {
 #endif
         }
     );
-    qDebug() << "load Items URL" << endpoint + appId + "/" + apiKey + "/data/" + tableName;
-
 }
