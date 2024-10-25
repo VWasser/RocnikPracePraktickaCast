@@ -37,6 +37,9 @@ private:
     QVBoxLayout *table = new QVBoxLayout;
     QHBoxLayout *dateLay = new QHBoxLayout;
     QVector<QPushButton*> dayButtons;
+    QVector<QTableWidgetItem*>dayItems;
+    QVector<QTableWidgetItem*>classItems;
+
 
     QMessageBox notDeletable;
 
@@ -44,6 +47,7 @@ private:
     time_t timestamp;
 
     QTableWidgetItem *placeholderItem;
+
 
     QTableWidgetItem *monday = new QTableWidgetItem(tr("Monday"));
     QTableWidgetItem *tuesday = new QTableWidgetItem(tr("Tuesday"));

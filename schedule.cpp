@@ -106,6 +106,23 @@ Schedule::Schedule(QWidget*parent): QWidget(parent)  {
     table->addStretch();
     setLayout(table);
 
+    dayItems.push_back(monday);
+    dayItems.push_back(tuesday);
+    dayItems.push_back(wednesday);
+    dayItems.push_back(thursday);
+    dayItems.push_back(friday);
+
+    classItems.push_back(zero);
+    classItems.push_back(one);
+    classItems.push_back(two);
+    classItems.push_back(three);
+    classItems.push_back(four);
+    classItems.push_back(five);
+    classItems.push_back(six);
+    classItems.push_back(seven);
+    classItems.push_back(eight);
+    classItems.push_back(nine);
+
     setupUI();
 
     calendar->setRowHeight(0, 75);
@@ -122,25 +139,21 @@ Schedule::Schedule(QWidget*parent): QWidget(parent)  {
     date->setText(ctime(&timestamp));
 
     updateData();
+
+    //qDebug()<< dayItems[0];
+
 }
 
 void Schedule::setupUI() {
-    calendar->setVerticalHeaderItem(0, monday);
-    calendar->setVerticalHeaderItem(1, tuesday);
-    calendar->setVerticalHeaderItem(2, wednesday);
-    calendar->setVerticalHeaderItem(3, thursday);
-    calendar->setVerticalHeaderItem(4, friday);
 
-    calendar->setHorizontalHeaderItem(0, zero);
-    calendar->setHorizontalHeaderItem(1, one);
-    calendar->setHorizontalHeaderItem(2, two);
-    calendar->setHorizontalHeaderItem(3, three);
-    calendar->setHorizontalHeaderItem(4, four);
-    calendar->setHorizontalHeaderItem(5, five);
-    calendar->setHorizontalHeaderItem(6, six);
-    calendar->setHorizontalHeaderItem(7, seven);
-    calendar->setHorizontalHeaderItem(8, eight);
-    calendar->setHorizontalHeaderItem(9, nine);
+    for(int i = 0; i < 10; i++){
+        if(i < 5){
+            calendar->setVerticalHeaderItem( i, dayItems[i]);
+            calendar->setHorizontalHeaderItem( i, classItems[i]);
+        }else{
+            calendar->setHorizontalHeaderItem( i, classItems[i]);
+        }
+    }
 }
 
 Schedule::~Schedule(){}
