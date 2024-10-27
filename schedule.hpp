@@ -43,11 +43,12 @@ private:
 
     QMessageBox notDeletable;
 
+    QMessageBox notDeletable;
+
     QLabel* date = new QLabel;
     time_t timestamp;
 
     QTableWidgetItem *placeholderItem;
-
 
     QTableWidgetItem *monday = new QTableWidgetItem(tr("Monday"));
     QTableWidgetItem *tuesday = new QTableWidgetItem(tr("Tuesday"));
