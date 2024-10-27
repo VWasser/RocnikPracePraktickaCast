@@ -14,8 +14,9 @@
 #include <QJsonObject>
 #include "BackendlessAPI.hpp"
 
-BackendlessAPI::BackendlessAPI(QString _appId, QString _apiKey, QString _endpoint): QObject(),
-    userAPI(&networkAccessManager, _appId, _apiKey, _endpoint),
+BackendlessAPI::BackendlessAPI(AnyNetworkAccessManager* _networkAccessManager, QString _appId, QString _apiKey, QString _endpoint): QObject(),
+    networkAccessManager(_networkAccessManager),
+    userAPI(_networkAccessManager, _appId, _apiKey, _endpoint),
     appId(_appId),
     apiKey(_apiKey),
     endpoint(_endpoint) {
@@ -24,12 +25,12 @@ BackendlessAPI::BackendlessAPI(QString _appId, QString _apiKey, QString _endpoin
 
 void BackendlessAPI::addItemToTable(QString tableName, PostParams params) {
     request(
-        &networkAccessManager,
+        networkAccessManager,
         this,
         endpoint + appId + "/" + apiKey + "/data/" + tableName,
         params,
         BERequestMethod::post,
-        [&](QString replyValue){
+        [&](auto replyValue){
             qDebug() << replyValue;
             emit itemAdded();
         }
@@ -38,25 +39,25 @@ void BackendlessAPI::addItemToTable(QString tableName, PostParams params) {
 
 void BackendlessAPI::deleteItemFromTable(QString tableName, QString objectId) {
     request(
-        &networkAccessManager,
+        networkAccessManager,
         this,
         endpoint + appId + "/" + apiKey + "/data/" + tableName + "/" + objectId,
         {
 
         },
         BERequestMethod::deleteResource,
-        [&](QByteArray replyValue){
+        [&](auto replyValue){
             qDebug() << replyValue;
             extractResult<DeletionResult>(
                 replyValue,
                 [&](auto result) {
                     emit deleteItemFromTableSuccess(result);
-                    qDebug()<< "Item Succesfuly deleted";
                 },
                 [&](auto beError) {
                     emit deleteItemFromTableError(beError);
                 },
                 [&](auto jsonError) {
+
                 }
             );
         }
@@ -65,14 +66,14 @@ void BackendlessAPI::deleteItemFromTable(QString tableName, QString objectId) {
 
 void BackendlessAPI::loadTableItems(QString tableName) {
     request(
-        &networkAccessManager,
+        networkAccessManager,
         this,
         endpoint + appId + "/" + apiKey + "/data/" + tableName + "?pageSize=100",
         {
 
         },
         BERequestMethod::get,
-        [&](QString replyValue){
+        [&](auto replyValue){
             qDebug() << replyValue;
 #ifdef BACKENDLESS_VARIANT_RESPONSE
 
