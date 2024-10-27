@@ -128,7 +128,6 @@ Schedule::Schedule(QWidget*parent): QWidget(parent)  {
 }
 
 void Schedule::setupUI() {
-
     for(int i = 0; i < 10; i++){
         if(i < 5){
             calendar->setVerticalHeaderItem( i, dayItems[i]);
@@ -137,25 +136,6 @@ void Schedule::setupUI() {
             calendar->setHorizontalHeaderItem( i, classItems[i]);
         }
     }
-}
-
-void Schedule::setupUI() {
-    calendar->setVerticalHeaderItem(0, monday);
-    calendar->setVerticalHeaderItem(1, tuesday);
-    calendar->setVerticalHeaderItem(2, wednesday);
-    calendar->setVerticalHeaderItem(3, thursday);
-    calendar->setVerticalHeaderItem(4, friday);
-
-    calendar->setHorizontalHeaderItem(0, zero);
-    calendar->setHorizontalHeaderItem(1, one);
-    calendar->setHorizontalHeaderItem(2, two);
-    calendar->setHorizontalHeaderItem(3, three);
-    calendar->setHorizontalHeaderItem(4, four);
-    calendar->setHorizontalHeaderItem(5, five);
-    calendar->setHorizontalHeaderItem(6, six);
-    calendar->setHorizontalHeaderItem(7, seven);
-    calendar->setHorizontalHeaderItem(8, eight);
-    calendar->setHorizontalHeaderItem(9, nine);
 }
 
 Schedule::~Schedule(){}

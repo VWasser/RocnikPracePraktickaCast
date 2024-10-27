@@ -40,9 +40,6 @@ private:
     QVector<QTableWidgetItem*>dayItems;
     QVector<QTableWidgetItem*>classItems;
 
-
-    QMessageBox notDeletable;
-
     QMessageBox notDeletable;
 
     QLabel* date = new QLabel;
