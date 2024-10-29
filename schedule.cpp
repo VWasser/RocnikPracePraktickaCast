@@ -94,6 +94,8 @@ Schedule::Schedule(QWidget*parent): QWidget(parent)  {
 
     editMode->setText(Schedule::tr("Edit Mode"));
     deleteItemButton->setText(Schedule::tr("deleteClass"));
+    notDeletable.setText(Schedule::tr("NothingHere"));
+    notDeletable.setInformativeText(Schedule::tr("CanNotDelete"));
 
     dateLay->addSpacing(400);
     dateLay->addWidget(date);
@@ -125,11 +127,9 @@ Schedule::Schedule(QWidget*parent): QWidget(parent)  {
 
     setupUI();
 
-    calendar->setRowHeight(0, 75);
-    calendar->setRowHeight(1, 75);
-    calendar->setRowHeight(2, 75);
-    calendar->setRowHeight(3, 75);
-    calendar->setRowHeight(4, 75);
+    for(int i = 0; i < 5; i++){
+        calendar->setRowHeight(i, 75);
+    }
 
     calendar->setFixedSize(1086,402);
 
