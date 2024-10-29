@@ -106,6 +106,23 @@ Schedule::Schedule(QWidget*parent): QWidget(parent)  {
     table->addStretch();
     setLayout(table);
 
+    dayItems.push_back(monday);
+    dayItems.push_back(tuesday);
+    dayItems.push_back(wednesday);
+    dayItems.push_back(thursday);
+    dayItems.push_back(friday);
+
+    classItems.push_back(zero);
+    classItems.push_back(one);
+    classItems.push_back(two);
+    classItems.push_back(three);
+    classItems.push_back(four);
+    classItems.push_back(five);
+    classItems.push_back(six);
+    classItems.push_back(seven);
+    classItems.push_back(eight);
+    classItems.push_back(nine);
+
     setupUI();
 
     calendar->setRowHeight(0, 75);
