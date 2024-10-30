@@ -8,7 +8,8 @@ SOURCES += \
     schedule.cpp \
     signinscreen.cpp \
     editmodescreen.cpp \
-    client.cpp \
+    httpclient.cpp \
+    # client.cpp \
     # Backendless
     BackendlessQt/BasicAPI.cpp \
     BackendlessQt/BackendlessAPI.cpp \
@@ -21,7 +22,8 @@ HEADERS += \
     schedule.hpp \
     signinscreen.hpp \
     editmodescreen.hpp \
-    client.hpp \
+    httpclient.hpp \
+    # client.hpp \
     # Backendless
     BackendlessQt/BasicAPI.hpp \
     BackendlessQt/BackendlessAPI.hpp \

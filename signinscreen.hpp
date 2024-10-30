@@ -10,7 +10,6 @@
 #include "qboxlayout.h"
 #include "registerscreen.hpp"
 #include "schedule.hpp"
-#include "client.hpp"
 
 extern registerscreen* myWindow2;
 extern Schedule* myWindow3;
@@ -43,9 +42,6 @@ private:
     QVBoxLayout signInLayout;
 private:
     void passwordShow(auto type);
-
-private:
-    Client client;
 };
 
 #endif
