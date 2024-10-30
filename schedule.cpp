@@ -99,8 +99,6 @@ Schedule::Schedule(QWidget*parent): QWidget(parent)  {
     table->addStretch();
     setLayout(table);
 
-
-
     setupUI();
 
     for(int i = 0; i < 5; i++){
