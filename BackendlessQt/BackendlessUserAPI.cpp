@@ -16,7 +16,7 @@
 #include <QFile>
 #include "BackendlessUserAPI.hpp"
 
-BackendlessUserAPI::BackendlessUserAPI(QNetworkAccessManager* _networkAccessManager, QString _appId, QString _apiKey, QString _endpoint): QObject(),
+BackendlessUserAPI::BackendlessUserAPI(AnyNetworkAccessManager* _networkAccessManager, QString _appId, QString _apiKey, QString _endpoint): QObject(),
     networkAccessManager(_networkAccessManager),
     appId(_appId),
     apiKey(_apiKey),
@@ -32,7 +32,7 @@ void BackendlessUserAPI::registerUser(BackendlessRegisterUserRepresentable& user
         endpoint + appId + "/" + apiKey + "/users/register",
         user.getAllParams(),
         BERequestMethod::post,
-        [&](QByteArray replyValue){
+        [&](auto replyValue){
             qDebug() << replyValue;
 
             emit registerUserResult();
@@ -50,7 +50,7 @@ void BackendlessUserAPI::signInUser(QString login, QString password) {
             {"password", new StringPostParam(password)}
         },
         BERequestMethod::post,
-        [&](QByteArray replyValue){
+        [&](auto replyValue){
             qDebug() << replyValue;
 
             #ifdef BACKENDLESS_VARIANT_RESPONSE
@@ -118,7 +118,7 @@ void BackendlessUserAPI::validateUserToken() {
 
         },
         BERequestMethod::get,
-        [&](QByteArray replyValue) {
+        [&](auto replyValue) {
             qDebug() << replyValue;
 
             #ifdef BACKENDLESS_VARIANT_RESPONSE
@@ -151,7 +151,7 @@ void BackendlessUserAPI::restorePassword(QString email) {
 
         },
         BERequestMethod::get,
-        [&](QByteArray replyValue){
+        [&](auto replyValue){
             qDebug() << replyValue;
 
             emit restorePasswordSuccess(replyValue);

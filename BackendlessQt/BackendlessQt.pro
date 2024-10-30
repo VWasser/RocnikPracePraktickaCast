@@ -8,10 +8,12 @@ SOURCES += \
     BasicAPI.cpp \
     BackendlessAPI.cpp \
     BackendlessUserAPI.cpp \
-    BackendlessUser.cpp
+    BackendlessUser.cpp \
+    StandardNetworkManager.cpp
 
 HEADERS += \
     BasicAPI.hpp \
     BackendlessAPI.hpp \
     BackendlessUserAPI.hpp \
-    BackendlessUser.hpp
+    BackendlessUser.hpp \
+    StandardNetworkManager.hpp

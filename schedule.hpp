@@ -37,6 +37,8 @@ private:
     QVBoxLayout *table = new QVBoxLayout;
     QHBoxLayout *dateLay = new QHBoxLayout;
     QVector<QPushButton*> dayButtons;
+    QVector<QTableWidgetItem*>dayItems;
+    QVector<QTableWidgetItem*>classItems;
 
     QMessageBox notDeletable;
 

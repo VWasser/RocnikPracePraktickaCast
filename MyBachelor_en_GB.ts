@@ -4,87 +4,87 @@
 <context>
     <name>Schedule</name>
     <message>
-        <location filename="schedule.hpp" line="43"/>
+        <location filename="schedule.hpp" line="50"/>
         <source>Monday</source>
         <translation>Monday</translation>
     </message>
     <message>
-        <location filename="schedule.hpp" line="44"/>
+        <location filename="schedule.hpp" line="51"/>
         <source>Tuesday</source>
         <translation>Tuesday</translation>
     </message>
     <message>
-        <location filename="schedule.hpp" line="45"/>
+        <location filename="schedule.hpp" line="52"/>
         <source>Wednesday</source>
         <translation>Wednesday</translation>
     </message>
     <message>
-        <location filename="schedule.hpp" line="46"/>
+        <location filename="schedule.hpp" line="53"/>
         <source>Thursday</source>
         <translation>Thursday</translation>
     </message>
     <message>
-        <location filename="schedule.hpp" line="47"/>
+        <location filename="schedule.hpp" line="54"/>
         <source>Friday</source>
         <translation>Friday</translation>
     </message>
     <message>
-        <location filename="schedule.hpp" line="50"/>
+        <location filename="schedule.hpp" line="58"/>
         <source>7:55 - 8:40</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="schedule.hpp" line="51"/>
+        <location filename="schedule.hpp" line="59"/>
         <source>8:45 - 9:30</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="schedule.hpp" line="52"/>
+        <location filename="schedule.hpp" line="60"/>
         <source>9:40 - 10:25</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="schedule.hpp" line="53"/>
+        <location filename="schedule.hpp" line="61"/>
         <source>10:50 - 11:35</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="schedule.hpp" line="54"/>
+        <location filename="schedule.hpp" line="62"/>
         <source>11:45 - 12:30</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="schedule.hpp" line="55"/>
+        <location filename="schedule.hpp" line="63"/>
         <source>12:40 - 13:25</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="schedule.hpp" line="56"/>
+        <location filename="schedule.hpp" line="64"/>
         <source>13:30 - 14:15</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="schedule.hpp" line="57"/>
+        <location filename="schedule.hpp" line="65"/>
         <source>14:20 - 15:05</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="schedule.hpp" line="58"/>
+        <location filename="schedule.hpp" line="66"/>
         <source>15:10 - 15:55</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="schedule.hpp" line="59"/>
+        <location filename="schedule.hpp" line="67"/>
         <source>16:00 - 16:45</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="schedule.cpp" line="74"/>
+        <location filename="schedule.cpp" line="95"/>
         <source>Edit Mode</source>
         <translation>Edit Mode</translation>
     </message>
     <message>
-        <location filename="schedule.cpp" line="75"/>
+        <location filename="schedule.cpp" line="96"/>
         <source>deleteClass</source>
         <translation>Delete Class</translation>
     </message>
