@@ -43,12 +43,10 @@ Schedule::Schedule(QWidget*parent): QWidget(parent)  {
 
         for (const auto& item : jsonObject) {
             auto lessonObject = item.toObject();
-
             auto objectId = lessonObject["objectId"].toString();
             auto desc = lessonObject["lessonDescription"].toString();
             auto dayOfWeek = lessonObject["dayOfWeek"].toInt();
             auto hourStart = lessonObject["hourStart"].toInt();
-
             auto oldItem = calendar->item(dayOfWeek, hourStart);
             delete oldItem;
 
@@ -77,14 +75,7 @@ Schedule::Schedule(QWidget*parent): QWidget(parent)  {
         }
         auto objectId = item->data(Qt::UserRole);
 
-
         qDebug() << "objectId" << objectId;
-
-        if(item->text() == ""){
-            notDeletable.exec();
-        }else{
-            api->deleteItemFromTable("Schedules", objectId.toString());
-        }
     });
     QObject::connect(editMode, &QPushButton::clicked, this, [&](){
         popUpWindow->show();
@@ -108,22 +99,7 @@ Schedule::Schedule(QWidget*parent): QWidget(parent)  {
     table->addStretch();
     setLayout(table);
 
-    dayItems.push_back(monday);
-    dayItems.push_back(tuesday);
-    dayItems.push_back(wednesday);
-    dayItems.push_back(thursday);
-    dayItems.push_back(friday);
 
-    classItems.push_back(zero);
-    classItems.push_back(one);
-    classItems.push_back(two);
-    classItems.push_back(three);
-    classItems.push_back(four);
-    classItems.push_back(five);
-    classItems.push_back(six);
-    classItems.push_back(seven);
-    classItems.push_back(eight);
-    classItems.push_back(nine);
 
     setupUI();
 
@@ -145,6 +121,23 @@ Schedule::Schedule(QWidget*parent): QWidget(parent)  {
 }
 
 void Schedule::setupUI() {
+    dayItems.push_back(monday);
+    dayItems.push_back(tuesday);
+    dayItems.push_back(wednesday);
+    dayItems.push_back(thursday);
+    dayItems.push_back(friday);
+
+    classItems.push_back(zero);
+    classItems.push_back(one);
+    classItems.push_back(two);
+    classItems.push_back(three);
+    classItems.push_back(four);
+    classItems.push_back(five);
+    classItems.push_back(six);
+    classItems.push_back(seven);
+    classItems.push_back(eight);
+    classItems.push_back(nine);
+
     for(int i = 0; i < 10; i++){
         if(i < 5){
             calendar->setVerticalHeaderItem( i, dayItems[i]);
