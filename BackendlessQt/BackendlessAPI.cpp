@@ -14,8 +14,9 @@
 #include <QJsonObject>
 #include "BackendlessAPI.hpp"
 
-BackendlessAPI::BackendlessAPI(QString _appId, QString _apiKey, QString _endpoint): QObject(),
-    userAPI(&networkAccessManager, _appId, _apiKey, _endpoint),
+BackendlessAPI::BackendlessAPI(AnyNetworkAccessManager* _networkAccessManager, QString _appId, QString _apiKey, QString _endpoint): QObject(),
+    networkAccessManager(_networkAccessManager),
+    userAPI(_networkAccessManager, _appId, _apiKey, _endpoint),
     appId(_appId),
     apiKey(_apiKey),
     endpoint(_endpoint) {
@@ -24,13 +25,12 @@ BackendlessAPI::BackendlessAPI(QString _appId, QString _apiKey, QString _endpoin
 
 void BackendlessAPI::addItemToTable(QString tableName, PostParams params) {
     request(
-        &networkAccessManager,
+        networkAccessManager,
         this,
         endpoint + appId + "/" + apiKey + "/data/" + tableName,
         params,
         BERequestMethod::post,
-        [&](QNetworkReply* reply){
-            auto replyValue = reply->readAll();
+        [&](auto replyValue){
             qDebug() << replyValue;
             emit itemAdded();
         }
@@ -39,15 +39,14 @@ void BackendlessAPI::addItemToTable(QString tableName, PostParams params) {
 
 void BackendlessAPI::deleteItemFromTable(QString tableName, QString objectId) {
     request(
-        &networkAccessManager,
+        networkAccessManager,
         this,
         endpoint + appId + "/" + apiKey + "/data/" + tableName + "/" + objectId,
         {
 
         },
         BERequestMethod::deleteResource,
-        [&](QNetworkReply* reply){
-            auto replyValue = reply->readAll();
+        [&](auto replyValue){
             qDebug() << replyValue;
             extractResult<DeletionResult>(
                 replyValue,
@@ -67,15 +66,14 @@ void BackendlessAPI::deleteItemFromTable(QString tableName, QString objectId) {
 
 void BackendlessAPI::loadTableItems(QString tableName) {
     request(
-        &networkAccessManager,
+        networkAccessManager,
         this,
-        endpoint + appId + "/" + apiKey + "/data/" + tableName,
+        endpoint + appId + "/" + apiKey + "/data/" + tableName + "?pageSize=100",
         {
 
         },
         BERequestMethod::get,
-        [&](QNetworkReply* reply){
-            auto replyValue = reply->readAll();
+        [&](auto replyValue){
             qDebug() << replyValue;
 #ifdef BACKENDLESS_VARIANT_RESPONSE
 
@@ -84,6 +82,4 @@ void BackendlessAPI::loadTableItems(QString tableName) {
 #endif
         }
     );
-    qDebug() << "load Items URL" << endpoint + appId + "/" + apiKey + "/data/" + tableName;
-
 }

@@ -10,7 +10,7 @@
 #include "BackendlessQt/BackendlessAPI.hpp"
 #include "editmodescreen.hpp"
 #include "qlabel.h"
-#include "qlineedit.h"
+#include "qmessagebox.h"
 #include <ctime>
 
 extern BackendlessAPI* api;
@@ -26,22 +26,33 @@ public:
     void updateData();
 
 private:
+    void setupUI();
+
+private:
     bool isUpdating = true;
     QTableWidget* calendar = new QTableWidget(5,10);
 
-    QPushButton* editMode = new QPushButton;
+    QPushButton *deleteItemButton = new QPushButton;
+    QPushButton *editMode = new QPushButton;
     QVBoxLayout *table = new QVBoxLayout;
     QHBoxLayout *dateLay = new QHBoxLayout;
     QVector<QPushButton*> dayButtons;
+    QVector<QTableWidgetItem*>dayItems;
+    QVector<QTableWidgetItem*>classItems;
+
+    QMessageBox notDeletable;
 
     QLabel* date = new QLabel;
     time_t timestamp;
+
+    QTableWidgetItem *placeholderItem;
 
     QTableWidgetItem *monday = new QTableWidgetItem(tr("Monday"));
     QTableWidgetItem *tuesday = new QTableWidgetItem(tr("Tuesday"));
     QTableWidgetItem *wednesday = new QTableWidgetItem(tr("Wednesday"));
     QTableWidgetItem *thursday = new QTableWidgetItem(tr("Thursday"));
     QTableWidgetItem *friday = new QTableWidgetItem(tr("Friday"));
+
 
 
     QTableWidgetItem *zero = new QTableWidgetItem(tr("7:55 - 8:40"));

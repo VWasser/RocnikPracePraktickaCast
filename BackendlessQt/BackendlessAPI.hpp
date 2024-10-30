@@ -21,11 +21,13 @@ struct DeletionResult {
     DeletionResult(QJsonObject jsonObject): deletionTime(jsonObject["deletionTime"].toInteger()) { }
 };
 
+class AnyNetworkAccessManager;
+
 class BackendlessAPI: public QObject, public BasicAPI {
     Q_OBJECT
 
 public:
-    BackendlessAPI(QString _appId, QString _apiKey, QString _endpoint = "https://eu-api.backendless.com/");
+    BackendlessAPI(AnyNetworkAccessManager* _networkAccessManager, QString _appId, QString _apiKey, QString _endpoint = "https://eu-api.backendless.com/");
     void addItemToTable(QString, PostParams);
     void deleteItemFromTable(QString, QString);
     void loadTableItems(QString);
@@ -45,7 +47,7 @@ public:
     BackendlessUserAPI userAPI;
 
 private:
-    QNetworkAccessManager networkAccessManager;
+    AnyNetworkAccessManager* networkAccessManager;
     QString appId;
     QString apiKey;
     QString endpoint;

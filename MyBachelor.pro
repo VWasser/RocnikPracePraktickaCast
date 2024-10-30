@@ -13,7 +13,8 @@ SOURCES += \
     BackendlessQt/BasicAPI.cpp \
     BackendlessQt/BackendlessAPI.cpp \
     BackendlessQt/BackendlessUserAPI.cpp \
-    BackendlessQt/BackendlessUser.cpp
+    BackendlessQt/BackendlessUser.cpp \
+    BackendlessQt/StandardNetworkManager.cpp
 
 HEADERS += \
     registerscreen.hpp \
@@ -26,6 +27,7 @@ HEADERS += \
     BackendlessQt/BackendlessAPI.hpp \
     BackendlessQt/BackendlessUserAPI.hpp \
     BackendlessQt/BackendlessUser.hpp \
+    BackendlessQt/StandardNetworkManager.hpp
 
 ios {
     QMAKE_TARGET_BUNDLE_PREFIX = com.bachelor
