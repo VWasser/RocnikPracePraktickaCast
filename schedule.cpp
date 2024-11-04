@@ -95,6 +95,7 @@ Schedule::Schedule(QWidget*parent): QWidget(parent) {
                 break;
             //Add
             case(1):
+                addItemFunc();
                 break;
             //Delete
             case(2):
@@ -198,13 +199,13 @@ void Schedule::addItemFunc(){
     auto collumn = new IntPostParam(calendar->currentColumn());
     auto item = new StringPostParam(calendar->item(calendar->currentRow(), calendar->currentColumn())->text());
 
-    if(item == ""){
+    if(item->asParam() == ""){
         close();
     }else{
         api->addItemToTable(
             "Schedules",
             {
-             {"lessonDescription", item->toS()},
+             {"lessonDescription", item},
                 {"dayOfWeek", row},
                 {"hourStart",collumn}
             }
