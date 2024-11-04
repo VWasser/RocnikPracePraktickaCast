@@ -88,6 +88,25 @@ Schedule::Schedule(QWidget*parent): QWidget(parent) {
     QObject::connect(editMode, &QPushButton::clicked, this, [&](){
         popUpWindow->show();
     });
+    QObject::connect(calendar, &QTableWidget::cellChanged, this, [&](){
+        switch(editFunctions->currentIndex()){
+            //Viewing
+            case(0):
+                break;
+            //Add
+            case(1):
+                break;
+            //Delete
+            case(2):
+                deleteItemFunc();
+                break;
+                //edit
+            case(3):
+                break;
+            }
+    });
+
+
 
     calendar->setVisible(true);
 
@@ -96,34 +115,34 @@ Schedule::Schedule(QWidget*parent): QWidget(parent) {
     notDeletable.setText(Schedule::tr("NothingHere"));
     notDeletable.setInformativeText(Schedule::tr("CanNotDelete"));
 
-    dateLay->addSpacing(400);
+    editFunctions->insertItem(0, "Viewing", *viewingMode);
+    editFunctions->insertItem(1, "Add", *addItem);
+    editFunctions->insertItem(2, "Delete", *deleteItem);
+    editFunctions->insertItem(3, "Edit", *editItem);
+
+
+    dateLay->addSpacing(calendar->width()/2);
     dateLay->addWidget(date);
-    dateLay->addSpacing(385);
-    dateLay->addWidget(editMode);
+    dateLay->addSpacing((calendar->width())/4);
+    dateLay->addWidget(editFunctions);
     dateLay->addWidget(deleteItemButton);
     table->addLayout(dateLay);
-    dateLay->addSpacing(350);
+    dateLay->addSpacing(calendar->width()/2);
     table ->addWidget(calendar);
     table->addStretch();
     setLayout(table);
+    calendar->setFixedSize(350,600);
 
     setupUI();
 
     for(int i = 0; i < 5; i++){
-        calendar->setRowHeight(i, 75);
+        calendar->setRowHeight(i, 100);
     }
-
-    calendar->setFixedSize(1086,402);
-
-    // calendar->setDisabled(true);
 
     time(&timestamp);
     date->setText(ctime(&timestamp));
 
     updateData();
-
-    //qDebug()<< dayItems[0];
-
 }
 
 void Schedule::setupUI() {
@@ -158,4 +177,41 @@ Schedule::~Schedule(){}
 
 void Schedule::updateData() {
     api->loadTableItems("Schedules");
+}
+
+void Schedule::deleteItemFunc(){
+    auto dayOfWeek = calendar->currentRow();
+    auto hourStart = calendar->currentColumn();
+    auto item = calendar->item(dayOfWeek, hourStart);
+    if (!item) {
+        qDebug() << "ITEM IS NOT SELECTED!!!";
+        notDeletable.show();
+        return;
+    }
+    auto objectId = item->data(Qt::UserRole);
+
+    qDebug() << "objectId" << objectId;
+}
+
+void Schedule::addItemFunc(){
+    auto row =  new IntPostParam(calendar->currentRow());
+    auto collumn = new IntPostParam(calendar->currentColumn());
+    auto item = new StringPostParam(calendar->item(calendar->currentRow(), calendar->currentColumn())->text());
+
+    if(item == ""){
+        close();
+    }else{
+        api->addItemToTable(
+            "Schedules",
+            {
+             {"lessonDescription", item->toS()},
+                {"dayOfWeek", row},
+                {"hourStart",collumn}
+            }
+            );
+    }
+
+    delete item;
+    delete row;
+    delete collumn;
 }
