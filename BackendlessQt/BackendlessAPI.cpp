@@ -64,11 +64,11 @@ void BackendlessAPI::deleteItemFromTable(QString tableName, QString objectId) {
     );
 }
 
-void BackendlessAPI::loadTableItems(QString tableName) {
+void BackendlessAPI::loadTableItems(QString tableName, int pageSize, int offset) {
     request(
         networkAccessManager,
         this,
-        endpoint + appId + "/" + apiKey + "/data/" + tableName + "?pageSize=100",
+        endpoint + appId + "/" + apiKey + "/data/" + tableName + "?pageSize=" + QString::number(pageSize) + "&offset=" + QString::number(offset),
         {
 
         },
@@ -80,6 +80,23 @@ void BackendlessAPI::loadTableItems(QString tableName) {
 #else
             emit loadTableItemsSuccess(replyValue);
 #endif
+        }
+    );
+}
+
+void BackendlessAPI::getItemsCount(QString tableName) {
+    request(
+        networkAccessManager,
+        this,
+        endpoint + appId + "/" + apiKey + "/data/" + tableName + "/count",
+        {
+
+        },
+        BERequestMethod::get,
+        [&](auto replyValue){
+            qDebug() << replyValue;
+
+            emit getItemsCountSuccess(replyValue.toInt());
         }
     );
 }

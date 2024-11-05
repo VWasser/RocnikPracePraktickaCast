@@ -30,7 +30,8 @@ public:
     BackendlessAPI(AnyNetworkAccessManager* _networkAccessManager, QString _appId, QString _apiKey, QString _endpoint = "https://eu-api.backendless.com/");
     void addItemToTable(QString, PostParams);
     void deleteItemFromTable(QString, QString);
-    void loadTableItems(QString);
+    void loadTableItems(QString tableName, int pageSize = 100, int offset = 0);
+    void getItemsCount(QString);
 
 signals:
     void itemAdded();
@@ -42,6 +43,7 @@ signals:
     void loadTableItemsSuccess(QString);
     void loadTableItemsError(BackendlessError);
 #endif
+    void getItemsCountSuccess(int);
 
 public:
     BackendlessUserAPI userAPI;

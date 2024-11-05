@@ -16,8 +16,6 @@ void StandardNetworkManager::get(QString urlString, const QObject* context, std:
 
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 
-    qDebug() << "FULL URL:" << url;
-
     QObject::connect(&manager, &QNetworkAccessManager::finished, context, [handleRequest](auto reply) {
         handleRequest(reply->readAll());
     }, Qt::SingleShotConnection);
