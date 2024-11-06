@@ -1,19 +1,28 @@
 #include "mocknetworkmanager.hpp"
 
 void MockNetworkManager::get(QString urlString, const QObject* context, std::function<void(QByteArray)> const& handleRequest) {
-    auto fakeRespone = QString("[") +
-        QString("{") +
-            QString("\"dayOfWeek\": 1,") +
-            QString("\"created\": 1729775924363,") +
-            QString("\"hourStart\": 1,") +
-            QString("\"lessonDescription\": \"Jiny text\",") +
-            QString("\"___class\": \"Schedules\",") +
-            QString("\"objectId\": \"2A855167-D125-479A-897C-4CDB874D63C8\"") +
-        QString("}") +
-    QString("]");
+    QUrl url(urlString);
 
-    auto fakeBytesArray = fakeRespone.toUtf8();
-    handleRequest(fakeBytesArray);
+    qDebug() << urlString;
+    qDebug() << "FAKE URL";
+    qDebug() << url.path();
+    if (url.path().endsWith("/Schedules")) {
+        auto fakeRespone = QString("[") +
+            QString("{") +
+                QString("\"dayOfWeek\": 1,") +
+                QString("\"created\": 1729775924363,") +
+                QString("\"hourStart\": 1,") +
+                QString("\"lessonDescription\": \"Jiny text\",") +
+                QString("\"___class\": \"Schedules\",") +
+                QString("\"objectId\": \"2A855167-D125-479A-897C-4CDB874D63C8\"") +
+            QString("}") +
+        QString("]");
+
+        auto fakeBytesArray = fakeRespone.toUtf8();
+        handleRequest(fakeBytesArray);
+    } else {
+        handleRequest(QByteArray());
+    }
 }
 
 void MockNetworkManager::post(QString urlString, PostParams customParams, const QObject* context, std::function<void(QByteArray)> const& handleRequest) {
