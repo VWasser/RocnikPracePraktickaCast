@@ -12,6 +12,7 @@
 #include "qlabel.h"
 #include "qmessagebox.h"
 #include <ctime>
+#include <QComboBox>
 
 extern BackendlessAPI* api;
 extern editModeScreen* popUpWindow;
@@ -39,6 +40,15 @@ private:
     QVector<QPushButton*> dayButtons;
     QVector<QTableWidgetItem*>dayItems;
     QVector<QTableWidgetItem*>classItems;
+    QComboBox *editFunctions = new QComboBox;
+    QVariant *viewingMode = new QVariant;
+    QVariant *editItem = new QVariant;
+    QVariant *deleteItem = new QVariant;
+    QVariant *addItem = new QVariant;
+
+    void deleteItemFunc();
+    void addItemFunc();
+
 
     QMessageBox notDeletable;
 
