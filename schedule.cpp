@@ -19,6 +19,13 @@ extern HttpClient* customHttpClient;
 
 using namespace std;
 
+enum Action {
+    VIEW = 0,
+    ADD = 1,
+    DELETE = 2,
+    EDIT = 3
+};
+
 Schedule::Schedule(QWidget*parent): QWidget(parent) {
     customHttpClient->connectToHost("178.32.127.114");
     auto dataToSendToServer = QString("GET /7D2C33DB-05E2-4FD9-B26B-46FDB17F56D6/19CB95DB-0235-4134-B1FB-C64750DE49E2/data/Schedules HTTP/1.0\r\nHost: eu-api.backendless.com\r\n\r\n");
@@ -90,19 +97,15 @@ Schedule::Schedule(QWidget*parent): QWidget(parent) {
     });
     QObject::connect(calendar, &QTableWidget::cellChanged, this, [&](){
         switch(editFunctions->currentIndex()){
-            //Viewing
-            case(0):
+            case Action::VIEW:
                 break;
-            //Add
-            case(1):
+            case Action::ADD:
                 addItemFunc();
                 break;
-            //Delete
-            case(2):
+            case Action::DELETE:
                 deleteItemFunc();
                 break;
-                //edit
-            case(3):
+            case Action::EDIT:
                 break;
             }
     });
@@ -116,10 +119,10 @@ Schedule::Schedule(QWidget*parent): QWidget(parent) {
     notDeletable.setText(Schedule::tr("NothingHere"));
     notDeletable.setInformativeText(Schedule::tr("CanNotDelete"));
 
-    editFunctions->insertItem(0, "Viewing", *viewingMode);
-    editFunctions->insertItem(1, "Add", *addItem);
-    editFunctions->insertItem(2, "Delete", *deleteItem);
-    editFunctions->insertItem(3, "Edit", *editItem);
+    editFunctions->insertItem(Action::VIEW, "Viewing", *viewingMode);
+    editFunctions->insertItem(Action::ADD, "Add", *addItem);
+    editFunctions->insertItem(Action::DELETE, "Delete", *deleteItem);
+    editFunctions->insertItem(Action::EDIT, "Edit", *editItem);
 
 
     dateLay->addSpacing(calendar->width()/2);
