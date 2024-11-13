@@ -47,6 +47,7 @@ private:
     QVariant *addItem = new QVariant;
 
     void deleteItemFunc();
+    void editItemFunc();
     void addItemFunc();
 
 
