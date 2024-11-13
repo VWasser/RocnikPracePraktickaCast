@@ -32,9 +32,11 @@ Schedule::Schedule(QWidget*parent): QWidget(parent) {
     customHttpClient->writeData(dataToSendToServer.toUtf8());
     // customHttpClient->readyRead();
 
-    QObject::connect(api, &BackendlessAPI::itemAdded, this, [&](){
+    auto itemAddedFuture = QtFuture::connect(api, &BackendlessAPI::itemAdded);
+    itemAddedFuture.then([&](){
         updateData();
     });
+
     QObject::connect(api, &BackendlessAPI::deleteItemFromTableSuccess, this, [&](){
         updateData();
     });
@@ -198,9 +200,16 @@ void Schedule::deleteItemFunc(){
 }
 
 void Schedule::addItemFunc(){
-    auto row =  new IntPostParam(calendar->currentRow());
-    auto collumn = new IntPostParam(calendar->currentColumn());
-    auto item = new StringPostParam(calendar->item(calendar->currentRow(), calendar->currentColumn())->text());
+    auto rowValue = calendar->currentRow();
+    auto columnValue = calendar->currentColumn();
+
+    if (rowValue < 0 || columnValue < 0) {
+        return;
+    }
+
+    auto row =  new IntPostParam(rowValue);
+    auto collumn = new IntPostParam(columnValue);
+    auto item = new StringPostParam(calendar->item(rowValue, columnValue)->text());
 
     if(item->asParam() == ""){
         close();
