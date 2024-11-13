@@ -9,6 +9,7 @@ SOURCES += \
     signinscreen.cpp \
     editmodescreen.cpp \
     httpclient.cpp \
+    mocknetworkmanager.cpp \
     # client.cpp \
     # Backendless
     BackendlessQt/BasicAPI.cpp \
@@ -23,6 +24,7 @@ HEADERS += \
     signinscreen.hpp \
     editmodescreen.hpp \
     httpclient.hpp \
+    mocknetworkmanager.hpp \
     # client.hpp \
     # Backendless
     BackendlessQt/BasicAPI.hpp \
