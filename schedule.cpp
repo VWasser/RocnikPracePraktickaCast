@@ -216,8 +216,8 @@ void Schedule::editItemFunc(){
 
     auto itemDeleteFuture = QtFuture::connect(api, &BackendlessAPI::deleteItemFromTableSuccess);
     itemDeleteFuture
-        .then([&](auto result){
-            addItemFunc();
+        .then([=](auto result){
+            addItemFunc(hourStart, dayOfWeek);
             return QtFuture::connect(api, &BackendlessAPI::itemAdded);
         })
         .unwrap()
@@ -228,9 +228,9 @@ void Schedule::editItemFunc(){
     api->deleteItemFromTable("Schedules", objectId.toString());
 }
 
-void Schedule::addItemFunc(){
-    auto rowValue = calendar->currentRow();
-    auto columnValue = calendar->currentColumn();
+void Schedule::addItemFunc(int predefinedColumnValue, int predefinedRowValue){
+    auto rowValue = predefinedRowValue >= 0 ? predefinedRowValue : calendar->currentRow();
+    auto columnValue = predefinedColumnValue >= 0 ? predefinedColumnValue : calendar->currentColumn();
     auto calendarItem = calendar->item(rowValue, columnValue);
 
     if (rowValue < 0 || columnValue < 0 || !calendarItem) {
