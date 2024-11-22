@@ -3,7 +3,10 @@ QT += core gui widgets network
 CONFIG += c++20
 
 SOURCES += \
+    absencewindow.cpp \
+    gradeswindow.cpp \
     main.cpp \
+    menuwindow.cpp \
     registerscreen.cpp \
     schedule.cpp \
     signinscreen.cpp \
@@ -19,6 +22,9 @@ SOURCES += \
     BackendlessQt/StandardNetworkManager.cpp
 
 HEADERS += \
+    absencewindow.hpp \
+    gradeswindow.hpp \
+    menuwindow.hpp \
     registerscreen.hpp \
     schedule.hpp \
     signinscreen.hpp \

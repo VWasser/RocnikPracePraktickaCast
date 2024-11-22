@@ -1,3 +1,4 @@
+#include "menuwindow.hpp"
 #include "registerscreen.hpp"
 #include "schedule.hpp"
 #include "signinscreen.hpp"
@@ -16,6 +17,9 @@ Schedule* myWindow3;
 editModeScreen* popUpWindow;
 AnyNetworkAccessManager* networkManager;
 HttpClient* customHttpClient;
+menuWindow* menuWin;
+gradesWindow* gradeWin;
+absenceWindow* abscWin;
 
 int main(int argc, char *argv[])
 {
@@ -36,8 +40,11 @@ int main(int argc, char *argv[])
     myWindow2 = new registerscreen();
     myWindow3 = new Schedule();
     popUpWindow = new editModeScreen();
+    menuWin = new menuWindow();
+    gradeWin = new gradesWindow();
+    abscWin = new absenceWindow();
 
-    myWindow3->show();
+    menuWin->show();
 
 
     return myApp.exec();
