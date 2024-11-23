@@ -81,18 +81,8 @@ Schedule::Schedule(QWidget*parent): QWidget(parent) {
     });
 
     QObject::connect(deleteItemButton, &QPushButton::clicked, this, [&](){
-        auto dayOfWeek = calendar->currentRow();
-        auto hourStart = calendar->currentColumn();
-
-        auto item = calendar->item(dayOfWeek, hourStart);
-        if (!item) {
-            qDebug() << "ITEM IS NOT SELECTED!!!";
-            notDeletable.show();
-            return;
-        }
-        auto objectId = item->data(Qt::UserRole);
-
-        qDebug() << "objectId" << objectId;
+        deleteItemFunc();
+        updateData();
     });
     QObject::connect(editMode, &QPushButton::clicked, this, [&](){
         popUpWindow->show();
@@ -105,7 +95,6 @@ Schedule::Schedule(QWidget*parent): QWidget(parent) {
                 addItemFunc();
                 break;
             case Action::DELETE:
-                deleteItemFunc();
                 break;
             case Action::EDIT:
                 editItemFunc();
@@ -113,7 +102,29 @@ Schedule::Schedule(QWidget*parent): QWidget(parent) {
             }
     });
 
+    QObject::connect(editFunctions, &QComboBox::currentIndexChanged, this, [&](){
+        if(editFunctions->currentIndex() == Action::DELETE){
 
+            deleteItemButton->show();
+            calendar->setDisabled(false);
+        }else if(editFunctions->currentIndex() == (Action::VIEW )){
+
+            deleteItemButton->hide();
+            calendar->setDisabled(true);
+
+        }else if(editFunctions->currentIndex() == (Action::ADD )){
+
+            deleteItemButton->hide();
+            calendar->setDisabled(false);
+
+        }else if(editFunctions->currentIndex() == (Action::EDIT )){
+
+            deleteItemButton->hide();
+            calendar->setDisabled(false);
+        }
+    });
+
+    deleteItemButton->hide();
 
     calendar->setVisible(true);
 
@@ -198,6 +209,14 @@ void Schedule::deleteItemFunc(){
     auto objectId = item->data(Qt::UserRole);
 
     qDebug() << "objectId" << objectId;
+
+    api->deleteItemFromTable("Schedules", objectId.toString());
+
+    auto itemDeleteFuture = QtFuture::connect(api, &BackendlessAPI::deleteItemFromTableSuccess)
+    .then([=, this](const auto &result) {
+    updateData();
+    });
+
 }
 
 
@@ -206,8 +225,7 @@ void Schedule::editItemFunc(){
     auto hourStart = calendar->currentColumn();
     auto item = calendar->item(dayOfWeek, hourStart);
     if (!item) {
-        qDebug() << "ITEM IS NOT SELECTED!!!";
-        notDeletable.show();
+        qDebug() << "NOTHING TO EDIT!!!";
         return;
     }
     auto objectId = item->data(Qt::UserRole);
@@ -216,7 +234,7 @@ void Schedule::editItemFunc(){
 
     auto itemDeleteFuture = QtFuture::connect(api, &BackendlessAPI::deleteItemFromTableSuccess);
     itemDeleteFuture
-        .then([=](auto result){
+        .then([=, this](auto result){
             addItemFunc(hourStart, dayOfWeek);
             return QtFuture::connect(api, &BackendlessAPI::itemAdded);
         })
