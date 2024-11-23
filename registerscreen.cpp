@@ -4,6 +4,7 @@
 #include <QPushButton>
 #include "BackendlessQt/BackendlessAPI.hpp"
 #include "schedule.hpp"
+#include "signinscreen.hpp"
 
 
 registerscreen::registerscreen(QWidget *parent): QWidget(parent),
@@ -21,6 +22,10 @@ registerscreen::registerscreen(QWidget *parent): QWidget(parent),
                 api->userAPI.registerUser(*currentUser);
                 delete currentUser;
             }
+    });
+    QObject::connect(&logIn, &QPushButton::clicked, this, [&]() {
+        myWindow->show();
+        hide();
     });
 
     regist.setText(registerscreen::tr("logIn"));
@@ -57,5 +62,4 @@ registerscreen::registerscreen(QWidget *parent): QWidget(parent),
     setFixedSize(640, 400);
 #endif
 }
-registerscreen::~registerscreen()
-{}
+registerscreen::~registerscreen(){}

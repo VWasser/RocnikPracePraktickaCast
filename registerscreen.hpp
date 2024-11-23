@@ -9,6 +9,7 @@
 #include <QCheckBox>
 #include "BackendlessQt/BackendlessUser.hpp"
 
+
 struct BackendlessRegisterUser: BasicBackendlessRegisterUser {
 public:
     BackendlessRegisterUser(
