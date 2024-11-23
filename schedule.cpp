@@ -32,12 +32,14 @@ Schedule::Schedule(QWidget*parent): QWidget(parent) {
     customHttpClient->writeData(dataToSendToServer.toUtf8());
     // customHttpClient->readyRead();
 
-    QObject::connect(api, &BackendlessAPI::itemAdded, this, [&](){
+    auto itemAddedFuture = QtFuture::connect(api, &BackendlessAPI::itemAdded);
+    itemAddedFuture.then([&](){
         updateData();
     });
-    QObject::connect(api, &BackendlessAPI::deleteItemFromTableSuccess, this, [&](){
-        updateData();
-    });
+
+    //QObject::connect(api, &BackendlessAPI::deleteItemFromTableSuccess, this, [&](){
+        //updateData();
+    //});
 
 
     QObject::connect(api, &BackendlessAPI::loadTableItemsSuccess, this, [&](auto replyValue){
@@ -106,6 +108,7 @@ Schedule::Schedule(QWidget*parent): QWidget(parent) {
                 deleteItemFunc();
                 break;
             case Action::EDIT:
+                editItemFunc();
                 break;
             }
     });
@@ -197,10 +200,46 @@ void Schedule::deleteItemFunc(){
     qDebug() << "objectId" << objectId;
 }
 
-void Schedule::addItemFunc(){
-    auto row =  new IntPostParam(calendar->currentRow());
-    auto collumn = new IntPostParam(calendar->currentColumn());
-    auto item = new StringPostParam(calendar->item(calendar->currentRow(), calendar->currentColumn())->text());
+
+void Schedule::editItemFunc(){
+    auto dayOfWeek = calendar->currentRow();
+    auto hourStart = calendar->currentColumn();
+    auto item = calendar->item(dayOfWeek, hourStart);
+    if (!item) {
+        qDebug() << "ITEM IS NOT SELECTED!!!";
+        notDeletable.show();
+        return;
+    }
+    auto objectId = item->data(Qt::UserRole);
+
+    qDebug() << "objectId" << objectId;
+
+    auto itemDeleteFuture = QtFuture::connect(api, &BackendlessAPI::deleteItemFromTableSuccess);
+    itemDeleteFuture
+        .then([=](auto result){
+            addItemFunc(hourStart, dayOfWeek);
+            return QtFuture::connect(api, &BackendlessAPI::itemAdded);
+        })
+        .unwrap()
+        .then([&]() {
+            updateData();
+        });
+
+    api->deleteItemFromTable("Schedules", objectId.toString());
+}
+
+void Schedule::addItemFunc(int predefinedColumnValue, int predefinedRowValue){
+    auto rowValue = predefinedRowValue >= 0 ? predefinedRowValue : calendar->currentRow();
+    auto columnValue = predefinedColumnValue >= 0 ? predefinedColumnValue : calendar->currentColumn();
+    auto calendarItem = calendar->item(rowValue, columnValue);
+
+    if (rowValue < 0 || columnValue < 0 || !calendarItem) {
+        return;
+    }
+
+    auto row =  new IntPostParam(rowValue);
+    auto collumn = new IntPostParam(columnValue);
+    auto item = new StringPostParam(calendarItem->text());
 
     if(item->asParam() == ""){
         close();

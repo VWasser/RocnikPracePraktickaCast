@@ -10,6 +10,9 @@ SOURCES += \
     editmodescreen.cpp \
     httpclient.cpp \
     mocknetworkmanager.cpp \
+    #menuWindow.cpp \
+    #gradeswindow.cpp \
+    #absencebutton.cpp \
     # client.cpp \
     # Backendless
     BackendlessQt/BasicAPI.cpp \
@@ -25,6 +28,9 @@ HEADERS += \
     editmodescreen.hpp \
     httpclient.hpp \
     mocknetworkmanager.hpp \
+    #menuwindow.hpp \
+    #gradeswindow.hpp \
+    #absencebutton.hpp \
     # client.hpp \
     # Backendless
     BackendlessQt/BasicAPI.hpp \

@@ -47,7 +47,8 @@ private:
     QVariant *addItem = new QVariant;
 
     void deleteItemFunc();
-    void addItemFunc();
+    void editItemFunc();
+    void addItemFunc(int predefinedColumnValue = -1, int predefinedRowValue = -1);
 
 
     QMessageBox notDeletable;
