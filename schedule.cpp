@@ -7,15 +7,17 @@
 
 
 #include "schedule.hpp"
+#include "menuwindow.hpp"
 #include "httpclient.hpp"
-#include "editmodescreen.hpp"
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
 #include "BackendlessQt/BackendlessAPI.hpp"
+#include "menuwindow.hpp"
 #include <QTimer>
 
 extern HttpClient* customHttpClient;
+
 
 using namespace std;
 
@@ -112,7 +114,6 @@ Schedule::Schedule(QWidget*parent): QWidget(parent) {
                 break;
             }
     });
-
 
 
     calendar->setVisible(true);
@@ -216,7 +217,7 @@ void Schedule::editItemFunc(){
 
     auto itemDeleteFuture = QtFuture::connect(api, &BackendlessAPI::deleteItemFromTableSuccess);
     itemDeleteFuture
-        .then([=](auto result){
+        .then([=, this](auto result){
             addItemFunc(hourStart, dayOfWeek);
             return QtFuture::connect(api, &BackendlessAPI::itemAdded);
         })

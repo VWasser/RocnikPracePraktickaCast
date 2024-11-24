@@ -9,8 +9,8 @@ SOURCES += \
     menuwindow.cpp \
     registerscreen.cpp \
     schedule.cpp \
+    settingsWindow.cpp \
     signinscreen.cpp \
-    editmodescreen.cpp \
     httpclient.cpp \
     mocknetworkmanager.cpp \
     # client.cpp \
@@ -27,8 +27,8 @@ HEADERS += \
     menuwindow.hpp \
     registerscreen.hpp \
     schedule.hpp \
+    settingsWindow.hpp \
     signinscreen.hpp \
-    editmodescreen.hpp \
     httpclient.hpp \
     mocknetworkmanager.hpp \
     # client.hpp \
