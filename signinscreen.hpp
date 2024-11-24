@@ -44,4 +44,6 @@ private:
     void passwordShow(auto type);
 };
 
+extern SignInScreen* myWindow;
+
 #endif
