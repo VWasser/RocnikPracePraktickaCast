@@ -6,6 +6,7 @@ SOURCES += \
     absencewindow.cpp \
     gradeswindow.cpp \
     main.cpp \
+    menubar.cpp \
     menuwindow.cpp \
     registerscreen.cpp \
     schedule.cpp \
@@ -24,6 +25,7 @@ SOURCES += \
 HEADERS += \
     absencewindow.hpp \
     gradeswindow.hpp \
+    menubar.hpp \
     menuwindow.hpp \
     registerscreen.hpp \
     schedule.hpp \

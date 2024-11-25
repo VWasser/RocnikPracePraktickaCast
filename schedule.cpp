@@ -17,6 +17,8 @@
 #include <QTimer>
 
 extern HttpClient* customHttpClient;
+extern menuWindow* menu;
+
 
 
 using namespace std;
