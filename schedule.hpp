@@ -49,6 +49,7 @@ private:
     void deleteItemFunc();
     void editItemFunc();
     void addItemFunc(int predefinedColumnValue = -1, int predefinedRowValue = -1);
+    bool exeptionForAdd();
 
 
     QMessageBox notDeletable;

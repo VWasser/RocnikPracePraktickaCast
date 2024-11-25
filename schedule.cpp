@@ -102,8 +102,12 @@ Schedule::Schedule(QWidget*parent): QWidget(parent) {
             case Action::VIEW:
                 break;
             case Action::ADD:
-                addItemFunc();
-                break;
+                if(exeptionForAdd() == true){
+                    break;
+                }else{
+                    addItemFunc();
+                    break;
+                }
             case Action::DELETE:
                 deleteItemFunc();
                 break;
@@ -112,7 +116,6 @@ Schedule::Schedule(QWidget*parent): QWidget(parent) {
                 break;
             }
     });
-
 
 
     calendar->setVisible(true);
@@ -216,7 +219,7 @@ void Schedule::editItemFunc(){
 
     auto itemDeleteFuture = QtFuture::connect(api, &BackendlessAPI::deleteItemFromTableSuccess);
     itemDeleteFuture
-        .then([=](auto result){
+        .then([=, this](auto result){
             addItemFunc(hourStart, dayOfWeek);
             return QtFuture::connect(api, &BackendlessAPI::itemAdded);
         })
@@ -257,4 +260,17 @@ void Schedule::addItemFunc(int predefinedColumnValue, int predefinedRowValue){
     delete item;
     delete row;
     delete collumn;
+}
+
+bool Schedule::exeptionForAdd(){
+        auto dayOfWeek = calendar->currentRow();
+        auto hourStart = calendar->currentColumn();
+        auto item = calendar->item(dayOfWeek, hourStart);
+        if (item) {
+            qDebug() << "ITEM ALREADY EXISTS!!!";
+            return true;
+        }else{
+            return false;
+        }
+
 }
