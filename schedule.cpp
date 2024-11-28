@@ -7,6 +7,7 @@
 
 
 #include "schedule.hpp"
+#include "menubar.hpp"
 #include "menuwindow.hpp"
 #include "httpclient.hpp"
 #include <QJsonDocument>
@@ -148,6 +149,10 @@ Schedule::Schedule(QWidget*parent): QWidget(parent) {
     dateLay->addSpacing((calendar->width())/4);
     dateLay->addWidget(editFunctions);
     dateLay->addWidget(deleteItemButton);
+
+    auto bar = new menuBar();
+    bar->menuBarStup(table);
+
     table->addLayout(dateLay);
     dateLay->addSpacing(calendar->width()/2);
     table ->addWidget(calendar);
