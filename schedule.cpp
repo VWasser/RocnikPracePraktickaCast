@@ -7,15 +7,20 @@
 
 
 #include "schedule.hpp"
+#include "menubar.hpp"
+#include "menuwindow.hpp"
 #include "httpclient.hpp"
-#include "editmodescreen.hpp"
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
 #include "BackendlessQt/BackendlessAPI.hpp"
+#include "menuwindow.hpp"
 #include <QTimer>
 
 extern HttpClient* customHttpClient;
+extern menuWindow* menu;
+
+
 
 using namespace std;
 
@@ -144,6 +149,10 @@ Schedule::Schedule(QWidget*parent): QWidget(parent) {
     dateLay->addSpacing((calendar->width())/4);
     dateLay->addWidget(editFunctions);
     dateLay->addWidget(deleteItemButton);
+
+    auto bar = new menuBar();
+    bar->menuBarStup(table);
+
     table->addLayout(dateLay);
     dateLay->addSpacing(calendar->width()/2);
     table ->addWidget(calendar);
