@@ -9,6 +9,8 @@
 #include "BackendlessQt/StandardNetworkManager.hpp"
 #include "BackendlessQt/BackendlessAPI.hpp"
 #include "mocknetworkmanager.hpp"
+#include <QQuickView>
+#include <QGuiApplication>
 
 BackendlessAPI* api;
 SignInScreen* myWindow;
@@ -24,7 +26,7 @@ absenceWindow* abscWin;
 
 int main(int argc, char *argv[])
 {
-    QTranslator translator;
+    /*QTranslator translator;
     auto loadResult = translator.load(":/strings");
     if (!loadResult) {
         exit(1);
@@ -45,7 +47,18 @@ int main(int argc, char *argv[])
     gradeWin = new gradesWindow();
     abscWin = new absenceWindow();
 
-    menuWin->show();
+    menuWin->show();*/
+
+    QGuiApplication myApp(argc, argv);
+    QQuickView* view = new QQuickView();
+    /*QFile url(":/qml/example.qml");
+    if (!url.isValid()) {
+        exit(1);
+    }*/
+    //view->setSource(QUrl::fromLocalFile("/Users/romanpodymov/FinanceTracker/App/example.qml"));
+    view->setSource(QUrl("qrc:/qml/example.qml"));
+    view->show();
+
 
     return myApp.exec();
 }

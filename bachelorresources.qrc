@@ -5,4 +5,7 @@
     <qresource>
         <file alias="strings">MyBachelor_en_GB.qm</file>
     </qresource>
+    <qresource prefix="/qml">
+        <file>example.qml</file>
+    </qresource>
 </RCC>
