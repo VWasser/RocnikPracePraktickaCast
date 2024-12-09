@@ -169,7 +169,7 @@ Schedule::Schedule(QWidget*parent): QWidget(parent) {
     time(&timestamp);
     date->setText(ctime(&timestamp));
 
-    updateData();
+    updateData();    
 }
 
 void Schedule::setupUI() {

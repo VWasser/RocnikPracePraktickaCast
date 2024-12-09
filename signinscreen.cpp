@@ -2,6 +2,7 @@
 #include "registerscreen.hpp"
 #include <QApplication>
 #include <QBoxLayout>
+#include <QQuickView>
 
 SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
     signInButton(this), registerButton(this), resetPasswordButton(this),
@@ -83,6 +84,13 @@ SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
 #if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS)
     setFixedSize(640, 480);
 #endif
+
+    QQuickView* view = new QQuickView();
+    view->setSource(QUrl("qrc:/qml/example.qml"));
+    view->contentItem();
+
+    auto qmlWrapper = this->createWindowContainer(view);
+    signInLayout.addWidget(qmlWrapper);
 }
 
 SignInScreen::~SignInScreen() {

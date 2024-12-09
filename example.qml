@@ -1,74 +1,40 @@
-import QtQuick 2.7
-import QtQuick.Controls 2.0
-import QtQuick.Layouts 1.3
-import QtQuick.Controls.Material 2.1
+import QtQuick 2.14
+import QtQuick.Window 2.14
+import QtQuick.Controls 2.14
+import QtQuick.Layouts 1.14
 
-Item {
-    id: root
-    width: 480
-    height: 320
-
-    Rectangle {
-        color: "#272822"
-        width: 480
-        height: 320
+Window {
+    visible: true
+    width: 640
+    height: 480
+    ListModel{
+        id: listmodel
     }
-
-    Column {
-        spacing: 20
-
-        TextInput {
-            text: "Something"
-            height: 100
+    function changeAll(){
+        for(var i=0; i< listmodel.count; ++i){
+            listmodel.setProperty(i, "number", listmodel.get(i).number + 1)
         }
-
-        Text {
-            text: 'I am the very model of a modern major general!'
-
-            // color can be set on the entire element with this property
-            color: "yellow"
-
+    }
+    GridView{
+        id: grid
+        anchors.fill: parent
+        clip: true
+        model: listmodel
+        cellHeight: 120
+        cellWidth: 120
+        delegate: Item {
+            width: grid.cellWidth; height: grid.cellHeight
+            Column {
+                anchors.fill: parent
+                Text { text: model.number; anchors.horizontalCenter: parent.horizontalCenter }
+                Button{text: "change me"; onClicked: model.number +=1}
+                Button{text: "change all"; onClicked: changeAll()}
+            }
         }
-
-        Text {
-            // For text to wrap, a width has to be explicitly provided
-            width: root.width
-
-            // This setting makes the text wrap at word boundaries when it goes
-            // past the width of the Text object
-            wrapMode: Text.WordWrap
-
-            // You can use \ to escape quotation marks, or to add new lines (\n).
-            //  Use \\ to get a \ in the string
-            text: 'I am the very model of a modern major general. I\'ve information \
-                  vegetable, animal and mineral. I know the kings of england and I \
-                  quote the fights historical; from Marathon to Waterloo in order categorical.'
-
-            // color can be set on the entire element with this property
-            color: "white"
-
-        }
-
-        Text {
-            text: 'I am the very model of a modern major general!'
-
-            // color can be set on the entire element with this property
-            color: "yellow"
-
-            // font properties can be set effciently on the whole string at once
-            font { family: 'Courier'; pixelSize: 20; italic: true; capitalization: Font.SmallCaps }
-
-        }
-
-        Text {
-            // HTML like markup can also be used
-            text: '<font color="white">I am the <b>very</b> model of a modern <i>major general</i>!</font>'
-
-            // This could also be written font { pointSize: 14 }. Both syntaxes are valid.
-            font.pointSize: 14
-
-            // StyledText format supports fewer tags, but is more efficient than RichText
-            textFormat: Text.StyledText
+    }
+    Component.onCompleted: {
+        for(var i=0; i < 10; ++i){
+            listmodel.append({"number": 0});
         }
     }
 }
