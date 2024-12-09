@@ -1,7 +1,8 @@
+#include "menuwindow.hpp"
 #include "registerscreen.hpp"
 #include "schedule.hpp"
 #include "signinscreen.hpp"
-#include "editmodescreen.hpp"
+#include "settingsWindow.hpp"
 #include "httpclient.hpp"
 #include <QApplication>
 #include <QTranslator>
@@ -13,9 +14,13 @@ BackendlessAPI* api;
 SignInScreen* myWindow;
 registerscreen* myWindow2;
 Schedule* myWindow3;
-editModeScreen* popUpWindow;
+settingsWindow* popUpWindow;
 AnyNetworkAccessManager* networkManager;
 HttpClient* customHttpClient;
+menuWindow* menuWin;
+gradesWindow* gradeWin;
+absenceWindow* abscWin;
+
 
 int main(int argc, char *argv[])
 {
@@ -35,10 +40,12 @@ int main(int argc, char *argv[])
     myWindow = new SignInScreen();
     myWindow2 = new registerscreen();
     myWindow3 = new Schedule();
-    popUpWindow = new editModeScreen();
+    popUpWindow = new settingsWindow();
+    menuWin = new menuWindow();
+    gradeWin = new gradesWindow();
+    abscWin = new absenceWindow();
 
-    myWindow3->show();
-
+    menuWin->show();
 
     return myApp.exec();
 }
