@@ -29,6 +29,7 @@ private:
 
 private:
     bool isUpdating = true;
+    bool isTaken = true;
     QTableWidget* calendar = new QTableWidget(5,10);
 
     QPushButton *deleteItemButton = new QPushButton;

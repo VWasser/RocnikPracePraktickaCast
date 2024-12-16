@@ -92,12 +92,20 @@ Schedule::Schedule(QWidget*parent): QWidget(parent) {
     QObject::connect(editMode, &QPushButton::clicked, this, [&](){
         popUpWindow->show();
     });
+    QObject::connect(calendar, &QTableWidget::cellClicked, this, [&](){
+        if(exeptionForAdd() == true){
+            isTaken = true;
+        }else{
+            isTaken = false;
+        }
+    });
+
     QObject::connect(calendar, &QTableWidget::cellChanged, this, [&](){
         switch(editFunctions->currentIndex()){
             case Action::VIEW:
                 break;
             case Action::ADD:
-                if(exeptionForAdd() == true){
+                if(isTaken == true){
                     break;
                 }else{
                     addItemFunc();
