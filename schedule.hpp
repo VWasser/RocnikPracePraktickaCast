@@ -15,6 +15,20 @@
 
 extern BackendlessAPI* api;
 
+struct ScheduleItem {
+    QString objectId;
+    QString desc;
+    int dayOfWeek;
+    int hourStart;
+
+    ScheduleItem(QJsonObject lessonObject) {
+        objectId = lessonObject["objectId"].toString();
+        desc = lessonObject["lessonDescription"].toString();
+        dayOfWeek = lessonObject["dayOfWeek"].toInt();
+        hourStart = lessonObject["hourStart"].toInt();
+    }
+};
+
 class Schedule : public QWidget
 {
     Q_OBJECT
@@ -29,7 +43,8 @@ private:
 
 private:
     bool isUpdating = true;
-    bool isTaken = true;
+    //bool isTaken = true;
+    QList<ScheduleItem> cachedSchedule;
     QTableWidget* calendar = new QTableWidget(5,10);
 
     QPushButton *deleteItemButton = new QPushButton;
