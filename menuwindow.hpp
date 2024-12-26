@@ -31,8 +31,8 @@ private:
     QHBoxLayout *row2 = new QHBoxLayout;
 
     QPushButton *scheduleButton = new QPushButton(menuWindow::tr("Schedule"));
-    QPushButton *absenceButton = new QPushButton(menuWindow::tr("Grades"));
-    QPushButton *gradesButton = new QPushButton(menuWindow::tr("Absence"));
+    QPushButton *absenceButton = new QPushButton(menuWindow::tr("Absence"));
+    QPushButton *gradesButton = new QPushButton(menuWindow::tr("Grades"));
     QPushButton *settingsButton = new QPushButton;
     QPushButton *LanguageButton = new QPushButton;
 
