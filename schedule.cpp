@@ -279,7 +279,20 @@ void Schedule::addItemFunc(int predefinedColumnValue, int predefinedRowValue){
         return;
     }
 
-    auto iterator = std::find_if(
+    if (myFindIf<ScheduleItem, std::function<bool(ScheduleItem)>>(cachedSchedule.begin(), cachedSchedule.end(), [=](ScheduleItem item){ // = means COPY all what we need
+        return item.dayOfWeek == rowValue && item.hourStart == columnValue;
+    })) {
+        // TODO alert window
+        qDebug() << "Lesson was already added there";
+        return;
+    }
+
+    /*QList arr = {1, 2, 3, 4};
+    myFindIf<int, std::function<bool(int)>>(arr, [](int a) {
+        return a > 0;
+    });*/
+
+    /*auto iterator = std::find_if(
         cachedSchedule.begin(),
         cachedSchedule.end(),
         [rowValue, columnValue](ScheduleItem scheduleItem) {
@@ -288,7 +301,7 @@ void Schedule::addItemFunc(int predefinedColumnValue, int predefinedRowValue){
     );
     if (iterator != cachedSchedule.end()) {
         return;
-    }
+    }*/
 
     auto row =  new IntPostParam(rowValue);
     auto collumn = new IntPostParam(columnValue);

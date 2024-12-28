@@ -95,5 +95,15 @@ private:
 
 };
 
+template<class T, class UnaryPred>
+bool myFindIf(QList<T> items, UnaryPred isWhatWeAreSearchingFor) {
+    for (auto item: items) {
+        if (isWhatWeAreSearchingFor(item)) {
+            return true;
+        }
+    }
+    return false;
+}
+
 #endif // SCHEDULE_H
 
