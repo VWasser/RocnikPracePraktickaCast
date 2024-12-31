@@ -15,6 +15,20 @@
 
 extern BackendlessAPI* api;
 
+struct ScheduleItem {
+    QString objectId;
+    QString desc;
+    int dayOfWeek;
+    int hourStart;
+
+    ScheduleItem(QJsonObject lessonObject) {
+        objectId = lessonObject["objectId"].toString();
+        desc = lessonObject["lessonDescription"].toString();
+        dayOfWeek = lessonObject["dayOfWeek"].toInt();
+        hourStart = lessonObject["hourStart"].toInt();
+    }
+};
+
 class Schedule : public QWidget
 {
     Q_OBJECT
@@ -29,6 +43,8 @@ private:
 
 private:
     bool isUpdating = true;
+    //bool isTaken = true;
+    QList<ScheduleItem> cachedSchedule;
     QTableWidget* calendar = new QTableWidget(5,10);
 
     QPushButton *deleteItemButton = new QPushButton;
@@ -47,6 +63,7 @@ private:
     void deleteItemFunc();
     void editItemFunc();
     void addItemFunc(int predefinedColumnValue = -1, int predefinedRowValue = -1);
+    bool exeptionForAdd();
 
 
     QMessageBox notDeletable;
@@ -77,6 +94,11 @@ private:
 
 
 };
+
+template<class T, class UnaryPred>
+bool myFindIf(typename QList<T>::Iterator begin, typename QList<T>::Iterator end, UnaryPred isWhatWeAreSearchingFor) {
+    return false;
+}
 
 #endif // SCHEDULE_H
 
