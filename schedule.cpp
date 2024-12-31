@@ -50,6 +50,8 @@ Schedule::Schedule(QWidget*parent): QWidget(parent) {
     QObject::connect(api, &BackendlessAPI::loadTableItemsSuccess, this, [&](auto replyValue){
         qDebug() << "Loaded " << replyValue;
 
+        cachedSchedule.clear();
+
         QJsonParseError jsonError;
         auto jsonResponse = QJsonDocument::fromJson(replyValue.toUtf8(), &jsonError);
 
@@ -69,6 +71,7 @@ Schedule::Schedule(QWidget*parent): QWidget(parent) {
             auto desc = lessonObject["lessonDescription"].toString();
             auto dayOfWeek = lessonObject["dayOfWeek"].toInt();
             auto hourStart = lessonObject["hourStart"].toInt();
+            cachedSchedule.push_back(ScheduleItem(lessonObject));
             auto oldItem = calendar->item(dayOfWeek, hourStart);
             delete oldItem;
 
@@ -92,13 +95,25 @@ Schedule::Schedule(QWidget*parent): QWidget(parent) {
     QObject::connect(editMode, &QPushButton::clicked, this, [&](){
         popUpWindow->show();
     });
+    /*QObject::connect(calendar, &QTableWidget::cellClicked, this, [&](){
+        if(exeptionForAdd() == true){
+            isTaken = true;
+        }else{
+            isTaken = false;
+        }
+    });*/
+
     QObject::connect(calendar, &QTableWidget::cellChanged, this, [&](){
         switch(editFunctions->currentIndex()){
             case Action::VIEW:
                 break;
             case Action::ADD:
-                addItemFunc();
-                break;
+                /*if(isTaken == true){
+                    break;
+                }else{*/
+                    addItemFunc();
+                    break;
+                //}
             case Action::DELETE:
                 break;
             case Action::EDIT:
@@ -264,6 +279,30 @@ void Schedule::addItemFunc(int predefinedColumnValue, int predefinedRowValue){
         return;
     }
 
+    if (myFindIf<ScheduleItem, std::function<bool(ScheduleItem)>>(cachedSchedule.begin(), cachedSchedule.end(), [=](ScheduleItem item){ // = means COPY all what we need
+        return item.dayOfWeek == rowValue && item.hourStart == columnValue;
+    })) {
+        // TODO alert window
+        qDebug() << "Lesson was already added there";
+        return;
+    }
+
+    /*QList arr = {1, 2, 3, 4};
+    myFindIf<int, std::function<bool(int)>>(arr, [](int a) {
+        return a > 0;
+    });*/
+
+    /*auto iterator = std::find_if(
+        cachedSchedule.begin(),
+        cachedSchedule.end(),
+        [rowValue, columnValue](ScheduleItem scheduleItem) {
+            return scheduleItem.dayOfWeek == rowValue && scheduleItem.hourStart == columnValue;
+        }
+    );
+    if (iterator != cachedSchedule.end()) {
+        return;
+    }*/
+
     auto row =  new IntPostParam(rowValue);
     auto collumn = new IntPostParam(columnValue);
     auto item = new StringPostParam(calendarItem->text());
@@ -271,6 +310,7 @@ void Schedule::addItemFunc(int predefinedColumnValue, int predefinedRowValue){
     if(item->asParam() == ""){
         close();
     }else{
+    //
         api->addItemToTable(
             "Schedules",
             {
@@ -278,10 +318,23 @@ void Schedule::addItemFunc(int predefinedColumnValue, int predefinedRowValue){
                 {"dayOfWeek", row},
                 {"hourStart",collumn}
             }
-            );
+        );
     }
 
     delete item;
     delete row;
     delete collumn;
+}
+
+bool Schedule::exeptionForAdd(){
+        auto dayOfWeek = calendar->currentRow();
+        auto hourStart = calendar->currentColumn();
+        auto item = calendar->item(dayOfWeek, hourStart);
+        if (item) {
+            qDebug() << "ITEM ALREADY EXISTS!!!";
+            return true;
+        }else{
+            return false;
+        }
+
 }
