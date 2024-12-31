@@ -96,12 +96,7 @@ private:
 };
 
 template<class T, class UnaryPred>
-bool myFindIf(QList<T> items, UnaryPred isWhatWeAreSearchingFor) {
-    for (auto item: items) {
-        if (isWhatWeAreSearchingFor(item)) {
-            return true;
-        }
-    }
+bool myFindIf(typename QList<T>::Iterator begin, typename QList<T>::Iterator end, UnaryPred isWhatWeAreSearchingFor) {
     return false;
 }
 

@@ -279,7 +279,7 @@ void Schedule::addItemFunc(int predefinedColumnValue, int predefinedRowValue){
         return;
     }
 
-    if (myFindIf<ScheduleItem, std::function<bool(ScheduleItem)>>(cachedSchedule, [=](ScheduleItem item){ // = means COPY all what we need
+    if (myFindIf<ScheduleItem, std::function<bool(ScheduleItem)>>(cachedSchedule.begin(), cachedSchedule.end(), [=](ScheduleItem item){ // = means COPY all what we need
         return item.dayOfWeek == rowValue && item.hourStart == columnValue;
     })) {
         // TODO alert window
