@@ -6,9 +6,21 @@
 #include "qpushbutton.h"
 #include <QWidget>
 #include <QBoxLayout>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonArray>
 
 extern addAbsenceWindow *addAbscPopUpWin;
 
+struct AbsenceItem {
+    QString userId;
+    unsigned long absenceDate;
+
+    AbsenceItem(QJsonObject lessonObject) {
+        userId = lessonObject["UserID"].toString();
+        absenceDate = lessonObject["AbsenceDate"].toInteger();
+    }
+};
 
 class absenceWindow : public QWidget
 {
@@ -31,6 +43,9 @@ private:
     QLabel *school = new QLabel(absenceWindow::tr("School"));
 
     QPushButton *addAbsence = new QPushButton;
+
+private:
+    QList<AbsenceItem> cachedItems;
 };
 
 
