@@ -85,9 +85,8 @@ SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
     setFixedSize(640, 480);
 #endif
 
-    QQuickView* view = new QQuickView();
+    auto view = new QQuickView();
     view->setSource(QUrl("qrc:/qml/example.qml"));
-    view->contentItem();
 
     auto qmlWrapper = this->createWindowContainer(view);
     signInLayout.addWidget(qmlWrapper);
