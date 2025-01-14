@@ -8,7 +8,7 @@ class addAbsenceWindow : public QWidget
     Q_OBJECT
 public:
     addAbsenceWindow(QWidget *parent = nullptr);
-    ~addAbsenceWindow();
+    ~addAbsenceWindow() { }
 };
 
 #endif // ADDABSENCEWINDOW_HPP
