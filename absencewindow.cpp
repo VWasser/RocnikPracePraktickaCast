@@ -5,20 +5,26 @@ absenceWindow::absenceWindow(QWidget *parent): QWidget(parent) {
         addAbscPopUpWin->show();
         hide();
     });
-    mainLayout->addLayout(popisky);
-    mainLayout->addLayout(absenceDaily);
+    absenceLayout->setFixedSize(315, 600);
+
+    absenceLayout->setRowCount(ammountOfDays);
+    absenceLayout->setColumnCount(6);
+    for(int i =0;i < 6;i++){
+        absenceLayout->setColumnWidth(i,50);
+    }
+    addAbsence->setText(absenceWindow::tr("addAbsence"));
+
+    absenceLayout->setHorizontalHeaderItem(0, date);
+    absenceLayout->setHorizontalHeaderItem(1,ok);
+    absenceLayout->setHorizontalHeaderItem(2,unsolved);
+    absenceLayout->setHorizontalHeaderItem(3,missed);
+    absenceLayout->setHorizontalHeaderItem(4,late);
+    absenceLayout->setHorizontalHeaderItem(5,school);
+
+
     mainLayout->addWidget(addAbsence);
-
-    popisky->addWidget(date);
-    popisky->addWidget(ok);
-    popisky->addWidget(unsolved);
-    popisky->addWidget(missed);
-    popisky->addWidget(late);
-    popisky->addWidget(school);
-
+    mainLayout->addWidget(absenceLayout);
     setLayout(mainLayout);
-
-
 }
 
 
