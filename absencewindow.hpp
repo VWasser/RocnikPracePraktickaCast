@@ -9,9 +9,6 @@
 #include <QBoxLayout>
 
 extern Schedule *myWindow3;
-extern Schedule *scheduleAbsenceOpened();
-
-
 
 class absenceWindow : public QWidget
 {
@@ -19,6 +16,9 @@ class absenceWindow : public QWidget
 public:
     absenceWindow(QWidget *parent = nullptr);
     ~absenceWindow();
+
+signals:
+    void scheduleAbsenceOpened();
 
 private:
     QVBoxLayout *mainLayout = new QVBoxLayout;

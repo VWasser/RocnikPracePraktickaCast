@@ -327,9 +327,10 @@ void Schedule::addItemFunc(int predefinedColumnValue, int predefinedRowValue){
     delete row;
     delete collumn;
 }
-void Schedule::scheduleAbsenceOpened(){
+
+/*void Schedule::scheduleAbsenceOpened(){
     calendar->hide();
-}
+}*/
 
 
 bool Schedule::exeptionForAdd(){

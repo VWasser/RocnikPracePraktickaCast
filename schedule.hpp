@@ -64,8 +64,6 @@ private:
     void editItemFunc();
     void addItemFunc(int predefinedColumnValue = -1, int predefinedRowValue = -1);
     bool exeptionForAdd();
-signals:
-    void scheduleAbsenceOpened();
 
 private:
     QMessageBox notDeletable;
