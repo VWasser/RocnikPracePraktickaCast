@@ -4,7 +4,6 @@ CONFIG += c++20
 
 SOURCES += \
     absencewindow.cpp \
-    addabsencewindow.cpp \
     gradeswindow.cpp \
     main.cpp \
     menubar.cpp \
@@ -25,7 +24,6 @@ SOURCES += \
 
 HEADERS += \
     absencewindow.hpp \
-    addabsencewindow.hpp \
     gradeswindow.hpp \
     menubar.hpp \
     menuwindow.hpp \

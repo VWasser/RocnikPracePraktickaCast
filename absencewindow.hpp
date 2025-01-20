@@ -1,14 +1,16 @@
 #ifndef ABSENCEWINDOW_HPP
 #define ABSENCEWINDOW_HPP
 
-#include "addabsencewindow.hpp"
 #include "qlabel.h"
 #include "qpushbutton.h"
 #include "qtablewidget.h"
+#include "schedule.hpp"
 #include <QWidget>
 #include <QBoxLayout>
 
-extern addAbsenceWindow *addAbscPopUpWin;
+extern Schedule *myWindow3;
+extern Schedule *scheduleAbsenceOpened();
+
 
 
 class absenceWindow : public QWidget
@@ -39,6 +41,7 @@ private:
     QString dateOfAbsence = "DD:MM";
 
     QPushButton *addAbsence = new QPushButton;
+
 };
 
 

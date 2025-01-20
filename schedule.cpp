@@ -144,6 +144,8 @@ Schedule::Schedule(QWidget*parent): QWidget(parent) {
         }
     });
 
+    void scheduleAbsenceOpened();
+
     deleteItemButton->hide();
 
     calendar->setVisible(true);
@@ -325,6 +327,10 @@ void Schedule::addItemFunc(int predefinedColumnValue, int predefinedRowValue){
     delete row;
     delete collumn;
 }
+void Schedule::scheduleAbsenceOpened(){
+    calendar->hide();
+}
+
 
 bool Schedule::exeptionForAdd(){
         auto dayOfWeek = calendar->currentRow();

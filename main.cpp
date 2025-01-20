@@ -1,4 +1,3 @@
-#include "addabsencewindow.hpp"
 #include "menuwindow.hpp"
 #include "registerscreen.hpp"
 #include "schedule.hpp"
@@ -21,7 +20,6 @@ HttpClient* customHttpClient;
 menuWindow* menuWin;
 gradesWindow* gradeWin;
 absenceWindow* abscWin;
-addAbsenceWindow* addAbscPopUpWin;
 
 
 int main(int argc, char *argv[])
@@ -46,8 +44,6 @@ int main(int argc, char *argv[])
     menuWin = new menuWindow();
     gradeWin = new gradesWindow();
     abscWin = new absenceWindow();
-    addAbscPopUpWin = new addAbsenceWindow();
-
     menuWin->show();
 
     return myApp.exec();

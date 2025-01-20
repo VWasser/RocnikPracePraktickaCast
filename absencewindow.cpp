@@ -2,8 +2,9 @@
 
 absenceWindow::absenceWindow(QWidget *parent): QWidget(parent) {
     QObject::connect(addAbsence, &QPushButton::clicked, this, [&](){
-        addAbscPopUpWin->show();
+        myWindow3->show();
         hide();
+        emit scheduleAbsenceOpened();
     });
     absenceLayout->setFixedSize(315, 600);
 
