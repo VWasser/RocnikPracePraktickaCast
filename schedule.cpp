@@ -46,6 +46,9 @@ Schedule::Schedule(QWidget*parent): QWidget(parent) {
         //updateData();
     //});
 
+    QObject::connect(abscWin, &absenceWindow::scheduleAbsenceOpened, this, []() {
+
+    });
 
     QObject::connect(api, &BackendlessAPI::loadTableItemsSuccess, this, [&](auto replyValue){
         qDebug() << "Loaded " << replyValue;
