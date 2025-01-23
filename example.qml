@@ -1,8 +1,8 @@
-import QtQuick 2.14
-import QtQuick.Window 2.14
+import QtQuick.Controls
+import QtQuick
 
-TextEdit {
-    width: 240
-    text: "Hello"
-    focus: true
+TextField {
+    id: text
+    objectName: "text"
+    color: "red"
 }

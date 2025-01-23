@@ -3,6 +3,8 @@
 #include <QApplication>
 #include <QBoxLayout>
 #include <QQuickView>
+#include <QQuickItem>
+#include <QQmlProperty>
 
 SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
     signInButton(this), registerButton(this), resetPasswordButton(this),
@@ -42,9 +44,7 @@ SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
     QObject::connect(&(api->userAPI), &BackendlessUserAPI::restorePasswordSuccess, this, [&](auto response){
         qDebug() << "email sent";
     });
-    QObject::connect(&signInButton, &QPushButton::clicked, this, [&]() {
-        api->userAPI.signInUser(email->text(), password->text());
-    });
+
     QObject::connect(&registerButton, &QPushButton::clicked, this, [&]() {
         myWindow2->show();
         hide();
@@ -73,6 +73,21 @@ SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
     signInLayout.addWidget(&signInButton);
     signInLayout.addWidget(&registerButton);
     signInLayout.addWidget(&resetPasswordButton);
+
+    auto view = new QQuickView();
+    view->setSource(QUrl("qrc:/qml/example.qml"));
+
+    auto qmlWrapper = QWidget::createWindowContainer(view, this);
+    qmlWrapper->setMinimumSize(200, 200);
+    signInLayout.addWidget(qmlWrapper);
+
+    QObject::connect(&signInButton, &QPushButton::clicked, this, [=]() {
+        auto kids = view->rootObject();
+        qDebug() << kids->property("text");
+
+        // api->userAPI.signInUser(email->text(), password->text());
+    });
+
     signInLayout.addStretch();
 
     setLayout(&signInLayout);
@@ -84,12 +99,6 @@ SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
 #if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS)
     setFixedSize(640, 480);
 #endif
-
-    auto view = new QQuickView();
-    view->setSource(QUrl("qrc:/qml/example.qml"));
-
-    auto qmlWrapper = this->createWindowContainer(view);
-    signInLayout.addWidget(qmlWrapper);
 }
 
 SignInScreen::~SignInScreen() {
