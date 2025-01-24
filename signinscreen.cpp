@@ -66,16 +66,17 @@ SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
     showPasswordLayout.addWidget(&showPasswordLabel);
     showPasswordLayout.addStretch();
 
-    // Let's try this with QML
-    // signInLayout.addWidget(email);
-
+#if defined(Q_OS_ANDROID) // Or you can use it for any other platform if you like QML, but for Android it is essential
     auto view = new QQuickView();
     view->setSource(QUrl("qrc:/qml/example.qml"));
 
-    auto qmlWrapper = QWidget::createWindowContainer(view, this);
+    auto qmlWrapper = this->createWindowContainer(view);
     qmlWrapper->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
     qmlWrapper->setMaximumHeight(30);
     signInLayout.addWidget(qmlWrapper);
+#else
+    signInLayout.addWidget(email);
+#endif
 
     signInLayout.addWidget(password);
     signInLayout.addLayout(&showPasswordLayout);
@@ -84,8 +85,15 @@ SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
     signInLayout.addWidget(&resetPasswordButton);
 
     QObject::connect(&signInButton, &QPushButton::clicked, this, [=]() {
-        auto signInObject = view->rootObject();
-        auto signInValue = signInObject->property("text").toString();
+        QString signInValue;
+        #if defined(Q_OS_ANDROID)
+        auto signInTextFieldObject = view->rootObject();
+        signInValue = signInTextFieldObject->property("text").toString();
+        #else
+        signInValue = email->text();
+        #endif
+
+        qDebug() << "SIGN IN email " << signInValue;
 
         api->userAPI.signInUser(signInValue, password->text());
     });
