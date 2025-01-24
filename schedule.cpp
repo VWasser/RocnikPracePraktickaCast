@@ -46,8 +46,11 @@ Schedule::Schedule(QWidget*parent): QWidget(parent) {
         //updateData();
     //});
 
-    QObject::connect(abscWin, &absenceWindow::scheduleAbsenceOpened, this, []() {
-
+    QObject::connect(abscWin, &absenceWindow::scheduleAbsenceOpened, this, [this]() {
+        editFunctions->hide();
+        date->hide();
+        calendar->setDisabled(false);
+        isAbsenceMode = true;
     });
 
     QObject::connect(api, &BackendlessAPI::loadTableItemsSuccess, this, [&](auto replyValue){
@@ -84,11 +87,21 @@ Schedule::Schedule(QWidget*parent): QWidget(parent) {
         }
     });
 
-    //For debuging
+    //in absence add mode
     QObject::connect(calendar, &QTableWidget::cellClicked, this, [&](){
-        qDebug() << calendar->currentRow() << " Row";
-        qDebug() << calendar->currentColumn() << " Column";
-        // qDebug() << calendar->currentItem()->text();
+        auto dayOfWeek = calendar->currentRow();
+        auto hourStart = calendar->currentColumn();
+        auto item = calendar->item(dayOfWeek, hourStart);
+        if (!item) {
+            qDebug() << "ITEM IS NOT SELECTED!!!";
+            notDeletable.show();
+            return;
+        }
+        if(isAbsenceMode == true){
+            absencePopUp->show();
+        }else{
+            return;
+        }
     });
 
     QObject::connect(deleteItemButton, &QPushButton::clicked, this, [&](){

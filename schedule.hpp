@@ -8,12 +8,14 @@
 #include <QHeaderView>
 #include <QCalendarWidget>
 #include "BackendlessQt/BackendlessAPI.hpp"
+#include "inputabsence.hpp"
 #include "qlabel.h"
 #include "qmessagebox.h"
 #include <ctime>
 #include <QComboBox>
 
 extern BackendlessAPI* api;
+extern inputAbsence* absencePopUp;
 
 struct ScheduleItem {
     QString objectId;
@@ -43,6 +45,7 @@ private:
 
 private:
     bool isUpdating = true;
+    bool isAbsenceMode = false;
     //bool isTaken = true;
     QList<ScheduleItem> cachedSchedule;
     QTableWidget* calendar = new QTableWidget(5,10);
