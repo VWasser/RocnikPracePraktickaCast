@@ -4,7 +4,7 @@ import QtQuick
 TextField {
     id: text
     objectName: "text"
-    width: 300
-    height: 300
+    width: 600
+    height: 30
     color: "red"
 }

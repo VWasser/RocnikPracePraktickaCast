@@ -66,26 +66,28 @@ SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
     showPasswordLayout.addWidget(&showPasswordLabel);
     showPasswordLayout.addStretch();
 
+    // Let's try this with QML
+    // signInLayout.addWidget(email);
 
-    signInLayout.addWidget(email);
+    auto view = new QQuickView();
+    view->setSource(QUrl("qrc:/qml/example.qml"));
+
+    auto qmlWrapper = QWidget::createWindowContainer(view, this);
+    qmlWrapper->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
+    qmlWrapper->setMaximumHeight(30);
+    signInLayout.addWidget(qmlWrapper);
+
     signInLayout.addWidget(password);
     signInLayout.addLayout(&showPasswordLayout);
     signInLayout.addWidget(&signInButton);
     signInLayout.addWidget(&registerButton);
     signInLayout.addWidget(&resetPasswordButton);
 
-    auto view = new QQuickView();
-    view->setSource(QUrl("qrc:/qml/example.qml"));
-
-    auto qmlWrapper = QWidget::createWindowContainer(view, this);
-    qmlWrapper->setMinimumSize(200, 200);
-    signInLayout.addWidget(qmlWrapper);
-
     QObject::connect(&signInButton, &QPushButton::clicked, this, [=]() {
-        auto kids = view->rootObject();
-        qDebug() << kids->property("text");
+        auto signInObject = view->rootObject();
+        auto signInValue = signInObject->property("text").toString();
 
-        // api->userAPI.signInUser(email->text(), password->text());
+        api->userAPI.signInUser(signInValue, password->text());
     });
 
     signInLayout.addStretch();
