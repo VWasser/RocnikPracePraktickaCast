@@ -48,8 +48,8 @@ absenceWindow::absenceWindow(QWidget *parent): QWidget(parent) {
 
         for (const auto& item : jsonObject) {
             auto absenceObject = item.toObject();
-            AbsenceItem absenceItem(item);
-            cachedItems.push_back(item);
+            AbsenceItem absenceItem(absenceObject);
+            cachedItems.push_back(absenceItem);
         }
     });
 

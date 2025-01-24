@@ -12,7 +12,7 @@
 #include <QJsonArray>
 
 extern Schedule *myWindow3;
-extern addAbsenceWindow *addAbscPopUpWin;
+extern inputAbsence *addAbscPopUpWin;
 
 struct AbsenceItem {
     QString userId;
