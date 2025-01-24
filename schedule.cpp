@@ -73,17 +73,14 @@ Schedule::Schedule(QWidget*parent): QWidget(parent) {
 
         for (const auto& item : jsonObject) {
             auto lessonObject = item.toObject();
-            auto objectId = lessonObject["objectId"].toString();
-            auto desc = lessonObject["lessonDescription"].toString();
-            auto dayOfWeek = lessonObject["dayOfWeek"].toInt();
-            auto hourStart = lessonObject["hourStart"].toInt();
-            cachedSchedule.push_back(ScheduleItem(lessonObject));
-            auto oldItem = calendar->item(dayOfWeek, hourStart);
+            ScheduleItem scheduleItem(lessonObject);
+            cachedSchedule.push_back(scheduleItem);
+            auto oldItem = calendar->item(scheduleItem.dayOfWeek, scheduleItem.hourStart);
             delete oldItem;
 
-            QTableWidgetItem* someItem = new QTableWidgetItem(desc, QTableWidgetItem::Type);
-            someItem->setData(Qt::UserRole, objectId);
-            calendar->setItem(dayOfWeek, hourStart, someItem);
+            QTableWidgetItem* someItem = new QTableWidgetItem(scheduleItem.desc, QTableWidgetItem::Type);
+            someItem->setData(Qt::UserRole, scheduleItem.objectId);
+            calendar->setItem(scheduleItem.dayOfWeek, scheduleItem.hourStart, someItem);
         }
     });
 

@@ -1,4 +1,7 @@
 #include "absencewindow.hpp"
+#include "BackendlessQt/BackendlessAPI.hpp"
+
+extern BackendlessAPI* api;
 
 absenceWindow::absenceWindow(QWidget *parent): QWidget(parent) {
     QObject::connect(addAbsence, &QPushButton::clicked, this, [&](){
@@ -28,6 +31,30 @@ absenceWindow::absenceWindow(QWidget *parent): QWidget(parent) {
     mainLayout->addWidget(addAbsence);
     mainLayout->addWidget(absenceLayout);
     setLayout(mainLayout);
+
+    QObject::connect(api, &BackendlessAPI::loadTableItemsSuccess, this, [&](auto replyValue){
+        qDebug() << "Loaded " << replyValue;
+
+        QJsonParseError jsonError;
+        auto jsonResponse = QJsonDocument::fromJson(replyValue.toUtf8(), &jsonError);
+
+        switch (jsonError.error) {
+        case QJsonParseError::NoError:
+            break;
+        default:
+            return;
+        }
+        auto jsonObject = jsonResponse.array();
+
+        for (const auto& item : jsonObject) {
+            auto absenceObject = item.toObject();
+            AbsenceItem absenceItem(item);
+            cachedItems.push_back(item);
+        }
+    });
+
+
+    api->loadTableItems("Absences");
 }
 
 
