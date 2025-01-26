@@ -18,9 +18,6 @@
 #include <QTimer>
 
 extern HttpClient* customHttpClient;
-extern menuWindow* menu;
-
-
 
 using namespace std;
 
@@ -46,12 +43,13 @@ Schedule::Schedule(QWidget*parent): QWidget(parent) {
         //updateData();
     //});
 
-    QObject::connect(abscWin, &absenceWindow::scheduleAbsenceOpened, this, [this]() {
+    // TODO: Something here
+    /*QObject::connect(abscWin, &absenceWindow::scheduleAbsenceOpened, this, [this]() {
         editFunctions->hide();
         date->hide();
         calendar->setDisabled(false);
         isAbsenceMode = true;
-    });
+    });*/
 
     QObject::connect(api, &BackendlessAPI::loadTableItemsSuccess, this, [&](auto replyValue){
         qDebug() << "Loaded " << replyValue;
@@ -95,7 +93,8 @@ Schedule::Schedule(QWidget*parent): QWidget(parent) {
             return;
         }
         if(isAbsenceMode == true){
-            absencePopUp->show();
+             // TODO: Some window here is displaying here
+            //absencePopUp->show();
         }else{
             return;
         }
@@ -106,7 +105,8 @@ Schedule::Schedule(QWidget*parent): QWidget(parent) {
         updateData();
     });
     QObject::connect(editMode, &QPushButton::clicked, this, [&](){
-        popUpWindow->show();
+         // TODO: Some window here is displaying here
+        //popUpWindow->show();
     });
     /*QObject::connect(calendar, &QTableWidget::cellClicked, this, [&](){
         if(exeptionForAdd() == true){

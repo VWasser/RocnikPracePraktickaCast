@@ -5,11 +5,13 @@ extern BackendlessAPI* api;
 
 absenceWindow::absenceWindow(QWidget *parent): QWidget(parent) {
     QObject::connect(addAbsence, &QPushButton::clicked, this, [&](){
-        myWindow3->show();
-        if(myWindow3->isVisible() == true){
+        // TODO: Some window here is displaying here
+        // myWindow3->show();
+         // TODO: Some window here is displaying here
+        /*if(myWindow3->isVisible() == true){
             emit scheduleAbsenceOpened();
             hide();
-        }
+        }*/
     });
     absenceLayout->setFixedSize(315, 600);
 

@@ -11,20 +11,6 @@
 #include <QObject>
 #include <QPointer>
 
-
-extern BackendlessAPI* api;
-extern SignInScreen* myWindow;
-extern registerscreen* myWindow2;
-extern Schedule* myWindow3;
-extern settingsWindow* popUpWindow;
-extern AnyNetworkAccessManager* networkManager;
-extern HttpClient* customHttpClient;
-extern menuWindow* menuWin;
-extern gradesWindow* gradeWin;
-extern absenceWindow* abscWin;
-extern inputAbsence* absencePopUp;
-
-
 class Coordinator : public QObject {
     Q_OBJECT
 

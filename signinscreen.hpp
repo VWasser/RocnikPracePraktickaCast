@@ -11,9 +11,6 @@
 #include "registerscreen.hpp"
 #include "schedule.hpp"
 
-extern registerscreen* myWindow2;
-extern Schedule* myWindow3;
-
 class SignInScreen: public QWidget
 {
     Q_OBJECT

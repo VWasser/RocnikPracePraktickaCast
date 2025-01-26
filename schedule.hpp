@@ -15,7 +15,6 @@
 #include <QComboBox>
 
 extern BackendlessAPI* api;
-extern inputAbsence* absencePopUp;
 
 struct ScheduleItem {
     QString objectId;

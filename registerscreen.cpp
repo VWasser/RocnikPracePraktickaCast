@@ -24,7 +24,8 @@ registerscreen::registerscreen(QWidget *parent): QWidget(parent),
             }
     });
     QObject::connect(&logIn, &QPushButton::clicked, this, [&]() {
-        myWindow->show();
+        // TODO: show this window
+        //myWindow->show();
         hide();
     });
 

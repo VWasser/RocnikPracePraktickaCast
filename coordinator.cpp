@@ -4,7 +4,14 @@
 
 
 Coordinator::Coordinator(QObject *parent) : QObject(parent) {
-
+    myWindow = new SignInScreen();
+    myWindow2 = new registerscreen();
+    myWindow3 = new Schedule();
+    popUpWindow = new settingsWindow();
+    menuWin = new menuWindow();
+    gradeWin = new gradesWindow();
+    abscWin = new absenceWindow();
+    absencePopUp = new inputAbsence();
 }
 
 Coordinator::~Coordinator() {}

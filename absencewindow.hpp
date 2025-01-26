@@ -11,9 +11,6 @@
 #include <QJsonObject>
 #include <QJsonArray>
 
-extern Schedule *myWindow3;
-extern inputAbsence *addAbscPopUpWin;
-
 struct AbsenceItem {
     QString userId;
     unsigned long absenceDate;

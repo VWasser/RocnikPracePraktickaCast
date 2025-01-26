@@ -20,7 +20,8 @@ SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
     QObject::connect(&(api->userAPI), &BackendlessUserAPI::signInUserSuccess, this, [&](){
         // api.userAPI.validateUserToken();
 
-        myWindow3->show();
+         // TODO: Some window here is displaying here
+        //myWindow3->show();
         hide();
     });
     QObject::connect(&(api->userAPI), &BackendlessUserAPI::signInUserErrorBackendless, this, [&](auto error){
@@ -46,7 +47,8 @@ SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
     });
 
     QObject::connect(&registerButton, &QPushButton::clicked, this, [&]() {
-        myWindow2->show();
+         // TODO: Some window here is displaying here
+        //myWindow2->show();
         hide();
     });
     QObject::connect(&showPassword, &QCheckBox::clicked, this, [&]() {

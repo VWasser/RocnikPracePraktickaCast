@@ -12,22 +12,26 @@ void menuBar::menuBarStup(QBoxLayout *layout){
 
     //QMenuBar Actions
     QObject::connect(scheduleAction, &QAction::triggered, this, [&](){
-        myWindow3->show();
+         // TODO: Some window here is displaying here
+        //myWindow3->show();
         hide();
 
     });
     QObject::connect(gradesAction, &QAction::triggered, this, [&](){
-        gradeWin->show();
+         // TODO: Some window here is displaying here
+        //gradeWin->show();
         hide();
 
     });
     QObject::connect(absenceAction, &QAction::triggered, this, [&](){
-        abscWin->show();
+         // TODO: Some window here is displaying here
+        //abscWin->show();
         hide();
 
     });
     QObject::connect(settingsAction, &QAction::triggered, this, [&](){
-        popUpWindow->show();
+         // TODO: Some window here is displaying here
+        //popUpWindow->show();
         hide();
 
     });
@@ -39,7 +43,8 @@ void menuBar::menuBarStup(QBoxLayout *layout){
 
     });
     QObject::connect(logOutAction, &QAction::triggered, this, [&](){
-        myWindow->show();
+        // TODO: show this window
+        //myWindow->show();
         hide();
 
     });
