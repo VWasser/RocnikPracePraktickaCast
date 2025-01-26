@@ -7,8 +7,22 @@
 #include "schedule.hpp"
 #include <QWidget>
 #include <QBoxLayout>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonArray>
 
 extern Schedule *myWindow3;
+extern addAbsenceWindow *addAbscPopUpWin;
+
+struct AbsenceItem {
+    QString userId;
+    unsigned long absenceDate;
+
+    AbsenceItem(QJsonObject lessonObject) {
+        userId = lessonObject["UserID"].toString();
+        absenceDate = lessonObject["AbsenceDate"].toInteger();
+    }
+};
 
 class absenceWindow : public QWidget
 {
@@ -42,6 +56,8 @@ private:
 
     QPushButton *addAbsence = new QPushButton;
 
+private:
+    QList<AbsenceItem> cachedItems;
 };
 
 
