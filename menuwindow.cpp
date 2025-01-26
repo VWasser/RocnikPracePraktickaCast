@@ -5,8 +5,9 @@
 #include <QMenuBar>
 #include <QAction>
 #include "menubar.hpp"
+#include "coordinator.hpp"
 
-
+extern Coordinator* coordinator;
 
 menuWindow::menuWindow(QWidget*parent): QWidget(parent)  {
 
