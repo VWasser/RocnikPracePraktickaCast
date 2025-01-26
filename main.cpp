@@ -48,7 +48,8 @@ int main(int argc, char *argv[])
     abscWin = new absenceWindow();
     addAbscPopUpWin = new addAbsenceWindow();
 
-    menuWin->show();
+    // menuWin->show();
+    myWindow->show();
 
     return myApp.exec();
 }

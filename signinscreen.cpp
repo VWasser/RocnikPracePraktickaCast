@@ -2,6 +2,9 @@
 #include "registerscreen.hpp"
 #include <QApplication>
 #include <QBoxLayout>
+#include <QQuickView>
+#include <QQuickItem>
+#include <QQmlProperty>
 
 SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
     signInButton(this), registerButton(this), resetPasswordButton(this),
@@ -41,9 +44,7 @@ SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
     QObject::connect(&(api->userAPI), &BackendlessUserAPI::restorePasswordSuccess, this, [&](auto response){
         qDebug() << "email sent";
     });
-    QObject::connect(&signInButton, &QPushButton::clicked, this, [&]() {
-        api->userAPI.signInUser(email->text(), password->text());
-    });
+
     QObject::connect(&registerButton, &QPushButton::clicked, this, [&]() {
         myWindow2->show();
         hide();
@@ -65,13 +66,38 @@ SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
     showPasswordLayout.addWidget(&showPasswordLabel);
     showPasswordLayout.addStretch();
 
+#if defined(Q_OS_ANDROID) // Or you can use it for any other platform if you like QML, but for Android it is essential
+    auto view = new QQuickView();
+    view->setSource(QUrl("qrc:/qml/example.qml"));
 
+    auto qmlWrapper = this->createWindowContainer(view);
+    qmlWrapper->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
+    qmlWrapper->setMaximumHeight(30);
+    signInLayout.addWidget(qmlWrapper);
+#else
     signInLayout.addWidget(email);
+#endif
+
     signInLayout.addWidget(password);
     signInLayout.addLayout(&showPasswordLayout);
     signInLayout.addWidget(&signInButton);
     signInLayout.addWidget(&registerButton);
     signInLayout.addWidget(&resetPasswordButton);
+
+    QObject::connect(&signInButton, &QPushButton::clicked, this, [=]() {
+        QString signInValue;
+        #if defined(Q_OS_ANDROID)
+        auto signInTextFieldObject = view->rootObject();
+        signInValue = signInTextFieldObject->property("text").toString();
+        #else
+        signInValue = email->text();
+        #endif
+
+        qDebug() << "SIGN IN email " << signInValue;
+
+        api->userAPI.signInUser(signInValue, password->text());
+    });
+
     signInLayout.addStretch();
 
     setLayout(&signInLayout);
