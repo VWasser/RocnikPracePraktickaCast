@@ -6,23 +6,29 @@
 #include <QAction>
 #include "menubar.hpp"
 
+
+
 menuWindow::menuWindow(QWidget*parent): QWidget(parent)  {
 
     QObject::connect(gradesButton, &QPushButton::clicked, this, [&](){
-        gradeWin->show();
+        emit gradesPressed();
+        coordinator->showGradesWindow();
         hide();
     });
     QObject::connect(absenceButton, &QPushButton::clicked, this, [&](){
+        emit absencePressed();
         abscWin->show();
         hide();
 
     });
     QObject::connect(scheduleButton, &QPushButton::clicked, this, [&](){
+        emit schedulePressed();
         myWindow3->show();
         hide();
 
     });
     QObject::connect(settingsButton, &QPushButton::clicked, this, [&](){
+        emit settingsPressed();
         popUpWindow->show();
         hide();
 

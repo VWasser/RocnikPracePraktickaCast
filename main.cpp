@@ -1,15 +1,7 @@
-#include "inputabsence.hpp"
-#include "menuwindow.hpp"
-#include "registerscreen.hpp"
-#include "schedule.hpp"
-#include "signinscreen.hpp"
-#include "settingsWindow.hpp"
-#include "httpclient.hpp"
 #include <QApplication>
 #include <QTranslator>
 #include "BackendlessQt/StandardNetworkManager.hpp"
-#include "BackendlessQt/BackendlessAPI.hpp"
-#include "mocknetworkmanager.hpp"
+#include "coordinator.hpp"
 
 BackendlessAPI* api;
 SignInScreen* myWindow;
@@ -22,7 +14,7 @@ menuWindow* menuWin;
 gradesWindow* gradeWin;
 absenceWindow* abscWin;
 inputAbsence* absencePopUp;
-
+Coordinator* coordinator;
 
 int main(int argc, char *argv[])
 {
@@ -31,10 +23,6 @@ int main(int argc, char *argv[])
     if (!loadResult) {
         exit(1);
     }
-
-
-    QApplication myApp(argc, argv);
-    myApp.installTranslator(&translator);
 
     customHttpClient = new HttpClient();
     networkManager = new StandardNetworkManager();
@@ -47,6 +35,9 @@ int main(int argc, char *argv[])
     gradeWin = new gradesWindow();
     abscWin = new absenceWindow();
     absencePopUp = new inputAbsence();
+
+    QApplication myApp(argc, argv);
+    myApp.installTranslator(&translator);
     menuWin->show();
 
     return myApp.exec();
