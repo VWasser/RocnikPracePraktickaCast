@@ -8,6 +8,7 @@
 #include <QHeaderView>
 #include <QCalendarWidget>
 #include "BackendlessQt/BackendlessAPI.hpp"
+#include "inputabsence.hpp"
 #include "qlabel.h"
 #include "qmessagebox.h"
 #include <ctime>
@@ -43,6 +44,7 @@ private:
 
 private:
     bool isUpdating = true;
+    bool isAbsenceMode = false;
     //bool isTaken = true;
     QList<ScheduleItem> cachedSchedule;
     QTableWidget* calendar = new QTableWidget(5,10);
@@ -65,7 +67,7 @@ private:
     void addItemFunc(int predefinedColumnValue = -1, int predefinedRowValue = -1);
     bool exeptionForAdd();
 
-
+private:
     QMessageBox notDeletable;
 
     QLabel* date = new QLabel;

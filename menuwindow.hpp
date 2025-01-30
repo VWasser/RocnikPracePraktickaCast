@@ -1,21 +1,11 @@
 #ifndef MENUWINDOW_H
 #define MENUWINDOW_H
 
-#include "absencewindow.hpp"
-#include "gradeswindow.hpp"
 #include "qpushbutton.h"
-#include "schedule.hpp"
-#include "signinscreen.hpp"
-#include "settingsWindow.hpp"
 #include <QWidget>
 #include <QGridLayout>
 #include <QMenuBar>
 
-extern Schedule* myWindow3;
-extern gradesWindow* gradeWin;
-extern absenceWindow* abscWin;
-extern SignInScreen* myWindow;
-extern settingsWindow* popUpWindow;
 
 class menuWindow : public QWidget
 {
@@ -35,6 +25,15 @@ private:
     QPushButton *gradesButton = new QPushButton(menuWindow::tr("Grades"));
     QPushButton *settingsButton = new QPushButton;
     QPushButton *LanguageButton = new QPushButton;
+
+signals:
+    void schedulePressed();
+    void gradesPressed();
+    void absencePressed();
+    void settingsPressed();
+
+    //not yet created
+    void logOutPressed();
 
 };
 

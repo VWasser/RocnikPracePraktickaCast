@@ -5,25 +5,32 @@
 #include <QMenuBar>
 #include <QAction>
 #include "menubar.hpp"
+#include "coordinator.hpp"
+
+extern Coordinator* coordinator;
 
 menuWindow::menuWindow(QWidget*parent): QWidget(parent)  {
 
     QObject::connect(gradesButton, &QPushButton::clicked, this, [&](){
-        gradeWin->show();
+        emit gradesPressed();
+        coordinator->showGradesWindow();
         hide();
     });
     QObject::connect(absenceButton, &QPushButton::clicked, this, [&](){
-        abscWin->show();
+        emit absencePressed();
+        coordinator->showAbsenceWindow();
         hide();
 
     });
     QObject::connect(scheduleButton, &QPushButton::clicked, this, [&](){
-        myWindow3->show();
+        emit schedulePressed();
+        coordinator->showSchedule();
         hide();
 
     });
     QObject::connect(settingsButton, &QPushButton::clicked, this, [&](){
-        popUpWindow->show();
+        emit settingsPressed();
+        coordinator->showSettingsWindow();
         hide();
 
     });

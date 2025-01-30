@@ -9,12 +9,6 @@
 #include "signinscreen.hpp"
 #include <QMenuBar>
 
-extern Schedule* myWindow3;
-extern gradesWindow* gradeWin;
-extern absenceWindow* abscWin;
-extern settingsWindow* popUpWindow;
-extern SignInScreen* myWindow;
-
 class menuBar : public QMenuBar
 {
     Q_OBJECT

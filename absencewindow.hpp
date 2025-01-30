@@ -1,16 +1,15 @@
 #ifndef ABSENCEWINDOW_HPP
 #define ABSENCEWINDOW_HPP
 
-#include "addabsencewindow.hpp"
 #include "qlabel.h"
 #include "qpushbutton.h"
+#include "qtablewidget.h"
+#include "schedule.hpp"
 #include <QWidget>
 #include <QBoxLayout>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
-
-extern addAbsenceWindow *addAbscPopUpWin;
 
 struct AbsenceItem {
     QString userId;
@@ -29,18 +28,28 @@ public:
     absenceWindow(QWidget *parent = nullptr);
     ~absenceWindow();
 
+signals:
+    void scheduleAbsenceOpened();
+
 private:
     QVBoxLayout *mainLayout = new QVBoxLayout;
-    QVBoxLayout *absenceDaily = new QVBoxLayout;
 
-    QHBoxLayout *popisky = new QHBoxLayout;
+    QTableWidget *absenceLayout = new QTableWidget;
 
-    QLabel *date = new QLabel(absenceWindow::tr("date"));
-    QLabel *ok = new QLabel(absenceWindow::tr("Ok"));
-    QLabel *unsolved = new QLabel(absenceWindow::tr("Unsolved"));
-    QLabel *missed = new QLabel(absenceWindow::tr("Missed"));
-    QLabel *late = new QLabel(absenceWindow::tr("Late"));
-    QLabel *school = new QLabel(absenceWindow::tr("School"));
+    QTableWidgetItem *date = new QTableWidgetItem(absenceWindow::tr("date"));
+    QTableWidgetItem *ok = new QTableWidgetItem(absenceWindow::tr("Ok"));
+    QTableWidgetItem *unsolved = new QTableWidgetItem(absenceWindow::tr("Unsolved"));
+    QTableWidgetItem *missed = new QTableWidgetItem(absenceWindow::tr("Missed"));
+    QTableWidgetItem *late = new QTableWidgetItem(absenceWindow::tr("Late"));
+    QTableWidgetItem *school = new QTableWidgetItem(absenceWindow::tr("School"));
+
+    //when functional the vaiable will be = 0 but for now ill sett it
+    //to random number
+    int ammountOfDays = 6;
+
+    //will later be added as a verticalHeaderItem to the
+    //absence adding function
+    QString dateOfAbsence = "DD:MM";
 
     QPushButton *addAbsence = new QPushButton;
 

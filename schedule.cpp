@@ -7,6 +7,7 @@
 
 
 #include "schedule.hpp"
+#include "coordinator.hpp"
 #include "menubar.hpp"
 #include "menuwindow.hpp"
 #include "httpclient.hpp"
@@ -17,10 +18,8 @@
 #include "menuwindow.hpp"
 #include <QTimer>
 
+extern Coordinator* coordinator;
 extern HttpClient* customHttpClient;
-extern menuWindow* menu;
-
-
 
 using namespace std;
 
@@ -46,6 +45,13 @@ Schedule::Schedule(QWidget*parent): QWidget(parent) {
         //updateData();
     //});
 
+    // TODO: Something here
+    /*QObject::connect(abscWin, &absenceWindow::scheduleAbsenceOpened, this, [this]() {
+        editFunctions->hide();
+        date->hide();
+        calendar->setDisabled(false);
+        isAbsenceMode = true;
+    });*/
 
     QObject::connect(api, &BackendlessAPI::loadTableItemsSuccess, this, [&](auto replyValue){
         qDebug() << "Loaded " << replyValue;
@@ -78,11 +84,21 @@ Schedule::Schedule(QWidget*parent): QWidget(parent) {
         }
     });
 
-    //For debuging
+    //in absence add mode
     QObject::connect(calendar, &QTableWidget::cellClicked, this, [&](){
-        qDebug() << calendar->currentRow() << " Row";
-        qDebug() << calendar->currentColumn() << " Column";
-        // qDebug() << calendar->currentItem()->text();
+        auto dayOfWeek = calendar->currentRow();
+        auto hourStart = calendar->currentColumn();
+        auto item = calendar->item(dayOfWeek, hourStart);
+        if (!item) {
+            qDebug() << "ITEM IS NOT SELECTED!!!";
+            notDeletable.show();
+            return;
+        }
+        if(isAbsenceMode == true){
+             coordinator->showInputAbsence();
+        }else{
+            return;
+        }
     });
 
     QObject::connect(deleteItemButton, &QPushButton::clicked, this, [&](){
@@ -90,7 +106,7 @@ Schedule::Schedule(QWidget*parent): QWidget(parent) {
         updateData();
     });
     QObject::connect(editMode, &QPushButton::clicked, this, [&](){
-        popUpWindow->show();
+         coordinator->showSettingsWindow();
     });
     /*QObject::connect(calendar, &QTableWidget::cellClicked, this, [&](){
         if(exeptionForAdd() == true){
@@ -140,6 +156,8 @@ Schedule::Schedule(QWidget*parent): QWidget(parent) {
             calendar->setDisabled(false);
         }
     });
+
+    void scheduleAbsenceOpened();
 
     deleteItemButton->hide();
 
@@ -322,6 +340,11 @@ void Schedule::addItemFunc(int predefinedColumnValue, int predefinedRowValue){
     delete row;
     delete collumn;
 }
+
+/*void Schedule::scheduleAbsenceOpened(){
+    calendar->hide();
+}*/
+
 
 bool Schedule::exeptionForAdd(){
         auto dayOfWeek = calendar->currentRow();

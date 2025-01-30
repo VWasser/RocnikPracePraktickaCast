@@ -3,8 +3,11 @@
 #include <QBoxLayout>
 #include <QPushButton>
 #include "BackendlessQt/BackendlessAPI.hpp"
+#include "coordinator.hpp"
 #include "schedule.hpp"
 #include "signinscreen.hpp"
+
+extern Coordinator* coordinator;
 
 
 registerscreen::registerscreen(QWidget *parent): QWidget(parent),
@@ -24,7 +27,7 @@ registerscreen::registerscreen(QWidget *parent): QWidget(parent),
             }
     });
     QObject::connect(&logIn, &QPushButton::clicked, this, [&]() {
-        myWindow->show();
+        coordinator->showSignInScreen();
         hide();
     });
 

@@ -1,10 +1,14 @@
 #include "signinscreen.hpp"
+#include "coordinator.hpp"
 #include "registerscreen.hpp"
 #include <QApplication>
 #include <QBoxLayout>
 #include <QQuickView>
 #include <QQuickItem>
 #include <QQmlProperty>
+
+extern Coordinator* coordinator;
+
 
 SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
     signInButton(this), registerButton(this), resetPasswordButton(this),
@@ -19,8 +23,7 @@ SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
     });*/
     QObject::connect(&(api->userAPI), &BackendlessUserAPI::signInUserSuccess, this, [&](){
         // api.userAPI.validateUserToken();
-
-        myWindow3->show();
+        coordinator->showMenuWindow();
         hide();
     });
     QObject::connect(&(api->userAPI), &BackendlessUserAPI::signInUserErrorBackendless, this, [&](auto error){
@@ -46,7 +49,7 @@ SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
     });
 
     QObject::connect(&registerButton, &QPushButton::clicked, this, [&]() {
-        myWindow2->show();
+        coordinator->showRegisterScreen();
         hide();
     });
     QObject::connect(&showPassword, &QCheckBox::clicked, this, [&]() {
