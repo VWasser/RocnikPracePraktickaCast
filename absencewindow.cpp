@@ -1,17 +1,16 @@
 #include "absencewindow.hpp"
 #include "BackendlessQt/BackendlessAPI.hpp"
+#include "coordinator.hpp"
 
 extern BackendlessAPI* api;
+extern Coordinator* coordinator;
 
 absenceWindow::absenceWindow(QWidget *parent): QWidget(parent) {
     QObject::connect(addAbsence, &QPushButton::clicked, this, [&](){
-        // TODO: Some window here is displaying here
-        // myWindow3->show();
-         // TODO: Some window here is displaying here
-        /*if(myWindow3->isVisible() == true){
-            emit scheduleAbsenceOpened();
-            hide();
-        }*/
+        coordinator->showInputAbsence();
+        emit scheduleAbsenceOpened();
+        hide();
+
     });
     absenceLayout->setFixedSize(315, 600);
 

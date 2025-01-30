@@ -7,6 +7,7 @@
 
 
 #include "schedule.hpp"
+#include "coordinator.hpp"
 #include "menubar.hpp"
 #include "menuwindow.hpp"
 #include "httpclient.hpp"
@@ -17,6 +18,7 @@
 #include "menuwindow.hpp"
 #include <QTimer>
 
+extern Coordinator* coordinator;
 extern HttpClient* customHttpClient;
 
 using namespace std;
@@ -93,8 +95,7 @@ Schedule::Schedule(QWidget*parent): QWidget(parent) {
             return;
         }
         if(isAbsenceMode == true){
-             // TODO: Some window here is displaying here
-            //absencePopUp->show();
+             coordinator->showInputAbsence();
         }else{
             return;
         }
@@ -105,8 +106,7 @@ Schedule::Schedule(QWidget*parent): QWidget(parent) {
         updateData();
     });
     QObject::connect(editMode, &QPushButton::clicked, this, [&](){
-         // TODO: Some window here is displaying here
-        //popUpWindow->show();
+         coordinator->showSettingsWindow();
     });
     /*QObject::connect(calendar, &QTableWidget::cellClicked, this, [&](){
         if(exeptionForAdd() == true){

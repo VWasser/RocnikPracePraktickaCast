@@ -18,22 +18,19 @@ menuWindow::menuWindow(QWidget*parent): QWidget(parent)  {
     });
     QObject::connect(absenceButton, &QPushButton::clicked, this, [&](){
         emit absencePressed();
-         // TODO: Some window here is displaying here
-        //abscWin->show();
+        coordinator->showAbsenceWindow();
         hide();
 
     });
     QObject::connect(scheduleButton, &QPushButton::clicked, this, [&](){
         emit schedulePressed();
-         // TODO: Some window here is displaying here
-        //myWindow3->show();
+        coordinator->showSchedule();
         hide();
 
     });
     QObject::connect(settingsButton, &QPushButton::clicked, this, [&](){
         emit settingsPressed();
-         // TODO: Some window here is displaying here
-        //popUpWindow->show();
+        coordinator->showSettingsWindow();
         hide();
 
     });
