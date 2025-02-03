@@ -26,6 +26,7 @@ public:
     void showRegisterScreen();
     void showSettingsWindow();
     void showSchedule();
+    void sendAbsenceSchedule();
 
 private:
     QPointer<absenceWindow> abscWin;
@@ -36,6 +37,9 @@ private:
     QPointer<settingsWindow> popUpWindow;
     QPointer<Schedule> myWindow3;
     QPointer<SignInScreen> myWindow;
+
+signals:
+    void scheduleAbsenceSend();
 };
 
 #endif // COORDINATOR_HPP

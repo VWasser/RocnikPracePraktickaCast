@@ -7,7 +7,7 @@ extern Coordinator* coordinator;
 
 absenceWindow::absenceWindow(QWidget *parent): QWidget(parent) {
     QObject::connect(addAbsence, &QPushButton::clicked, this, [&](){
-        coordinator->showInputAbsence();
+        coordinator->showSchedule();
         emit scheduleAbsenceOpened();
         hide();
 

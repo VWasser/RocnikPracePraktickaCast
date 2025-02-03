@@ -1,7 +1,8 @@
 #include "coordinator.hpp"
+#include "absencewindow.hpp"
 #include "BackendlessQt/StandardNetworkManager.hpp"
 #include "httpclient.hpp"
-
+#include <QObject>
 
 Coordinator::Coordinator(QObject *parent) : QObject(parent) {
     myWindow = new SignInScreen();
@@ -12,6 +13,10 @@ Coordinator::Coordinator(QObject *parent) : QObject(parent) {
     gradeWin = new gradesWindow();
     abscWin = new absenceWindow();
     absencePopUp = new inputAbsence();
+
+    QObject::connect(abscWin, &absenceWindow::scheduleAbsenceOpened, this, [&](){
+        emit scheduleAbsenceSend();
+    });
 }
 
 Coordinator::~Coordinator() {}
