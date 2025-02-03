@@ -1,6 +1,6 @@
 #include "mocknetworkmanager.hpp"
 
-void MockNetworkManager::get(QString urlString, const QObject* context, std::function<void(QByteArray)> const& handleRequest) {
+void MockNetworkManager::get(QString urlString, QMap<QString, QString>, const QObject* context, std::function<void(QByteArray)> const& handleRequest) {
     QUrl url(urlString);
 
     qDebug() << urlString;
@@ -25,7 +25,7 @@ void MockNetworkManager::get(QString urlString, const QObject* context, std::fun
     }
 }
 
-void MockNetworkManager::post(QString urlString, PostParams customParams, const QObject* context, std::function<void(QByteArray)> const& handleRequest) {
+void MockNetworkManager::post(QString urlString, QMap<QString, QString>, PostParams customParams, const QObject* context, std::function<void(QByteArray)> const& handleRequest) {
     /*QUrl url(urlString);
     QNetworkRequest request(url);
 
@@ -51,7 +51,7 @@ void MockNetworkManager::post(QString urlString, PostParams customParams, const 
     manager.post(request, params.toUtf8());*/
 }
 
-void MockNetworkManager::put(QString urlString, PostParams customParams, const QObject* context, std::function<void(QByteArray)> const& handleRequest) {
+void MockNetworkManager::put(QString urlString, QMap<QString, QString>, PostParams customParams, const QObject* context, std::function<void(QByteArray)> const& handleRequest) {
     /*QUrl url(urlString);
     QNetworkRequest request(url);
 
@@ -77,7 +77,7 @@ void MockNetworkManager::put(QString urlString, PostParams customParams, const Q
     manager.put(request, params.toUtf8());*/
 }
 
-void MockNetworkManager::deleteResource(QString urlString, const QObject* context, std::function<void(QByteArray)> const& handleRequest) {
+void MockNetworkManager::deleteResource(QString urlString, QMap<QString, QString>, const QObject* context, std::function<void(QByteArray)> const& handleRequest) {
     /*QUrl url(urlString);
     QNetworkRequest request(url);
 
