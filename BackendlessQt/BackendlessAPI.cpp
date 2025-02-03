@@ -30,6 +30,7 @@ void BackendlessAPI::addItemToTable(QString tableName, PostParams params) {
         endpoint + appId + "/" + apiKey + "/data/" + tableName,
         params,
         BERequestMethod::post,
+        {},
         [&](auto replyValue){
             qDebug() << replyValue;
             emit itemAdded();
@@ -46,6 +47,7 @@ void BackendlessAPI::deleteItemFromTable(QString tableName, QString objectId) {
 
         },
         BERequestMethod::deleteResource,
+        {},
         [&](auto replyValue){
             qDebug() << replyValue;
             extractResult<DeletionResult>(
@@ -77,6 +79,7 @@ void BackendlessAPI::loadTableItems(QString tableName, int pageSize, int offset,
 
         },
         BERequestMethod::get,
+        {},
         [&](auto replyValue){
             qDebug() << replyValue;
 #ifdef BACKENDLESS_VARIANT_RESPONSE
@@ -97,6 +100,7 @@ void BackendlessAPI::getItemsCount(QString tableName) {
 
         },
         BERequestMethod::get,
+        {},
         [&](auto replyValue){
             qDebug() << replyValue;
 
