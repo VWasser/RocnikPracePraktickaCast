@@ -35,6 +35,7 @@ class Schedule : public QWidget
     Q_OBJECT
 
 public:
+    friend class Coordinator;
     Schedule(QWidget *parent = nullptr);
     ~Schedule();
     void updateData();
@@ -66,6 +67,7 @@ private:
     void editItemFunc();
     void addItemFunc(int predefinedColumnValue = -1, int predefinedRowValue = -1);
     bool exeptionForAdd();
+    void onSomething();
 
 private:
     QMessageBox notDeletable;

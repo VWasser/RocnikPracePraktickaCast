@@ -80,11 +80,9 @@ Schedule::Schedule(QWidget*parent): QWidget(parent) {
 
     //absence signal recieved
 
+    // Not calling, don't know why
     QObject::connect(coordinator, &Coordinator::sendScheduleAbsence, this, [&](){
-        isAbsenceMode = true;
-        date->hide();
-        editFunctions->hide();
-        calendar->setDisabled(false);
+        this->onSomething();
     });
 
     //in absence add mode
@@ -160,7 +158,7 @@ Schedule::Schedule(QWidget*parent): QWidget(parent) {
         }
     });
 
-    void scheduleAbsenceOpened();
+    // void scheduleAbsenceOpened();
 
     deleteItemButton->hide();
 
@@ -203,6 +201,13 @@ Schedule::Schedule(QWidget*parent): QWidget(parent) {
     date->setText(ctime(&timestamp));
 
     updateData();    
+}
+
+void Schedule::onSomething() {
+    isAbsenceMode = true;
+    date->hide();
+    editFunctions->hide();
+    calendar->setDisabled(false);
 }
 
 void Schedule::setupUI() {

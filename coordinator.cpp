@@ -14,6 +14,7 @@ Coordinator::Coordinator(QObject *parent) : QObject(parent) {
 
     QObject::connect(abscWin, &absenceWindow::scheduleAbsenceOpened, this, [&](){
         emit sendScheduleAbsence();
+        this->myWindow3->onSomething();
     });
 }
 
@@ -27,18 +28,19 @@ void Coordinator::showSignInScreen() {
 void Coordinator::showMenuWindow() {
     if (!menuWin) {
         menuWin = new ::menuWindow();
+        // Next lines are not calling (and it's great, because otherwise we will show the same screens twice)
         QObject::connect(menuWin, &menuWindow::absencePressed, this, [this]() {
-            auto coordinator = static_cast<Coordinator*>(QObject::sender()->parent());
+            auto coordinator = qobject_cast<Coordinator*>(QObject::sender()->parent());
             coordinator->showAbsenceWindow();
             coordinator->menuWin->hide();
         });
         QObject::connect(menuWin, &menuWindow::gradesPressed, this, [this]() {
-            auto coordinator = static_cast<Coordinator*>(QObject::sender()->parent());
+            auto coordinator = qobject_cast<Coordinator*>(QObject::sender()->parent());
             coordinator->showGradesWindow();
             coordinator->menuWin->hide();
         });
         QObject::connect(menuWin, &menuWindow::settingsPressed, this, [this]() {
-            auto coordinator = static_cast<Coordinator*>(QObject::sender()->parent());
+            auto coordinator = qobject_cast<Coordinator*>(QObject::sender()->parent());
             coordinator->showSettingsWindow();
             coordinator->menuWin->hide();
         });
@@ -47,10 +49,12 @@ void Coordinator::showMenuWindow() {
 }
 
 void Coordinator::showAbsenceWindow() {
+    menuWin->hide();
     abscWin->show();
 }
 
 void Coordinator::showGradesWindow() {
+    menuWin->hide();
     gradeWin->show();
 }
 
@@ -63,9 +67,12 @@ void Coordinator::showRegisterScreen() {
 }
 
 void Coordinator::showSettingsWindow() {
+    menuWin->hide();
     popUpWindow->show();
 }
 
 void Coordinator::showSchedule() {
+    absencePopUp->hide();
+    menuWin->hide();
     myWindow3->show();
 }

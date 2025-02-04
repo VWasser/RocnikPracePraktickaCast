@@ -1,6 +1,4 @@
 #include "menuwindow.hpp"
-#include "schedule.hpp"
-#include "signinscreen.hpp"
 #include <QGridLayout>
 #include <QMenuBar>
 #include <QAction>
@@ -14,25 +12,18 @@ menuWindow::menuWindow(QWidget*parent): QWidget(parent)  {
     QObject::connect(gradesButton, &QPushButton::clicked, this, [&](){
         emit gradesPressed();
         coordinator->showGradesWindow();
-        hide();
     });
     QObject::connect(absenceButton, &QPushButton::clicked, this, [&](){
         emit absencePressed();
         coordinator->showAbsenceWindow();
-        hide();
-
     });
     QObject::connect(scheduleButton, &QPushButton::clicked, this, [&](){
         emit schedulePressed();
         coordinator->showSchedule();
-        hide();
-
     });
     QObject::connect(settingsButton, &QPushButton::clicked, this, [&](){
         emit settingsPressed();
         coordinator->showSettingsWindow();
-        hide();
-
     });
 
     row1->addWidget(scheduleButton);
