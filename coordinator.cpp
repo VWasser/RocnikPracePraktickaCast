@@ -12,6 +12,10 @@ Coordinator::Coordinator(QObject *parent) : QObject(parent) {
     gradeWin = new gradesWindow();
     abscWin = new absenceWindow();
     absencePopUp = new inputAbsence();
+
+    QObject::connect(abscWin, &absenceWindow::scheduleAbsenceOpened, this, [&](){
+        emit sendScheduleAbsence();
+    });
 }
 
 Coordinator::~Coordinator() {}

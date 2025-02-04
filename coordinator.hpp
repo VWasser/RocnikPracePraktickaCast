@@ -36,6 +36,8 @@ private:
     QPointer<settingsWindow> popUpWindow;
     QPointer<Schedule> myWindow3;
     QPointer<SignInScreen> myWindow;
+signals:
+    void sendScheduleAbsence();
 };
 
 #endif // COORDINATOR_HPP

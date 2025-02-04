@@ -20,6 +20,7 @@
 
 extern Coordinator* coordinator;
 extern HttpClient* customHttpClient;
+extern absenceWindow* abscWin;
 
 using namespace std;
 
@@ -44,14 +45,6 @@ Schedule::Schedule(QWidget*parent): QWidget(parent) {
     //QObject::connect(api, &BackendlessAPI::deleteItemFromTableSuccess, this, [&](){
         //updateData();
     //});
-
-    // TODO: Something here
-    /*QObject::connect(abscWin, &absenceWindow::scheduleAbsenceOpened, this, [this]() {
-        editFunctions->hide();
-        date->hide();
-        calendar->setDisabled(false);
-        isAbsenceMode = true;
-    });*/
 
     QObject::connect(api, &BackendlessAPI::loadTableItemsSuccess, this, [&](auto replyValue){
         qDebug() << "Loaded " << replyValue;
@@ -82,6 +75,14 @@ Schedule::Schedule(QWidget*parent): QWidget(parent) {
             someItem->setData(Qt::UserRole, scheduleItem.objectId);
             calendar->setItem(scheduleItem.dayOfWeek, scheduleItem.hourStart, someItem);
         }
+    });
+
+    //absence signal recieved
+    QObject::connect(abscWin, &absenceWindow::scheduleAbsenceOpened, this, [this]() {
+        editFunctions->hide();
+        date->hide();
+        calendar->setDisabled(false);
+        isAbsenceMode = true;
     });
 
     //in absence add mode
