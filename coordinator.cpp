@@ -1,7 +1,8 @@
 #include "coordinator.hpp"
+#include "absencewindow.hpp"
 #include "BackendlessQt/StandardNetworkManager.hpp"
 #include "httpclient.hpp"
-
+#include <QObject>
 
 Coordinator::Coordinator(QObject *parent) : QObject(parent) {
     myWindow = new SignInScreen();

@@ -10,6 +10,7 @@
 #include "coordinator.hpp"
 #include "menubar.hpp"
 #include "menuwindow.hpp"
+#include "absencewindow.hpp"
 #include "httpclient.hpp"
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -77,12 +78,20 @@ Schedule::Schedule(QWidget*parent): QWidget(parent) {
         }
     });
 
+<<<<<<< HEAD
     //absence signal recieved
     QObject::connect(abscWin, &absenceWindow::scheduleAbsenceOpened, this, [this]() {
         editFunctions->hide();
         date->hide();
         calendar->setDisabled(false);
         isAbsenceMode = true;
+=======
+    QObject::connect(coordinator, &Coordinator::scheduleAbsenceSend, this, [&](){
+        isAbsenceMode = true;
+        date->hide();
+        editFunctions->hide();
+        calendar->setDisabled(false);
+>>>>>>> main
     });
 
     //in absence add mode
