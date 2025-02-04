@@ -78,20 +78,13 @@ Schedule::Schedule(QWidget*parent): QWidget(parent) {
         }
     });
 
-<<<<<<< HEAD
     //absence signal recieved
-    QObject::connect(abscWin, &absenceWindow::scheduleAbsenceOpened, this, [this]() {
-        editFunctions->hide();
-        date->hide();
-        calendar->setDisabled(false);
-        isAbsenceMode = true;
-=======
-    QObject::connect(coordinator, &Coordinator::scheduleAbsenceSend, this, [&](){
+
+    QObject::connect(coordinator, &Coordinator::sendScheduleAbsence, this, [&](){
         isAbsenceMode = true;
         date->hide();
         editFunctions->hide();
         calendar->setDisabled(false);
->>>>>>> main
     });
 
     //in absence add mode
