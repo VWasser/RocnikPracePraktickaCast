@@ -30,12 +30,14 @@ public:
     void signInUser(QString, QString);
     void validateUserToken();
     void restorePassword(QString);
+    void logout();
     QString userToken();
 
 private:
     QString tokenFilePath();
     void readTokenFromDisk();
     void saveTokenOnDisk();
+    void removeTokenFromDisk();
 
 signals:
     void registerUserResult();

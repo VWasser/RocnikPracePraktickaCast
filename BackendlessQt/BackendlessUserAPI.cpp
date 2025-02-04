@@ -32,6 +32,7 @@ void BackendlessUserAPI::registerUser(BackendlessRegisterUserRepresentable& user
         endpoint + appId + "/" + apiKey + "/users/register",
         user.getAllParams(),
         BERequestMethod::post,
+        {},
         [&](auto replyValue){
             qDebug() << replyValue;
 
@@ -50,6 +51,7 @@ void BackendlessUserAPI::signInUser(QString login, QString password) {
             {"password", new StringPostParam(password)}
         },
         BERequestMethod::post,
+        {},
         [&](auto replyValue){
             qDebug() << replyValue;
 
@@ -109,6 +111,11 @@ void BackendlessUserAPI::saveTokenOnDisk() {
     file.close();
 }
 
+void BackendlessUserAPI::removeTokenFromDisk() {
+    QFile file(tokenFilePath());
+    file.remove();
+}
+
 void BackendlessUserAPI::validateUserToken() {
     request(
         networkAccessManager,
@@ -118,6 +125,7 @@ void BackendlessUserAPI::validateUserToken() {
 
         },
         BERequestMethod::get,
+        {},
         [&](auto replyValue) {
             qDebug() << replyValue;
 
@@ -151,8 +159,30 @@ void BackendlessUserAPI::restorePassword(QString email) {
 
         },
         BERequestMethod::get,
+        {},
         [&](auto replyValue){
             qDebug() << replyValue;
+
+            emit restorePasswordSuccess(replyValue);
+        }
+    );
+}
+
+void BackendlessUserAPI::logout() {
+    request(
+        networkAccessManager,
+        this,
+        endpoint + appId + "/" + apiKey + "/users/logout",
+        {
+
+        },
+        BERequestMethod::get,
+        {{"user-token", userTokenValue}},
+        [&](auto replyValue){
+            qDebug() << replyValue;
+
+            userTokenValue = "";
+            removeTokenFromDisk();
 
             emit restorePasswordSuccess(replyValue);
         }
