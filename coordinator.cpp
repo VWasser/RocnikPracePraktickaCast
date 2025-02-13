@@ -26,25 +26,6 @@ void Coordinator::showSignInScreen() {
 
 
 void Coordinator::showMenuWindow() {
-    if (!menuWin) {
-        menuWin = new ::menuWindow();
-        // Next lines are not calling (and it's great, because otherwise we will show the same screens twice)
-        QObject::connect(menuWin, &menuWindow::absencePressed, this, [this]() {
-            auto coordinator = qobject_cast<Coordinator*>(QObject::sender()->parent());
-            coordinator->showAbsenceWindow();
-            coordinator->menuWin->hide();
-        });
-        QObject::connect(menuWin, &menuWindow::gradesPressed, this, [this]() {
-            auto coordinator = qobject_cast<Coordinator*>(QObject::sender()->parent());
-            coordinator->showGradesWindow();
-            coordinator->menuWin->hide();
-        });
-        QObject::connect(menuWin, &menuWindow::settingsPressed, this, [this]() {
-            auto coordinator = qobject_cast<Coordinator*>(QObject::sender()->parent());
-            coordinator->showSettingsWindow();
-            coordinator->menuWin->hide();
-        });
-    }
     menuWin->show();
 }
 
