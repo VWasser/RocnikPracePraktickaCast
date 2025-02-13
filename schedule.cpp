@@ -77,7 +77,9 @@ Schedule::Schedule(QWidget*parent): QWidget(parent) {
     });
 
     //absence signal recieved
-
+    QObject::connect(coordinator, &Coordinator::sendScheduleAbsence, this, [&](){
+        this->onSomething();
+    });
 
     //in absence add mode
     QObject::connect(calendar, &QTableWidget::cellClicked, this, [&](){

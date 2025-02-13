@@ -5,18 +5,12 @@
 Coordinator::Coordinator(QObject *parent) : QObject(parent) {
     myWindow = new SignInScreen();
     myWindow2 = new registerscreen();
-    myWindow3 = new Schedule();
     popUpWindow = new settingsWindow();
-    menuWin = new menuWindow();
     gradeWin = new gradesWindow();
     abscWin = new absenceWindow();
     absencePopUp = new inputAbsence();
 
     QObject::connect(abscWin, &absenceWindow::scheduleAbsenceOpened, this, &Coordinator::sendScheduleAbsence);
-
-    QObject::connect(this, &Coordinator::sendScheduleAbsence, myWindow3, [&](){
-        myWindow3->onSomething();
-    });
 }
 
 Coordinator::~Coordinator() {}
@@ -27,11 +21,16 @@ void Coordinator::showSignInScreen() {
 
 
 void Coordinator::showMenuWindow() {
+    if (!menuWin) {
+        menuWin = new menuWindow();
+    }
     menuWin->show();
 }
 
 void Coordinator::showAbsenceWindow() {
     menuWin->hide();
+    //menuWin->deleteLater();
+    //menuWin = nullptr;
     abscWin->show();
 }
 
@@ -54,7 +53,14 @@ void Coordinator::showSettingsWindow() {
 }
 
 void Coordinator::showSchedule() {
+    abscWin->hide();
     absencePopUp->hide();
-    menuWin->hide();
+    hideAllScreenExcept();
+    //menuWin->hide();
+    //menuWin->deleteLater();
+    //menuWin = nullptr;
+    if (!myWindow3) {
+        myWindow3 = new Schedule();
+    }
     myWindow3->show();
 }

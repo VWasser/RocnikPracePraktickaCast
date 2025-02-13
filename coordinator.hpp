@@ -1,7 +1,6 @@
 #ifndef COORDINATOR_HPP
 #define COORDINATOR_HPP
 
-#include "BackendlessQt/BackendlessAPI.hpp"
 #include "absencewindow.hpp"
 #include "gradeswindow.hpp"
 #include "httpclient.hpp"
@@ -10,6 +9,10 @@
 #include "signinscreen.hpp"
 #include <QObject>
 #include <QPointer>
+
+enum class Screen {
+
+};
 
 class Coordinator : public QObject {
     Q_OBJECT
