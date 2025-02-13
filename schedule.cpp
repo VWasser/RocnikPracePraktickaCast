@@ -9,14 +9,12 @@
 #include "schedule.hpp"
 #include "coordinator.hpp"
 #include "menubar.hpp"
-#include "menuwindow.hpp"
 #include "absencewindow.hpp"
 #include "httpclient.hpp"
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
 #include "BackendlessQt/BackendlessAPI.hpp"
-#include "menuwindow.hpp"
 #include <QTimer>
 
 extern Coordinator* coordinator;
@@ -80,10 +78,6 @@ Schedule::Schedule(QWidget*parent): QWidget(parent) {
 
     //absence signal recieved
 
-    // Not calling, don't know why
-    QObject::connect(coordinator, &Coordinator::sendScheduleAbsence, this, [&](){
-        this->onSomething();
-    });
 
     //in absence add mode
     QObject::connect(calendar, &QTableWidget::cellClicked, this, [&](){

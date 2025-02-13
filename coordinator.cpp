@@ -12,9 +12,10 @@ Coordinator::Coordinator(QObject *parent) : QObject(parent) {
     abscWin = new absenceWindow();
     absencePopUp = new inputAbsence();
 
-    QObject::connect(abscWin, &absenceWindow::scheduleAbsenceOpened, this, [&](){
-        emit sendScheduleAbsence();
-        this->myWindow3->onSomething();
+    QObject::connect(abscWin, &absenceWindow::scheduleAbsenceOpened, this, &Coordinator::sendScheduleAbsence);
+
+    QObject::connect(this, &Coordinator::sendScheduleAbsence, myWindow3, [&](){
+        myWindow3->onSomething();
     });
 }
 
