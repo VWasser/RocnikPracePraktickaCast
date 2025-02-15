@@ -32,7 +32,7 @@ public:
     void sendAbsenceSchedule();
 
 private:
-    QPointer<absenceWindow> abscWin;
+    QSharedPointer<absenceWindow> abscWin;
     QPointer<gradesWindow> gradeWin;
     QPointer<inputAbsence> absencePopUp;
     QPointer<menuWindow> menuWin;

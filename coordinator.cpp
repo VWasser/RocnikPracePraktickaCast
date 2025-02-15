@@ -7,10 +7,10 @@ Coordinator::Coordinator(QObject *parent) : QObject(parent) {
     myWindow2 = new registerscreen();
     popUpWindow = new settingsWindow();
     gradeWin = new gradesWindow();
-    abscWin = new absenceWindow();
+    abscWin = QSharedPointer<absenceWindow>(new absenceWindow, &QObject::deleteLater);
     absencePopUp = new inputAbsence();
 
-    QObject::connect(abscWin, &absenceWindow::scheduleAbsenceOpened, this, &Coordinator::sendScheduleAbsence);
+    QObject::connect(abscWin.get(), &absenceWindow::scheduleAbsenceOpened, this, &Coordinator::sendScheduleAbsence);
 }
 
 Coordinator::~Coordinator() {}
