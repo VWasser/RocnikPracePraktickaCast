@@ -3,8 +3,8 @@
 #include <QObject>
 
 Coordinator::Coordinator(QObject *parent) : QObject(parent) {
-    myWindow = new SignInScreen();
-    myWindow2 = new registerscreen();
+    signInWindow = new SignInScreen();
+    registerWindow = new registerscreen();
     popUpWindow = new settingsWindow();
     gradeWin = new gradesWindow();
     abscWin = QSharedPointer<absenceWindow>(new absenceWindow, &QObject::deleteLater);
@@ -16,7 +16,7 @@ Coordinator::Coordinator(QObject *parent) : QObject(parent) {
 Coordinator::~Coordinator() {}
 
 void Coordinator::showSignInScreen() {
-    myWindow->show();
+    signInWindow->show();
 }
 
 
@@ -44,7 +44,7 @@ void Coordinator::showInputAbsence() {
 }
 
 void Coordinator::showRegisterScreen() {
-    myWindow2->show();
+    registerWindow->show();
 }
 
 void Coordinator::showSettingsWindow() {
@@ -58,8 +58,8 @@ void Coordinator::showSchedule() {
     //menuWin->hide();
     //menuWin->deleteLater();
     //menuWin = nullptr;
-    if (!myWindow3) {
-        myWindow3 = new Schedule();
+    if (!scheduleWindow) {
+        scheduleWindow = new Schedule();
     }
-    myWindow3->show();
+    scheduleWindow->show();
 }
