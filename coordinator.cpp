@@ -55,7 +55,6 @@ void Coordinator::showSettingsWindow() {
 void Coordinator::showSchedule() {
     abscWin->hide();
     absencePopUp->hide();
-    hideAllScreenExcept();
     //menuWin->hide();
     //menuWin->deleteLater();
     //menuWin = nullptr;
