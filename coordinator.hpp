@@ -11,7 +11,13 @@
 #include <QPointer>
 
 enum class Screen {
-
+    SignIn,
+    Register,
+    Schedule,
+    Menu,
+    Absence,
+    Grades,
+    Settings
 };
 
 class Coordinator : public QObject {
@@ -36,10 +42,10 @@ private:
     QPointer<gradesWindow> gradeWin;
     QPointer<inputAbsence> absencePopUp;
     QPointer<menuWindow> menuWin;
-    QPointer<registerscreen> myWindow2;
+    QPointer<registerscreen> registerWindow;
     QPointer<settingsWindow> popUpWindow;
-    QPointer<Schedule> myWindow3;
-    QPointer<SignInScreen> myWindow;
+    QPointer<Schedule> scheduleWindow;
+    QPointer<SignInScreen> signInWindow;
 
 signals:
     void sendScheduleAbsence();
