@@ -16,6 +16,7 @@ enum class Screen {
     Schedule,
     Menu,
     Absence,
+    InputAbsence,
     Grades,
     Settings
 };
@@ -37,8 +38,16 @@ public:
     void showSchedule();
     void sendAbsenceSchedule();
 
+public:
+    void hideAllScreens(Screen exeption);
+
 private:
-    QSharedPointer<absenceWindow> abscWin;
+    QMap<Screen, QWidget*>windows;
+
+private:
+    //had to refrain from using shared pointer,
+    //it was making an error while making hide all function
+    QPointer<absenceWindow> abscWin;
     QPointer<gradesWindow> gradeWin;
     QPointer<inputAbsence> absencePopUp;
     QPointer<menuWindow> menuWin;
@@ -49,6 +58,7 @@ private:
 
 signals:
     void sendScheduleAbsence();
+
 
 };
 
