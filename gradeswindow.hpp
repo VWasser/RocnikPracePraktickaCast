@@ -1,6 +1,7 @@
 #ifndef GRADESWINDOW_HPP
 #define GRADESWINDOW_HPP
 
+#include "qboxlayout.h"
 #include <QWidget>
 
 class gradesWindow : public QWidget
@@ -9,6 +10,8 @@ class gradesWindow : public QWidget
 public:
     gradesWindow(QWidget *parent = nullptr);
     ~gradesWindow();
+private:
+    QVBoxLayout *mainLayout = new QVBoxLayout;
 };
 
 

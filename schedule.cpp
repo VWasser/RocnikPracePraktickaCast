@@ -177,8 +177,7 @@ Schedule::Schedule(QWidget*parent): QWidget(parent) {
     dateLay->addWidget(editFunctions);
     dateLay->addWidget(deleteItemButton);
 
-    auto bar = new menuBar();
-    bar->menuBarStup(table);
+    coordinator->implementMenuBar(table);
 
     table->addLayout(dateLay);
     dateLay->addSpacing(calendar->width()/2);

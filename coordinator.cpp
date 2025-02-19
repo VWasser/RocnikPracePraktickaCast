@@ -1,5 +1,6 @@
 #include "coordinator.hpp"
 #include "absencewindow.hpp"
+#include "menubar.hpp"
 #include <QObject>
 
 Coordinator::Coordinator(QObject *parent) : QObject(parent) {
@@ -79,4 +80,8 @@ void Coordinator::hideAllScreens(Screen exeption){
             qDebug()<<  "HIDING" << &i.key();
         }
     }
+}
+void Coordinator::implementMenuBar(QBoxLayout *layout){
+    auto bar = new menuBar();
+    bar->menuBarStup(layout);
 }

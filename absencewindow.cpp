@@ -28,6 +28,8 @@ absenceWindow::absenceWindow(QWidget *parent): QWidget(parent) {
     absenceLayout->setHorizontalHeaderItem(4,late);
     absenceLayout->setHorizontalHeaderItem(5,school);
 
+    coordinator->implementMenuBar(mainLayout);
+
 
     mainLayout->addWidget(addAbsence);
     mainLayout->addWidget(absenceLayout);

@@ -37,9 +37,8 @@ public:
     void showSettingsWindow();
     void showSchedule();
     void sendAbsenceSchedule();
-
-public:
     void hideAllScreens(Screen exeption);
+    void implementMenuBar(QBoxLayout *layout);
 
 private:
     QMap<Screen, QWidget*>windows;
