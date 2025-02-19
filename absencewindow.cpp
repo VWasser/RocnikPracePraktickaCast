@@ -9,8 +9,8 @@ absenceWindow::absenceWindow(QWidget *parent): QWidget(parent) {
     QObject::connect(addAbsence, &QPushButton::clicked, this, [&](){
         coordinator->showSchedule();
         emit scheduleAbsenceOpened();
-        hide();
-
+        // This SHOULD be hidden, but not sure, if I break something here now(
+        // hide();
     });
     absenceLayout->setFixedSize(315, 600);
 
@@ -27,6 +27,8 @@ absenceWindow::absenceWindow(QWidget *parent): QWidget(parent) {
     absenceLayout->setHorizontalHeaderItem(3,missed);
     absenceLayout->setHorizontalHeaderItem(4,late);
     absenceLayout->setHorizontalHeaderItem(5,school);
+
+    coordinator->implementMenuBar(mainLayout);
 
 
     mainLayout->addWidget(addAbsence);

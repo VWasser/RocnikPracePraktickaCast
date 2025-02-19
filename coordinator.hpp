@@ -1,7 +1,6 @@
 #ifndef COORDINATOR_HPP
 #define COORDINATOR_HPP
 
-#include "BackendlessQt/BackendlessAPI.hpp"
 #include "absencewindow.hpp"
 #include "gradeswindow.hpp"
 #include "httpclient.hpp"
@@ -10,6 +9,17 @@
 #include "signinscreen.hpp"
 #include <QObject>
 #include <QPointer>
+
+enum class Screen {
+    SignIn,
+    Register,
+    Schedule,
+    Menu,
+    Absence,
+    InputAbsence,
+    Grades,
+    Settings
+};
 
 class Coordinator : public QObject {
     Q_OBJECT
@@ -27,19 +37,28 @@ public:
     void showSettingsWindow();
     void showSchedule();
     void sendAbsenceSchedule();
+    void hideAllScreens(Screen exeption);
+    void implementMenuBar(QBoxLayout *layout);
 
 private:
+    QMap<Screen, QWidget*>windows;
+
+private:
+    //had to refrain from using shared pointer,
+    //it was making an error while making hide all function
     QPointer<absenceWindow> abscWin;
     QPointer<gradesWindow> gradeWin;
     QPointer<inputAbsence> absencePopUp;
     QPointer<menuWindow> menuWin;
-    QPointer<registerscreen> myWindow2;
+    QPointer<registerscreen> registerWindow;
     QPointer<settingsWindow> popUpWindow;
-    QPointer<Schedule> myWindow3;
-    QPointer<SignInScreen> myWindow;
+    QPointer<Schedule> scheduleWindow;
+    QPointer<SignInScreen> signInWindow;
 
 signals:
-    void scheduleAbsenceSend();
+    void sendScheduleAbsence();
+
+
 };
 
 #endif // COORDINATOR_HPP

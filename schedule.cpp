@@ -9,19 +9,18 @@
 #include "schedule.hpp"
 #include "coordinator.hpp"
 #include "menubar.hpp"
-#include "menuwindow.hpp"
 #include "absencewindow.hpp"
 #include "httpclient.hpp"
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
 #include "BackendlessQt/BackendlessAPI.hpp"
-#include "menuwindow.hpp"
 #include <QTimer>
 
 extern Coordinator* coordinator;
 extern HttpClient* customHttpClient;
 extern absenceWindow* abscWin;
+
 using namespace std;
 
 enum Action {
@@ -77,11 +76,9 @@ Schedule::Schedule(QWidget*parent): QWidget(parent) {
         }
     });
 
-    QObject::connect(coordinator, &Coordinator::scheduleAbsenceSend, this, [&](){
-        isAbsenceMode = true;
-        date->hide();
-        editFunctions->hide();
-        calendar->setDisabled(false);
+    //absence signal recieved
+    QObject::connect(coordinator, &Coordinator::sendScheduleAbsence, this, [&](){
+        this->onSomething();
     });
 
     //in absence add mode
@@ -157,7 +154,7 @@ Schedule::Schedule(QWidget*parent): QWidget(parent) {
         }
     });
 
-    void scheduleAbsenceOpened();
+    // void scheduleAbsenceOpened();
 
     deleteItemButton->hide();
 
@@ -180,8 +177,7 @@ Schedule::Schedule(QWidget*parent): QWidget(parent) {
     dateLay->addWidget(editFunctions);
     dateLay->addWidget(deleteItemButton);
 
-    auto bar = new menuBar();
-    bar->menuBarStup(table);
+    coordinator->implementMenuBar(table);
 
     table->addLayout(dateLay);
     dateLay->addSpacing(calendar->width()/2);
@@ -200,6 +196,13 @@ Schedule::Schedule(QWidget*parent): QWidget(parent) {
     date->setText(ctime(&timestamp));
 
     updateData();    
+}
+
+void Schedule::onSomething() {
+    isAbsenceMode = true;
+    date->hide();
+    editFunctions->hide();
+    calendar->setDisabled(false);
 }
 
 void Schedule::setupUI() {
