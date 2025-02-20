@@ -25,7 +25,7 @@ Coordinator::Coordinator(QObject *parent) : QObject(parent) {
 Coordinator::~Coordinator() {}
 
 void Coordinator::showSignInScreen() {
-    signInWindow->show();
+    hideAllScreens(Screen::SignIn);
 }
 
 
@@ -50,20 +50,14 @@ void Coordinator::showInputAbsence() {
 }
 
 void Coordinator::showRegisterScreen() {
-    registerWindow->show();
+    hideAllScreens(Screen::Register);
 }
 
 void Coordinator::showSettingsWindow() {
-    menuWin->hide();
-    popUpWindow->show();
+    hideAllScreens(Screen::Settings);
 }
 
 void Coordinator::showSchedule() {
-    abscWin->hide();
-    absencePopUp->hide();
-    //menuWin->hide();
-    //menuWin->deleteLater();
-    //menuWin = nullptr;
     if (!scheduleWindow) {
         scheduleWindow = new Schedule();
         windows[Screen::Schedule] = scheduleWindow;
