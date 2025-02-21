@@ -39,7 +39,9 @@ public:
     void sendAbsenceSchedule();
     void hideAllScreens(Screen exeption);
     void implementMenuBar(QBoxLayout *layout);
-
+public:
+    int hourStart;
+    int dayOfWeek;
 private:
     QMap<Screen, QWidget*>windows;
 
@@ -57,7 +59,7 @@ private:
 
 signals:
     void sendScheduleAbsence();
-
+    void sendImputAbsence();
 
 };
 

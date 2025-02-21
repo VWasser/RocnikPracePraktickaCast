@@ -39,7 +39,6 @@ public:
     Schedule(QWidget *parent = nullptr);
     ~Schedule();
     void updateData();
-
 private:
     void setupUI();
 
@@ -68,6 +67,8 @@ private:
     void addItemFunc(int predefinedColumnValue = -1, int predefinedRowValue = -1);
     bool exeptionForAdd();
     void onSomething();
+signals:
+    void sendImputAbsenceData();
 
 private:
     QMessageBox notDeletable;

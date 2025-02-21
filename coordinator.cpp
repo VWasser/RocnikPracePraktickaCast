@@ -20,6 +20,8 @@ Coordinator::Coordinator(QObject *parent) : QObject(parent) {
     windows[Screen::InputAbsence] = absencePopUp;
 
     QObject::connect(abscWin.get(), &absenceWindow::scheduleAbsenceOpened, this, &Coordinator::sendScheduleAbsence);
+    QObject::connect(scheduleWindow.get(), &Schedule::sendImputAbsenceData, this, &Coordinator::sendImputAbsence);
+
 }
 
 Coordinator::~Coordinator() {}

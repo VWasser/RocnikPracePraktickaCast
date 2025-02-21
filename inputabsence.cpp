@@ -8,6 +8,10 @@ inputAbsence::inputAbsence(QWidget *parent): QWidget(parent) {
     QObject::connect(addAbsence, &QPushButton::clicked,this, [](){
         coordinator->showSchedule();
     });
+    QObject::connect(coordinator, &Coordinator::sendImputAbsence,this, [=](){
+        dayBox->setText(QString::number(coordinator->dayOfWeek));
+        hourBox->setText(QString::number(coordinator->hourStart));
+    });
 
     setLayout(mainLayout);
     nameLine->addWidget(nameLabel);
