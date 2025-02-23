@@ -14,10 +14,10 @@ Coordinator::Coordinator(QObject *parent) : QObject(parent) {
 
     windows[Screen::SignIn] = signInWindow;
     windows[Screen::Register] = registerWindow;
-    /*windows[Screen::Settings] = popUpWindow;
+    windows[Screen::Settings] = popUpWindow;
     windows[Screen::Absence] = abscWin;
     windows[Screen::Grades] = gradeWin;
-    windows[Screen::InputAbsence] = absencePopUp;*/
+    windows[Screen::InputAbsence] = absencePopUp;
 
     QObject::connect(abscWin.get(), &absenceWindow::scheduleAbsenceOpened, this, &Coordinator::sendScheduleAbsence);
     QObject::connect(scheduleWindow.get(), &Schedule::sendImputAbsenceData, this, &Coordinator::sendImputAbsence);
@@ -34,7 +34,7 @@ void Coordinator::showSignInScreen() {
 void Coordinator::showMenuWindow() {
     if (!menuWin) {
         menuWin = new menuWindow();
-        // windows[Screen::Menu] = menuWin;
+        windows[Screen::Menu] = menuWin;
     }
     hideAllScreens(Screen::Menu);
 }
@@ -62,7 +62,7 @@ void Coordinator::showSettingsWindow() {
 void Coordinator::showSchedule() {
     if (!scheduleWindow) {
         scheduleWindow = new Schedule();
-        // windows[Screen::Schedule] = scheduleWindow;
+        windows[Screen::Schedule] = scheduleWindow;
     }
     hideAllScreens(Screen::Schedule);
 }

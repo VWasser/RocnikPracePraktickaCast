@@ -3,7 +3,7 @@
 
 extern Coordinator *coordinator;
 
-inputAbsence::inputAbsence(QWidget *parent): QWidget(parent) {
+inputAbsence::inputAbsence(QWidget *parent): ScreenWidget(parent) {
 
     QObject::connect(addAbsence, &QPushButton::clicked,this, [](){
         coordinator->showSchedule();
@@ -35,3 +35,7 @@ inputAbsence::inputAbsence(QWidget *parent): QWidget(parent) {
 
 }
 inputAbsence::~inputAbsence(){}
+
+void inputAbsence::configure(ShowBasicData*) {
+
+}

@@ -7,7 +7,7 @@
 
 extern Coordinator* coordinator;
 
-menuWindow::menuWindow(QWidget*parent): QWidget(parent)  {
+menuWindow::menuWindow(QWidget*parent): ScreenWidget(parent)  {
 
     QObject::connect(gradesButton, &QPushButton::clicked, this, [&](){
         emit gradesPressed();
@@ -37,6 +37,8 @@ menuWindow::menuWindow(QWidget*parent): QWidget(parent)  {
     setLayout(mainLayout);
 }
 
-
-
 menuWindow::~menuWindow(){};
+
+void menuWindow::configure(ShowBasicData*) {
+
+}

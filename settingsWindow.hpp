@@ -3,14 +3,17 @@
 
 #include "qboxlayout.h"
 #include <QWidget>
+#include "screenwidget.hpp"
 
-class settingsWindow: public QWidget
+class settingsWindow: public ScreenWidget
 {
     Q_OBJECT
 
 public:
     settingsWindow(QWidget *parent = nullptr);
     ~settingsWindow();
+    void configure(ShowBasicData*) override;
+
 private:
     QVBoxLayout *mainLayout = new QVBoxLayout;
 };

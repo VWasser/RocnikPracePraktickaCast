@@ -5,15 +5,15 @@
 #include <QWidget>
 #include <QGridLayout>
 #include <QMenuBar>
+#include "screenwidget.hpp"
 
-
-class menuWindow : public QWidget
+class menuWindow : public ScreenWidget
 {
     Q_OBJECT
 public:
     menuWindow(QWidget *parent = nullptr);
     ~menuWindow();
-
+    void configure(ShowBasicData*) override;
 
 private:
     QVBoxLayout *mainLayout = new QVBoxLayout;

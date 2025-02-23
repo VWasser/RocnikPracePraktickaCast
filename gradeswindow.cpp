@@ -3,11 +3,14 @@
 
 extern Coordinator *coordinator;
 
-gradesWindow::gradesWindow(QWidget *parent):QWidget(parent) {
+gradesWindow::gradesWindow(QWidget *parent): ScreenWidget(parent) {
     coordinator->implementMenuBar(mainLayout);
     setLayout(mainLayout);
 
 }
 
-
 gradesWindow::~gradesWindow(){}
+
+void gradesWindow::configure(ShowBasicData*) {
+
+}

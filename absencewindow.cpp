@@ -5,7 +5,7 @@
 extern BackendlessAPI* api;
 extern Coordinator* coordinator;
 
-absenceWindow::absenceWindow(QWidget *parent): QWidget(parent) {
+absenceWindow::absenceWindow(QWidget *parent): ScreenWidget(parent) {
     QObject::connect(addAbsence, &QPushButton::clicked, this, [&](){
         coordinator->showSchedule();
         emit scheduleAbsenceOpened();
@@ -62,3 +62,7 @@ absenceWindow::absenceWindow(QWidget *parent): QWidget(parent) {
 
 
 absenceWindow::~absenceWindow(){}
+
+void absenceWindow::configure(ShowBasicData*) {
+
+}

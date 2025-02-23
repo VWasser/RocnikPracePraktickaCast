@@ -6,13 +6,16 @@
 #include <QLabel>
 #include <QPushButton>
 #include <QBoxLayout>
+#include "screenwidget.hpp"
 
-class inputAbsence : public QWidget
+class inputAbsence : public ScreenWidget
 {
     Q_OBJECT
 public:
     inputAbsence(QWidget *parent = nullptr);
     ~inputAbsence();
+    void configure(ShowBasicData*) override;
+
 private:
     QVBoxLayout *mainLayout = new QVBoxLayout;
     QHBoxLayout *nameLine = new QHBoxLayout;

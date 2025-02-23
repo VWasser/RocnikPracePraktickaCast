@@ -13,6 +13,7 @@
 #include "qmessagebox.h"
 #include <ctime>
 #include <QComboBox>
+#include "screenwidget.hpp"
 
 extern BackendlessAPI* api;
 
@@ -30,7 +31,7 @@ struct ScheduleItem {
     }
 };
 
-class Schedule : public QWidget
+class Schedule : public ScreenWidget
 {
     Q_OBJECT
 
@@ -39,6 +40,8 @@ public:
     Schedule(QWidget *parent = nullptr);
     ~Schedule();
     void updateData();
+    void configure(ShowBasicData*) override;
+
 private:
     void setupUI();
 
