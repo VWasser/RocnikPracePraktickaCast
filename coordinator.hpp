@@ -3,10 +3,11 @@
 
 #include "absencewindow.hpp"
 #include "gradeswindow.hpp"
-#include "httpclient.hpp"
+#include "registerscreen.hpp"
 #include "menuwindow.hpp"
 #include "settingsWindow.hpp"
 #include "signinscreen.hpp"
+#include "screenwidget.hpp"
 #include <QObject>
 #include <QPointer>
 
@@ -37,13 +38,13 @@ public:
     void showSettingsWindow();
     void showSchedule();
     void sendAbsenceSchedule();
-    void hideAllScreens(Screen exeption);
+    void hideAllScreens(Screen exeption, ShowBasicData* data = new ShowBasicData());
     void implementMenuBar(QBoxLayout *layout);
 public:
     int hourStart;
     int dayOfWeek;
 private:
-    QMap<Screen, QWidget*>windows;
+    QMap<Screen, ScreenWidget*>windows;
 
 private:
     //had to refrain from using shared pointer,

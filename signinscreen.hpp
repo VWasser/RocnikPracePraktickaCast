@@ -6,18 +6,19 @@
 #include <QLineEdit>
 #include <QLabel>
 #include <QMessageBox>
-#include "BackendlessQt/BackendlessAPI.hpp"
+#include <QCheckBox>
 #include "qboxlayout.h"
-#include "registerscreen.hpp"
-#include "schedule.hpp"
+#include "screenwidget.hpp"
 
-class SignInScreen: public QWidget
+class SignInScreen: public ScreenWidget
 {
     Q_OBJECT
 
 public:
     SignInScreen(QWidget *parent = nullptr);
     ~SignInScreen();
+
+    void configure(ShowBasicData*) override;
 
 private:
     //UI

@@ -10,7 +10,7 @@
 extern Coordinator* coordinator;
 
 
-SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
+SignInScreen::SignInScreen(QWidget *parent): ScreenWidget(parent),
     signInButton(this), registerButton(this), resetPasswordButton(this),
     errorWin(this), signInLayout(this)
 {
@@ -108,6 +108,10 @@ SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
 }
 
 SignInScreen::~SignInScreen() {
+
+}
+
+void SignInScreen::configure(ShowBasicData*) {
 
 }
 
