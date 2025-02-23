@@ -36,6 +36,7 @@ inputAbsence::inputAbsence(QWidget *parent): ScreenWidget(parent) {
 }
 inputAbsence::~inputAbsence(){}
 
-void inputAbsence::configure(ShowBasicData*) {
-
+void inputAbsence::configure(ShowBasicData* data) {
+    InputAbsenceData* castedData = (InputAbsenceData*)data;
+    nameLabel->setText(castedData->name);
 }

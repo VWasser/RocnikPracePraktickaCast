@@ -47,8 +47,8 @@ void Coordinator::showGradesWindow() {
     hideAllScreens(Screen::Grades);
 }
 
-void Coordinator::showInputAbsence() {
-    hideAllScreens(Screen::InputAbsence);
+void Coordinator::showInputAbsence(InputAbsenceData* data) {
+    hideAllScreens(Screen::InputAbsence, data);
 }
 
 void Coordinator::showRegisterScreen() {

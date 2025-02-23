@@ -22,6 +22,12 @@ enum class Screen {
     Settings
 };
 
+struct InputAbsenceData: ShowBasicData {
+    QString name;
+
+    InputAbsenceData(QString _name): name(_name) { }
+};
+
 class Coordinator : public QObject {
     Q_OBJECT
 
@@ -33,7 +39,7 @@ public:
     void showMenuWindow();
     void showAbsenceWindow();
     void showGradesWindow();
-    void showInputAbsence();
+    void showInputAbsence(InputAbsenceData* data);
     void showRegisterScreen();
     void showSettingsWindow();
     void showSchedule();

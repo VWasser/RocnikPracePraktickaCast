@@ -7,10 +7,6 @@ struct ShowBasicData {
 
 };
 
-/*struct InputAbsenceData: ShowBasicData {
-
-};*/
-
 class ScreenWidget: public QWidget {
     Q_OBJECT
 
