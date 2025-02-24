@@ -83,16 +83,16 @@ Schedule::Schedule(QWidget*parent): ScreenWidget(parent) {
 
     //in absence add mode
     QObject::connect(calendar, &QTableWidget::cellClicked, this, [&](){
-        coordinator->dayOfWeek = calendar->currentRow();
-        coordinator->hourStart = calendar->currentColumn();
-        auto item = calendar->item(coordinator->dayOfWeek, coordinator->hourStart);
+        dayOfWeek = calendar->currentRow();
+        hourStart = calendar->currentColumn();
+        auto item = calendar->item(dayOfWeek, hourStart);
         if (!item) {
             qDebug() << "ITEM IS NOT SELECTED!!!";
             notDeletable.show();
             return;
         }
         if(isAbsenceMode == true){
-            coordinator->showInputAbsence(new InputAbsenceData("Petr"));
+            coordinator->showInputAbsence(new InputAbsenceData(dayOfWeek));
             emit sendImputAbsenceData();
         }else{
             return;

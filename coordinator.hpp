@@ -23,9 +23,11 @@ enum class Screen {
 };
 
 struct InputAbsenceData: ShowBasicData {
-    QString name;
+    int day;
+    int hour;
 
-    InputAbsenceData(QString _name): name(_name) { }
+
+    InputAbsenceData(int _day): day(_day) { }
 };
 
 class Coordinator : public QObject {
@@ -46,9 +48,7 @@ public:
     void sendAbsenceSchedule();
     void hideAllScreens(Screen exeption, ShowBasicData* data = new ShowBasicData());
     void implementMenuBar(QBoxLayout *layout);
-public:
-    int hourStart;
-    int dayOfWeek;
+
 private:
     QMap<Screen, ScreenWidget*>windows;
 

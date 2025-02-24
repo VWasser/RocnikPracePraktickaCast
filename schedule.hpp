@@ -46,6 +46,8 @@ private:
     void setupUI();
 
 private:
+    int hourStart;
+    int dayOfWeek;
     bool isUpdating = true;
     bool isAbsenceMode = false;
     //bool isTaken = true;
