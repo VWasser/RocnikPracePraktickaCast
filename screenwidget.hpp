@@ -3,8 +3,9 @@
 
 #include <QWidget>
 
-struct ShowBasicData {
 
+class ShowBasicData: public QObject {
+    Q_OBJECT
 };
 
 class ScreenWidget: public QWidget {

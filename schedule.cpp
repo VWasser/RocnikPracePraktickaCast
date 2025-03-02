@@ -92,7 +92,7 @@ Schedule::Schedule(QWidget*parent): ScreenWidget(parent) {
             return;
         }
         if(isAbsenceMode == true){
-            coordinator->showInputAbsence(new InputAbsenceData(dayOfWeek));
+            coordinator->showInputAbsence(new InputAbsenceData(dayOfWeek, hourStart));
             emit sendImputAbsenceData();
         }else{
             return;

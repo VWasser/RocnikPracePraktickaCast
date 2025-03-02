@@ -33,6 +33,10 @@ inputAbsence::inputAbsence(QWidget *parent): ScreenWidget(parent) {
 inputAbsence::~inputAbsence(){}
 
 void inputAbsence::configure(ShowBasicData* data) {
-    InputAbsenceData* castedData = (InputAbsenceData*)data;
-    nameLabel->setText(QString::number(castedData->day));
+    InputAbsenceData* castedData = qobject_cast<InputAbsenceData*>(data);
+    if (!castedData) {
+        return; // Someone is trying to configure inputAbsence with a non-InputAbsenceData instance
+    }
+    dayBox->setText(QString::number(castedData->day));
+    hourBox->setText(QString::number(castedData->hour));
 }

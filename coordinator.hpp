@@ -22,12 +22,14 @@ enum class Screen {
     Settings
 };
 
-struct InputAbsenceData: ShowBasicData {
+class InputAbsenceData: public ShowBasicData {
+    Q_OBJECT
+
+public:
+    InputAbsenceData(int _day, int _hour): day(_day), hour(_hour) { }
+
     int day;
     int hour;
-
-
-    InputAbsenceData(int _day): day(_day) { }
 };
 
 class Coordinator : public QObject {
