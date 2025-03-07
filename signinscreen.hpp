@@ -18,7 +18,7 @@ public:
     SignInScreen(QWidget *parent = nullptr);
     ~SignInScreen();
 
-    void configure(ShowBasicData*) override;
+    void configure(ShowBasicData*,ShowBasicData2*) override;
 
 private:
     //UI

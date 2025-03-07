@@ -40,7 +40,7 @@ public:
     Schedule(QWidget *parent = nullptr);
     ~Schedule();
     void updateData();
-    void configure(ShowBasicData*) override;
+    void configure(ShowBasicData*,ShowBasicData2*) override;
 
 private:
     void setupUI();
@@ -48,6 +48,10 @@ private:
 private:
     bool isUpdating = true;
     bool isAbsenceMode = false;
+
+    int hourStart;
+    int dayOfWeek;
+
     //bool isTaken = true;
     QList<ScheduleItem> cachedSchedule;
     QTableWidget* calendar = new QTableWidget(5,10);

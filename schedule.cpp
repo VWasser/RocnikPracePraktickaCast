@@ -83,17 +83,17 @@ Schedule::Schedule(QWidget*parent): ScreenWidget(parent) {
 
     //in absence add mode
     QObject::connect(calendar, &QTableWidget::cellClicked, this, [&](){
-        coordinator->dayOfWeek = calendar->currentRow();
-        coordinator->hourStart = calendar->currentColumn();
-        auto item = calendar->item(coordinator->dayOfWeek, coordinator->hourStart);
-        if (!item) {
-            qDebug() << "ITEM IS NOT SELECTED!!!";
-            notDeletable.show();
-            return;
-        }
+        qDebug()<< "cell clicked";
         if(isAbsenceMode == true){
-            coordinator->showInputAbsence(new InputAbsenceData("Petr"));
+            qDebug()<< "if statement triggered";
+            dayOfWeek = calendar->currentRow();
+            hourStart = calendar->currentColumn();
+            qDebug() << "variables set";
+            //crashes here
+            coordinator->showInputAbsence(new InputAbsenceData(QString::number(hourStart, dayOfWeek)));
+            qDebug() << "show input absence called";
             emit sendImputAbsenceData();
+            qDebug() <<"signal emited";
         }else{
             return;
         }
@@ -155,6 +155,15 @@ Schedule::Schedule(QWidget*parent): ScreenWidget(parent) {
         }
     });
 
+    for(int i = 0; i < 5; i++){
+        for(int j = 0; j <10;j++){
+            auto item = calendar->item(i, j);
+            if(!item){
+            calendar->setItem(i,j,new QTableWidgetItem(""));
+            }
+        }
+        qDebug() << "ROW " << i <<" SET";
+    }
     // void scheduleAbsenceOpened();
 
     deleteItemButton->hide();
@@ -363,6 +372,6 @@ bool Schedule::exeptionForAdd(){
 
 }
 
-void Schedule::configure(ShowBasicData*) {
+void Schedule::configure(ShowBasicData*, ShowBasicData2 *) {
 
 }

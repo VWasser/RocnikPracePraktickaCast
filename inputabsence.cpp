@@ -8,10 +8,6 @@ inputAbsence::inputAbsence(QWidget *parent): ScreenWidget(parent) {
     QObject::connect(addAbsence, &QPushButton::clicked,this, [](){
         coordinator->showSchedule();
     });
-    QObject::connect(coordinator, &Coordinator::sendImputAbsence,this, [=](){
-        dayBox->setText(QString::number(coordinator->dayOfWeek));
-        hourBox->setText(QString::number(coordinator->hourStart));
-    });
 
     setLayout(mainLayout);
     nameLine->addWidget(nameLabel);
@@ -36,7 +32,10 @@ inputAbsence::inputAbsence(QWidget *parent): ScreenWidget(parent) {
 }
 inputAbsence::~inputAbsence(){}
 
-void inputAbsence::configure(ShowBasicData* data) {
-    InputAbsenceData* castedData = (InputAbsenceData*)data;
-    nameLabel->setText(castedData->name);
+void inputAbsence::configure(ShowBasicData* data, ShowBasicData2* data2) {
+    InputAbsenceData* passedData1 = (InputAbsenceData*)data;
+    InputAbsenceData* passedData2 = (InputAbsenceData*)data2;
+    hourBox->setText(passedData1->name);
+    dayBox->setText(passedData2->name);
+
 }

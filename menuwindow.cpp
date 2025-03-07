@@ -39,6 +39,6 @@ menuWindow::menuWindow(QWidget*parent): ScreenWidget(parent)  {
 
 menuWindow::~menuWindow(){};
 
-void menuWindow::configure(ShowBasicData*) {
+void menuWindow::configure(ShowBasicData*, ShowBasicData2 *) {
 
 }

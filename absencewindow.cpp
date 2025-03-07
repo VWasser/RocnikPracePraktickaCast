@@ -63,6 +63,6 @@ absenceWindow::absenceWindow(QWidget *parent): ScreenWidget(parent) {
 
 absenceWindow::~absenceWindow(){}
 
-void absenceWindow::configure(ShowBasicData*) {
+void absenceWindow::configure(ShowBasicData*, ShowBasicData2 *) {
 
 }
