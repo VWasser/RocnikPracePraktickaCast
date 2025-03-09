@@ -48,7 +48,7 @@ public:
     void showSettingsWindow();
     void showSchedule();
     void sendAbsenceSchedule();
-    void hideAllScreens(Screen exeption, ShowBasicData* data = new ShowBasicData());
+    void hideAllScreens(Screen exeption, ShowBasicData* data = new ShowBasicData(), ShowBasicData2 *data2 = new ShowBasicData2());
     void implementMenuBar(QBoxLayout *layout);
 
 private:

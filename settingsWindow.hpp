@@ -12,7 +12,7 @@ class settingsWindow: public ScreenWidget
 public:
     settingsWindow(QWidget *parent = nullptr);
     ~settingsWindow();
-    void configure(ShowBasicData*) override;
+    void configure(ShowBasicData*, ShowBasicData2*) override;
 
 private:
     QVBoxLayout *mainLayout = new QVBoxLayout;

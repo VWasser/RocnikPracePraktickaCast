@@ -11,7 +11,7 @@ class gradesWindow : public ScreenWidget
 public:
     gradesWindow(QWidget *parent = nullptr);
     ~gradesWindow();
-    void configure(ShowBasicData*) override;
+    void configure(ShowBasicData*,ShowBasicData2*) override;
 
 private:
     QVBoxLayout *mainLayout = new QVBoxLayout;

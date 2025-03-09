@@ -11,6 +11,6 @@ settingsWindow::settingsWindow(QWidget* parent): ScreenWidget(parent) {
 
 settingsWindow::~settingsWindow() {}
 
-void settingsWindow::configure(ShowBasicData*) {
+void settingsWindow::configure(ShowBasicData*, ShowBasicData2 *) {
 
 }

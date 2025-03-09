@@ -111,7 +111,7 @@ SignInScreen::~SignInScreen() {
 
 }
 
-void SignInScreen::configure(ShowBasicData*) {
+void SignInScreen::configure(ShowBasicData*, ShowBasicData2 *) {
 
 }
 
