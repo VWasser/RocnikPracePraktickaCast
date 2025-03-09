@@ -22,7 +22,8 @@ SOURCES += \
     BackendlessQt/BackendlessAPI.cpp \
     BackendlessQt/BackendlessUserAPI.cpp \
     BackendlessQt/BackendlessUser.cpp \
-    BackendlessQt/StandardNetworkManager.cpp
+    BackendlessQt/StandardNetworkManager.cpp \
+    burger-menu/src/burgermenu.cpp
 
 HEADERS += \
     absencewindow.hpp \
@@ -43,7 +44,8 @@ HEADERS += \
     BackendlessQt/BackendlessAPI.hpp \
     BackendlessQt/BackendlessUserAPI.hpp \
     BackendlessQt/BackendlessUser.hpp \
-    BackendlessQt/StandardNetworkManager.hpp
+    BackendlessQt/StandardNetworkManager.hpp \
+    burger-menu/src/burgermenu.h
 
 ios {
     QMAKE_TARGET_BUNDLE_PREFIX = com.bachelor
