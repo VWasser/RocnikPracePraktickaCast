@@ -51,9 +51,6 @@ private:
     bool isUpdating = true;
     bool isAbsenceMode = false;
 
-    int hourStart;
-    int dayOfWeek;
-
     //bool isTaken = true;
     QList<ScheduleItem> cachedSchedule;
     QTableWidget* calendar = new QTableWidget(5,10);

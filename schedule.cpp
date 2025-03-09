@@ -90,7 +90,7 @@ Schedule::Schedule(QWidget*parent): ScreenWidget(parent) {
             hourStart = calendar->currentColumn();
             qDebug() << "variables set";
             //crashes here
-            coordinator->showInputAbsence(new InputAbsenceData(QString::number(hourStart, dayOfWeek)));
+            coordinator->showInputAbsence(new InputAbsenceData(hourStart, dayOfWeek));
             qDebug() << "show input absence called";
             emit sendImputAbsenceData();
             qDebug() <<"signal emited";

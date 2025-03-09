@@ -35,6 +35,6 @@ inputAbsence::~inputAbsence(){}
 void inputAbsence::configure(ShowBasicData* data, ShowBasicData2* data2) {
     InputAbsenceData* passedData1 = (InputAbsenceData*)data;
     InputAbsenceData* passedData2 = (InputAbsenceData*)data2;
-    hourBox->setText(passedData1->name);
-    dayBox->setText(passedData2->name);
+    //hourBox->setText(passedData1->name);
+    //dayBox->setText(passedData2->name);
 }
