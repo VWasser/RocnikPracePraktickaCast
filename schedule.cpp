@@ -90,7 +90,11 @@ Schedule::Schedule(QWidget*parent): ScreenWidget(parent) {
             hourStart = calendar->currentColumn();
             qDebug() << "variables set";
             //crashes here
-            coordinator->showInputAbsence(new InputAbsenceData(hourStart, dayOfWeek));
+            coordinator->showInputAbsence(
+                QSharedPointer<InputAbsenceData>(
+                    new InputAbsenceData(hourStart, dayOfWeek)
+                )
+            );
             qDebug() << "show input absence called";
             emit sendImputAbsenceData();
             qDebug() <<"signal emited";
@@ -372,6 +376,6 @@ bool Schedule::exeptionForAdd(){
 
 }
 
-void Schedule::configure(ShowBasicData*, ShowBasicData2 *) {
+void Schedule::configure(QSharedPointer<ShowBasicData>, QSharedPointer<ShowBasicData2>) {
 
 }

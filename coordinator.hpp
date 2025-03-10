@@ -43,12 +43,16 @@ public:
     void showMenuWindow();
     void showAbsenceWindow();
     void showGradesWindow();
-    void showInputAbsence(InputAbsenceData* data);
+    void showInputAbsence(QSharedPointer<InputAbsenceData> data);
     void showRegisterScreen();
     void showSettingsWindow();
     void showSchedule();
     void sendAbsenceSchedule();
-    void hideAllScreens(Screen exeption, ShowBasicData* data = new ShowBasicData(), ShowBasicData2 *data2 = new ShowBasicData2());
+    void hideAllScreens(
+        Screen exeption,
+        QSharedPointer<ShowBasicData> data = QSharedPointer<ShowBasicData>(new ShowBasicData()),
+        QSharedPointer<ShowBasicData2> data2 = QSharedPointer<ShowBasicData2>(new ShowBasicData2())
+    );
     void implementMenuBar(QBoxLayout *layout);
 
 private:

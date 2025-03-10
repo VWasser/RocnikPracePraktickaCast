@@ -47,7 +47,7 @@ void Coordinator::showGradesWindow() {
     hideAllScreens(Screen::Grades);
 }
 
-void Coordinator::showInputAbsence(InputAbsenceData* data) {
+void Coordinator::showInputAbsence(QSharedPointer<InputAbsenceData> data) {
     hideAllScreens(Screen::InputAbsence, data);
 }
 
@@ -67,7 +67,7 @@ void Coordinator::showSchedule() {
     hideAllScreens(Screen::Schedule);
 }
 
-void Coordinator::hideAllScreens(Screen exeption, ShowBasicData* data, ShowBasicData2* data2){
+void Coordinator::hideAllScreens(Screen exeption, QSharedPointer<ShowBasicData> data, QSharedPointer<ShowBasicData2> data2){
     for(auto i = windows.begin(); i != windows.end(); ++i ){
         if(i.key() == exeption){
             i.value()->show();

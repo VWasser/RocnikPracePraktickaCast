@@ -68,6 +68,6 @@ registerscreen::registerscreen(QWidget *parent): ScreenWidget(parent),
 
 registerscreen::~registerscreen(){}
 
-void registerscreen::configure(ShowBasicData*, ShowBasicData2 *) {
+void registerscreen::configure(QSharedPointer<ShowBasicData>, QSharedPointer<ShowBasicData2>) {
 
 }

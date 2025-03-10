@@ -40,7 +40,7 @@ public:
     Schedule(QWidget *parent = nullptr);
     ~Schedule();
     void updateData();
-    void configure(ShowBasicData*,ShowBasicData2*) override;
+    void configure(QSharedPointer<ShowBasicData>, QSharedPointer<ShowBasicData2>) override;
 
 private:
     void setupUI();

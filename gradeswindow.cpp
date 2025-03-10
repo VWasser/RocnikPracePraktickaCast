@@ -11,6 +11,6 @@ gradesWindow::gradesWindow(QWidget *parent): ScreenWidget(parent) {
 
 gradesWindow::~gradesWindow(){}
 
-void gradesWindow::configure(ShowBasicData*, ShowBasicData2 *) {
+void gradesWindow::configure(QSharedPointer<ShowBasicData>, QSharedPointer<ShowBasicData2>) {
 
 }

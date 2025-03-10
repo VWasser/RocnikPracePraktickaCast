@@ -28,7 +28,7 @@ class absenceWindow : public ScreenWidget
 public:
     absenceWindow(QWidget *parent = nullptr);
     ~absenceWindow();
-    void configure(ShowBasicData*,ShowBasicData2*) override;
+    void configure(QSharedPointer<ShowBasicData>, QSharedPointer<ShowBasicData2>) override;
 
 signals:
     void scheduleAbsenceOpened();

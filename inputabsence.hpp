@@ -14,7 +14,7 @@ class inputAbsence : public ScreenWidget
 public:
     inputAbsence(QWidget *parent = nullptr);
     ~inputAbsence();
-    void configure(ShowBasicData*data, ShowBasicData2*data2) override;
+    void configure(QSharedPointer<ShowBasicData> data, QSharedPointer<ShowBasicData2> data2) override;
 
 private:
     QVBoxLayout *mainLayout = new QVBoxLayout;

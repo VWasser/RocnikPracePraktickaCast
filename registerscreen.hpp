@@ -42,7 +42,7 @@ public:
     registerscreen(QWidget *parent = nullptr);
     ~registerscreen();
 
-    void configure(ShowBasicData*,ShowBasicData2*) override;
+    void configure(QSharedPointer<ShowBasicData>, QSharedPointer<ShowBasicData2>) override;
 
 private:
 

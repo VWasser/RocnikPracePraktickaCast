@@ -2,7 +2,7 @@
 #define SCREENWIDGET_H
 
 #include <QWidget>
-
+#include <QSharedPointer>
 
 class ShowBasicData: public QObject {
     Q_OBJECT
@@ -17,7 +17,7 @@ class ScreenWidget: public QWidget {
 
 public:
     ScreenWidget(QWidget *parent = nullptr); // : QWidget(parent) { }
-    virtual void configure(ShowBasicData*, ShowBasicData2*) = 0;
+    virtual void configure(QSharedPointer<ShowBasicData>, QSharedPointer<ShowBasicData2>) = 0;
 };
 
 #endif // SCREENWIDGET_H
