@@ -2,8 +2,6 @@ QT += core gui widgets network quick
 
 CONFIG += c++20
 
-INCLUDEPATH += /home/vojta/libigl/include
-
 SOURCES += \
     absencewindow.cpp \
     coordinator.cpp \
