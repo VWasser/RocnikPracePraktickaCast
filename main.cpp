@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
     coordinator->showMenuWindow();*/
 
     burger = new BurgerMenu();
-    burger->addMenuAction("Some");
+    burger->addMenuAction(new QAction("Hello"));
     burger->addMenuAction("Other");
     burger->show();
 
