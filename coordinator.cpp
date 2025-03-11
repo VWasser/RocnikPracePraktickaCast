@@ -1,129 +1,85 @@
 #include "coordinator.hpp"
 #include "absencewindow.hpp"
-#include "BackendlessQt/StandardNetworkManager.hpp"
-#include "httpclient.hpp"
+#include "menubar.hpp"
 #include <QObject>
 
 Coordinator::Coordinator(QObject *parent) : QObject(parent) {
-    myWindow = new SignInScreen();
-    myWindow2 = new registerscreen();
-    myWindow3 = new Schedule();
+    signInWindow = new SignInScreen();
+    registerWindow = new registerscreen();
     popUpWindow = new settingsWindow();
-    menuWin = new menuWindow();
     gradeWin = new gradesWindow();
     abscWin = new absenceWindow();
+    //abscWin = QSharedPointer<absenceWindow>(new absenceWindow, &QObject::deleteLater);
     absencePopUp = new inputAbsence();
 
-    QObject::connect(abscWin, &absenceWindow::scheduleAbsenceOpened, this, [&](){
-        emit scheduleAbsenceSend();
-    });
+    windows[Screen::SignIn] = signInWindow;
+    windows[Screen::Register] = registerWindow;
+    windows[Screen::Settings] = popUpWindow;
+    windows[Screen::Absence] = abscWin;
+    windows[Screen::Grades] = gradeWin;
+    windows[Screen::InputAbsence] = absencePopUp;
+
+    QObject::connect(abscWin.get(), &absenceWindow::scheduleAbsenceOpened, this, &Coordinator::sendScheduleAbsence);
+    QObject::connect(scheduleWindow.get(), &Schedule::sendImputAbsenceData, this, &Coordinator::sendImputAbsence);
+
 }
 
 Coordinator::~Coordinator() {}
 
 void Coordinator::showSignInScreen() {
-    /*if (!signInScreen) {
-        signInScreen = new SignInScreen();
-        QObject::connect(signInScreen, &SignInScreen::goToMenu, this, []() {
-            auto coordinator = static_cast<Coordinator*>(QObject::sender()->parent());
-            coordinator->showMenuWindow();
-            coordinator->signInScreen->hide();
-        });
-    }*/
-    myWindow->show();
+    hideAllScreens(Screen::SignIn);
 }
 
 
 void Coordinator::showMenuWindow() {
     if (!menuWin) {
-        menuWin = new ::menuWindow();
-        QObject::connect(menuWin, &menuWindow::absencePressed, this, [this]() {
-            auto coordinator = static_cast<Coordinator*>(QObject::sender()->parent());
-            coordinator->showAbsenceWindow();
-            coordinator->menuWin->hide();
-        });
-        QObject::connect(menuWin, &menuWindow::gradesPressed, this, [this]() {
-            auto coordinator = static_cast<Coordinator*>(QObject::sender()->parent());
-            coordinator->showGradesWindow();
-            coordinator->menuWin->hide();
-        });
-        QObject::connect(menuWin, &menuWindow::settingsPressed, this, [this]() {
-            auto coordinator = static_cast<Coordinator*>(QObject::sender()->parent());
-            coordinator->showSettingsWindow();
-            coordinator->menuWin->hide();
-        });
+        menuWin = new menuWindow();
+        windows[Screen::Menu] = menuWin;
     }
-    menuWin->show();
+    hideAllScreens(Screen::Menu);
 }
 
 void Coordinator::showAbsenceWindow() {
-    /*if (!absenceWindow) {
-        absenceWindow = new ::absenceWindow();
-        QObject::connect(absenceWindow, &AbsenceWindow::goBackToMenu, this, [this]() {
-            auto coordinator = static_cast<Coordinator*>(QObject::sender()->parent());
-            coordinator->showMenuWindow();
-            coordinator->absenceWindow->hide();
-        });
-    }*/
-    abscWin->show();
+    hideAllScreens(Screen::Absence);
 }
 
 void Coordinator::showGradesWindow() {
-    /*if (!gradesWindow) {
-        gradesWindow = new GradesWindow();
-        QObject::connect(gradesWindow, &GradesWindow::goBackToMenu, this, []() {
-            auto coordinator = static_cast<Coordinator*>(QObject::sender()->parent());
-            coordinator->showMenuWindow();
-            coordinator->gradesWindow->hide();
-        });
-    }*/
-    gradeWin->show();
+    hideAllScreens(Screen::Grades);
 }
 
-void Coordinator::showInputAbsence() {
-    /*if (!inputAbsence) {
-        inputAbsence = new InputAbsence();
-        QObject::connect(inputAbsence, &InputAbsence::goBackToAbsence, this, []() {
-            auto coordinator = static_cast<Coordinator*>(QObject::sender()->parent());
-            coordinator->showAbsenceWindow();
-            coordinator->inputAbsence->hide();
-        });
-    }*/
-    absencePopUp->show();
+void Coordinator::showInputAbsence(QSharedPointer<InputAbsenceData> data) {
+    hideAllScreens(Screen::InputAbsence, data);
 }
 
 void Coordinator::showRegisterScreen() {
-    /*if (!registerScreen) {
-        registerScreen = new RegisterScreen();
-        QObject::connect(registerScreen, &RegisterScreen::goBackToSignIn, this, []() {
-            auto coordinator = static_cast<Coordinator*>(QObject::sender()->parent());
-            coordinator->showSignInScreen();
-            coordinator->registerScreen->hide();
-        });
-    }*/
-    myWindow2->show();
+    hideAllScreens(Screen::Register);
 }
 
 void Coordinator::showSettingsWindow() {
-    /*if (!settingsWindow) {
-        settingsWindow = new SettingsWindow();
-        QObject::connect(settingsWindow, &SettingsWindow::goBackToMenu, this, []() {
-            auto coordinator = static_cast<Coordinator*>(QObject::sender()->parent());
-            coordinator->showMenuWindow();
-            coordinator->settingsWindow->hide();
-        });
-    }*/
-    popUpWindow->show();
+    hideAllScreens(Screen::Settings);
 }
 
 void Coordinator::showSchedule() {
-    /*if (!schedule) {
-        schedule = new Schedule();
-        QObject::connect(schedule, &Schedule::goBackToMenu, this, []() {
-            auto coordinator = static_cast<Coordinator*>(QObject::sender()->parent());
-            coordinator->showMenuWindow();
-            coordinator->schedule->hide();
-        });
-    }*/
-    myWindow3->show();
+    if (!scheduleWindow) {
+        scheduleWindow = new Schedule();
+        windows[Screen::Schedule] = scheduleWindow;
+    }
+    hideAllScreens(Screen::Schedule);
+}
+
+void Coordinator::hideAllScreens(Screen exeption, QSharedPointer<ShowBasicData> data){
+    for(auto i = windows.begin(); i != windows.end(); ++i ){
+        if(i.key() == exeption){
+            i.value()->show();
+            i.value()->configure(data);
+            qDebug() << "SHOWING" << &i.key();
+        }else if(i.key() != exeption){
+            i.value()->hide();
+            qDebug()<<  "HIDING" << &i.key();
+        }
+    }
+}
+void Coordinator::implementMenuBar(QBoxLayout *layout){
+    auto bar = new menuBar();
+    bar->menuBarStup(layout);
 }
