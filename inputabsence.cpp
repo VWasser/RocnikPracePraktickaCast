@@ -2,10 +2,44 @@
 #include "coordinator.hpp"
 
 extern Coordinator *coordinator;
+extern BackendlessAPI* api;
+
+class LongPostParam: public PostParam {
+public:
+    LongPostParam(long _value): value(_value) { }
+
+    QString asParam() override {
+        return QString::number(value);
+    }
+
+private:
+    long value;
+};
 
 inputAbsence::inputAbsence(QWidget *parent): ScreenWidget(parent) {
+    QObject::connect(api, &BackendlessAPI::itemAdded, this, [&](){
+        // qDebug() << "Item was added " << replyValue;
 
-    QObject::connect(addAbsence, &QPushButton::clicked,this, [](){
+    });
+
+    QObject::connect(addAbsence, &QPushButton::clicked, this, [](){
+        auto kind = new IntPostParam(14);
+        auto userId = new StringPostParam("someUserId");
+        auto absenceDate = new LongPostParam(1000000000000);
+
+        api->addItemToTable(
+            "Absences",
+            {
+                {"Kind", kind},
+                {"UserID", userId},
+                {"AbsenceDate", absenceDate}
+            }
+        );
+
+        delete kind;
+        delete userId;
+        delete absenceDate;
+
         coordinator->showSchedule();
     });
 
