@@ -67,11 +67,11 @@ void Coordinator::showSchedule() {
     hideAllScreens(Screen::Schedule);
 }
 
-void Coordinator::hideAllScreens(Screen exeption, QSharedPointer<ShowBasicData> data, QSharedPointer<ShowBasicData2> data2){
+void Coordinator::hideAllScreens(Screen exeption, QSharedPointer<ShowBasicData> data){
     for(auto i = windows.begin(); i != windows.end(); ++i ){
         if(i.key() == exeption){
             i.value()->show();
-            i.value()->configure(data, data2);
+            i.value()->configure(data);
             qDebug() << "SHOWING" << &i.key();
         }else if(i.key() != exeption){
             i.value()->hide();

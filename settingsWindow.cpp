@@ -11,6 +11,6 @@ settingsWindow::settingsWindow(QWidget* parent): ScreenWidget(parent) {
 
 settingsWindow::~settingsWindow() {}
 
-void settingsWindow::configure(QSharedPointer<ShowBasicData>, QSharedPointer<ShowBasicData2>) {
+void settingsWindow::configure(QSharedPointer<ShowBasicData>) {
 
 }

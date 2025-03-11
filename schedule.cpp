@@ -376,6 +376,6 @@ bool Schedule::exeptionForAdd(){
 
 }
 
-void Schedule::configure(QSharedPointer<ShowBasicData>, QSharedPointer<ShowBasicData2>) {
+void Schedule::configure(QSharedPointer<ShowBasicData>) {
 
 }

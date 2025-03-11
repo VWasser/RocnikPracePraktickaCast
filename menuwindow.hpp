@@ -13,7 +13,7 @@ class menuWindow : public ScreenWidget
 public:
     menuWindow(QWidget *parent = nullptr);
     ~menuWindow();
-    void configure(QSharedPointer<ShowBasicData>, QSharedPointer<ShowBasicData2>) override;
+    void configure(QSharedPointer<ShowBasicData>) override;
 
 private:
     QVBoxLayout *mainLayout = new QVBoxLayout;

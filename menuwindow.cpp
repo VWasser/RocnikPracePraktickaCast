@@ -39,6 +39,6 @@ menuWindow::menuWindow(QWidget*parent): ScreenWidget(parent)  {
 
 menuWindow::~menuWindow(){};
 
-void menuWindow::configure(QSharedPointer<ShowBasicData>, QSharedPointer<ShowBasicData2>) {
+void menuWindow::configure(QSharedPointer<ShowBasicData>) {
 
 }

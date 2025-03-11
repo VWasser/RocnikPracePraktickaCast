@@ -50,8 +50,7 @@ public:
     void sendAbsenceSchedule();
     void hideAllScreens(
         Screen exeption,
-        QSharedPointer<ShowBasicData> data = QSharedPointer<ShowBasicData>(new ShowBasicData()),
-        QSharedPointer<ShowBasicData2> data2 = QSharedPointer<ShowBasicData2>(new ShowBasicData2())
+        QSharedPointer<ShowBasicData> data = QSharedPointer<ShowBasicData>(new ShowBasicData())
     );
     void implementMenuBar(QBoxLayout *layout);
 

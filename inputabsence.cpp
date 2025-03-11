@@ -32,9 +32,9 @@ inputAbsence::inputAbsence(QWidget *parent): ScreenWidget(parent) {
 }
 inputAbsence::~inputAbsence(){}
 
-void inputAbsence::configure(QSharedPointer<ShowBasicData> data, QSharedPointer<ShowBasicData2> data2) {
-    InputAbsenceData* passedData1 = (InputAbsenceData*)data.data();
-    // InputAbsenceData* passedData2 = (InputAbsenceData*)data2.data();
-    hourBox->setText(QString::number(passedData1->hour +1));
-    dayBox->setText(QString::number(passedData1->day +1));
+void inputAbsence::configure(QSharedPointer<ShowBasicData> data) {
+    InputAbsenceData* passedData = (InputAbsenceData*)data.get();
+
+    hourBox->setText(QString::number(passedData->hour +1));
+    dayBox->setText(QString::number(passedData->day +1));
 }

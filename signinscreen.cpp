@@ -111,7 +111,7 @@ SignInScreen::~SignInScreen() {
 
 }
 
-void SignInScreen::configure(QSharedPointer<ShowBasicData>, QSharedPointer<ShowBasicData2>) {
+void SignInScreen::configure(QSharedPointer<ShowBasicData>) {
 
 }
 

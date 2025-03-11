@@ -66,8 +66,13 @@ registerscreen::registerscreen(QWidget *parent): ScreenWidget(parent),
 #endif
 }
 
-registerscreen::~registerscreen(){}
+registerscreen::~registerscreen(){
+    delete name;
+    delete password;
+    delete password2;
+    delete email;
+}
 
-void registerscreen::configure(QSharedPointer<ShowBasicData>, QSharedPointer<ShowBasicData2>) {
+void registerscreen::configure(QSharedPointer<ShowBasicData>) {
 
 }
