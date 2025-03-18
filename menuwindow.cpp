@@ -7,7 +7,7 @@
 
 extern Coordinator* coordinator;
 
-menuWindow::menuWindow(QWidget*parent): QWidget(parent)  {
+menuWindow::menuWindow(QWidget*parent): ScreenWidget(parent)  {
 
     QObject::connect(gradesButton, &QPushButton::clicked, this, [&](){
         emit gradesPressed();
@@ -29,13 +29,16 @@ menuWindow::menuWindow(QWidget*parent): QWidget(parent)  {
     row1->addWidget(scheduleButton);
     row1->addWidget(gradesButton);
     row2->addWidget(absenceButton);
-    auto bar = new menuBar();
-    bar->menuBarStup(mainLayout);
+    coordinator->implementMenuBar(mainLayout);
+    //auto bar = new menuBar();
+    //bar->menuBarStup(mainLayout);
     mainLayout->addLayout(row1);
     mainLayout->addLayout(row2);
     setLayout(mainLayout);
 }
 
-
-
 menuWindow::~menuWindow(){};
+
+void menuWindow::configure(QSharedPointer<ShowBasicData>) {
+
+}

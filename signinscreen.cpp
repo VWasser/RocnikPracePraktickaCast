@@ -10,17 +10,10 @@
 extern Coordinator* coordinator;
 
 
-SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
+SignInScreen::SignInScreen(QWidget *parent): ScreenWidget(parent),
     signInButton(this), registerButton(this), resetPasswordButton(this),
     errorWin(this), signInLayout(this)
 {
-    // Sign in screen should not register a new user, we already have registerscreen.cpp for it
-    /*QObject::connect(&api.userAPI, &BackendlessUserAPI::registerUserResult, this, [&](){
-        api.userAPI.signInUser("something@new.com", "Password");
-        qDebug() << "Signing in";
-        myWindow3->show();
-        hide();
-    });*/
     QObject::connect(&(api->userAPI), &BackendlessUserAPI::signInUserSuccess, this, [&](){
         // api.userAPI.validateUserToken();
         coordinator->showMenuWindow();
@@ -115,6 +108,10 @@ SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
 }
 
 SignInScreen::~SignInScreen() {
+
+}
+
+void SignInScreen::configure(QSharedPointer<ShowBasicData>) {
 
 }
 

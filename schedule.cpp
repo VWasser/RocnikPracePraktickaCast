@@ -30,7 +30,7 @@ enum Action {
     EDIT = 3
 };
 
-Schedule::Schedule(QWidget*parent): QWidget(parent) {
+Schedule::Schedule(QWidget*parent): ScreenWidget(parent) {
     customHttpClient->connectToHost("178.32.127.114");
     auto dataToSendToServer = QString("GET /7D2C33DB-05E2-4FD9-B26B-46FDB17F56D6/19CB95DB-0235-4134-B1FB-C64750DE49E2/data/Schedules HTTP/1.0\r\nHost: eu-api.backendless.com\r\n\r\n");
     customHttpClient->writeData(dataToSendToServer.toUtf8());
@@ -83,16 +83,21 @@ Schedule::Schedule(QWidget*parent): QWidget(parent) {
 
     //in absence add mode
     QObject::connect(calendar, &QTableWidget::cellClicked, this, [&](){
-        auto dayOfWeek = calendar->currentRow();
-        auto hourStart = calendar->currentColumn();
-        auto item = calendar->item(dayOfWeek, hourStart);
-        if (!item) {
-            qDebug() << "ITEM IS NOT SELECTED!!!";
-            notDeletable.show();
-            return;
-        }
+        qDebug()<< "cell clicked";
         if(isAbsenceMode == true){
-             coordinator->showInputAbsence();
+            qDebug()<< "if statement triggered";
+            dayOfWeek = calendar->currentRow();
+            hourStart = calendar->currentColumn();
+            qDebug() << "variables set";
+            //crashes here
+            coordinator->showInputAbsence(
+                QSharedPointer<InputAbsenceData>(
+                    new InputAbsenceData(hourStart, dayOfWeek)
+                )
+            );
+            qDebug() << "show input absence called";
+            emit sendImputAbsenceData();
+            qDebug() <<"signal emited";
         }else{
             return;
         }
@@ -154,6 +159,15 @@ Schedule::Schedule(QWidget*parent): QWidget(parent) {
         }
     });
 
+    for(int i = 0; i < 5; i++){
+        for(int j = 0; j <10;j++){
+            auto item = calendar->item(i, j);
+            if(!item){
+            calendar->setItem(i,j,new QTableWidgetItem(""));
+            }
+        }
+        qDebug() << "ROW " << i <<" SET";
+    }
     // void scheduleAbsenceOpened();
 
     deleteItemButton->hide();
@@ -177,8 +191,7 @@ Schedule::Schedule(QWidget*parent): QWidget(parent) {
     dateLay->addWidget(editFunctions);
     dateLay->addWidget(deleteItemButton);
 
-    auto bar = new menuBar();
-    bar->menuBarStup(table);
+    coordinator->implementMenuBar(table);
 
     table->addLayout(dateLay);
     dateLay->addSpacing(calendar->width()/2);
@@ -360,5 +373,9 @@ bool Schedule::exeptionForAdd(){
         }else{
             return false;
         }
+
+}
+
+void Schedule::configure(QSharedPointer<ShowBasicData>) {
 
 }

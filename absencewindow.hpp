@@ -10,6 +10,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
+#include "screenwidget.hpp"
 
 struct AbsenceItem {
     QString userId;
@@ -21,12 +22,13 @@ struct AbsenceItem {
     }
 };
 
-class absenceWindow : public QWidget
+class absenceWindow : public ScreenWidget
 {
     Q_OBJECT
 public:
     absenceWindow(QWidget *parent = nullptr);
     ~absenceWindow();
+    void configure(QSharedPointer<ShowBasicData>) override;
 
 signals:
     void scheduleAbsenceOpened();

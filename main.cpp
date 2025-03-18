@@ -1,5 +1,6 @@
 #include <QApplication>
 #include <QTranslator>
+#include "httpclient.hpp"
 #include "BackendlessQt/StandardNetworkManager.hpp"
 #include "coordinator.hpp"
 
