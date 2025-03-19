@@ -16,11 +16,6 @@ jobs:
         with:
           version: '6.8.2'
 
-      - name: Install dependencies
-        run: |
-             sudo apt-get update
-             sudo apt-get install libgl1-mesa-dev libxkbcommon-x11-0 libxcb-icccm4 libxcb-image0 libxcb-keysyms1 libxcb-render-util0 libxcb-xinerama0 libzstd-dev
-
       - name: Compile
         run: |
              qmake MyBachelor.pro CONFIG+=release PREFIX=/usr
