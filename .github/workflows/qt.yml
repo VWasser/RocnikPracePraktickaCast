@@ -18,5 +18,4 @@ jobs:
 
       - name: Compile
         run: |
-             qmake MyBachelor.pro CONFIG+=release PREFIX=/usr
-             make -j8
+             qmake MyBachelor.pro
