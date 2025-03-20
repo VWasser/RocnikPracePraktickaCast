@@ -12,7 +12,7 @@ Coordinator::Coordinator(QObject *parent) : QObject(parent) {
     //abscWin = QSharedPointer<absenceWindow>(new absenceWindow, &QObject::deleteLater);
     absencePopUp = new inputAbsence();
 
-    windows[Screen::SignIn] = signInWindow;
+    windows[Screen::SignI] = signInWindow;
     windows[Screen::Register] = registerWindow;
     windows[Screen::Settings] = popUpWindow;
     windows[Screen::Absence] = abscWin;
