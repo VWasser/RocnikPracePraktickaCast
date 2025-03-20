@@ -19,3 +19,4 @@ jobs:
       - name: Compile
         run: |
              qmake MyBachelor.pro
+             make -j12
