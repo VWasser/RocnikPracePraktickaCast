@@ -5,8 +5,9 @@
 #include <QTableWidget>
 #include <QBoxLayout>
 #include <QPushButton>
+#include "screenwidget.hpp"
 
-class GradesWindow
+class gradesWindow : public ScreenWidget
 {
 
     Q_OBJECT

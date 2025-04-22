@@ -14,11 +14,15 @@
 
 struct AbsenceItem {
     QString userId;
-    unsigned long absenceDate;
+    int absenceMonth;
+    int absenceDay;
+    int absenceHour;
 
     AbsenceItem(QJsonObject lessonObject) {
         userId = lessonObject["UserID"].toString();
-        absenceDate = lessonObject["AbsenceDate"].toInteger();
+        absenceMonth = lessonObject["AbsenceMonth"].toInteger();
+        absenceDay = lessonObject["AbsenceDay"].toInteger();
+        absenceHour = lessonObject["AbsenceHour"].toInteger();
     }
 };
 

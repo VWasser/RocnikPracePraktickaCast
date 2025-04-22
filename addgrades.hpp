@@ -6,8 +6,9 @@
 #include <QLineEdit>
 #include <QPushButton>
 #include <QBoxLayout>
+#include "screenwidget.hpp"
 
-class AddGrades
+class addGrades : public ScreenWidget
 {
 public:
     addGrades(QWidget *parent = nullptr);

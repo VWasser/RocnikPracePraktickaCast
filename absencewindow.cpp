@@ -49,10 +49,15 @@ absenceWindow::absenceWindow(QWidget *parent): ScreenWidget(parent) {
         }
         auto jsonObject = jsonResponse.array();
 
+        auto i = 0;
         for (const auto& item : jsonObject) {
             auto absenceObject = item.toObject();
             AbsenceItem absenceItem(absenceObject);
             cachedItems.push_back(absenceItem);
+
+            QTableWidgetItem* someItem = new QTableWidgetItem(QString::number(absenceItem.absenceDay), QTableWidgetItem::Type);
+            absenceLayout->setItem(i, 1, someItem);
+            ++i;
         }
     });
 
