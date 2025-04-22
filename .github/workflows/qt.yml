@@ -1,8 +1,8 @@
 name: QT
 
 on:
-  push:
-    branches: [ "feature/actions" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
   build-linux:
