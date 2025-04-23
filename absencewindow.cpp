@@ -14,7 +14,6 @@ absenceWindow::absenceWindow(QWidget *parent): ScreenWidget(parent) {
     });
     absenceLayout->setFixedSize(315, 600);
 
-    absenceLayout->setRowCount(ammountOfDays);
     absenceLayout->setColumnCount(6);
     for(int i =0;i < 6;i++){
         absenceLayout->setColumnWidth(i,50);
@@ -57,8 +56,10 @@ absenceWindow::absenceWindow(QWidget *parent): ScreenWidget(parent) {
 
             QTableWidgetItem* someItem = new QTableWidgetItem(QString::number(absenceItem.absenceDay), QTableWidgetItem::Type);
             absenceLayout->setItem(i, 1, someItem);
+            ammountOfDays++;
             ++i;
         }
+        absenceLayout->setRowCount(ammountOfDays);
     });
 
 

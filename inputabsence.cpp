@@ -3,6 +3,14 @@
 
 extern Coordinator *coordinator;
 
+enum absenceTypes {
+    OK = 0,
+    UNSOLVED = 1,
+    MISSED = 2,
+    LATE = 3,
+    SCHOOL = 4
+};
+
 inputAbsence::inputAbsence(QWidget *parent): ScreenWidget(parent) {
 
     QObject::connect(addAbsence, &QPushButton::clicked,this, [](){
@@ -28,6 +36,29 @@ inputAbsence::inputAbsence(QWidget *parent): ScreenWidget(parent) {
     mainLayout->addLayout(classLine);
     mainLayout->addLayout(dayAndHourLine);
     mainLayout->addWidget(addAbsence);
+
+    absenceType->insertItem(absenceTypes::OK, "Ok", *ok);
+    absenceType->insertItem(absenceTypes::UNSOLVED, "Unsolved", *unsolved);
+    absenceType->insertItem(absenceTypes::MISSED, "Missed", *missed);
+    absenceType->insertItem(absenceTypes::LATE, "Late", *late);
+    absenceType->insertItem(absenceTypes::SCHOOL, "School", *school);
+
+    //will eventualy add some functions just dont have the idea of exactly what
+    QObject::connect(addAbsence, &QPushButton::clicked, this, [&](){
+        switch(absenceType->currentIndex()){
+        case absenceTypes::OK:
+            break;
+        case absenceTypes::UNSOLVED:
+            break;
+        case absenceTypes::MISSED:
+            break;
+        case absenceTypes::LATE:
+            break;
+        case absenceTypes::SCHOOL:
+            break;
+        }
+    });
+
 
 }
 inputAbsence::~inputAbsence(){}

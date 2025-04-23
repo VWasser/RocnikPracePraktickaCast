@@ -51,7 +51,7 @@ private:
 
     //when functional the vaiable will be = 0 but for now ill sett it
     //to random number
-    int ammountOfDays = 6;
+    int ammountOfDays;
 
     //will later be added as a verticalHeaderItem to the
     //absence adding function
