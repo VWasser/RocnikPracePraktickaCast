@@ -14,11 +14,15 @@
 
 struct AbsenceItem {
     QString userId;
-    unsigned long absenceDate;
+    int absenceMonth;
+    int absenceDay;
+    int absenceHour;
 
     AbsenceItem(QJsonObject lessonObject) {
         userId = lessonObject["UserID"].toString();
-        absenceDate = lessonObject["AbsenceDate"].toInteger();
+        absenceMonth = lessonObject["AbsenceMonth"].toInteger();
+        absenceDay = lessonObject["AbsenceDay"].toInteger();
+        absenceHour = lessonObject["AbsenceHour"].toInteger();
     }
 };
 
@@ -47,7 +51,7 @@ private:
 
     //when functional the vaiable will be = 0 but for now ill sett it
     //to random number
-    int ammountOfDays = 6;
+    int ammountOfDays;
 
     //will later be added as a verticalHeaderItem to the
     //absence adding function

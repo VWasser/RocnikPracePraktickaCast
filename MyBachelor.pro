@@ -3,6 +3,7 @@ QT += core gui widgets network quick
 CONFIG += c++20
 
 SOURCES += \
+    addgrades.cpp \
     absencewindow.cpp \
     coordinator.cpp \
     gradeswindow.cpp \
@@ -26,6 +27,7 @@ SOURCES += \
     BackendlessQt/StandardNetworkManager.cpp
 
 HEADERS += \
+    addgrades.hpp \
     absencewindow.hpp \
     coordinator.hpp \
     gradeswindow.hpp \
