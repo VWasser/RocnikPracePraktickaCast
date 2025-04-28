@@ -314,7 +314,7 @@ void Schedule::addItemFunc(int predefinedColumnValue, int predefinedRowValue){
     if (myFindIf<ScheduleItem, std::function<bool(ScheduleItem)>>(cachedSchedule.begin(), cachedSchedule.end(), [=](ScheduleItem item){ // = means COPY all what we need
         return item.dayOfWeek == rowValue && item.hourStart == columnValue;
     })) {
-        // TODO alert window
+        // TODO ALERT WINDOW
         qDebug() << "Lesson was already added there";
         return;
     }

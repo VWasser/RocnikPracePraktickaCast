@@ -1,5 +1,6 @@
 #include "inputabsence.hpp"
 #include "coordinator.hpp"
+#include "BackendlessQt/BackendlessAPI.hpp"
 
 extern Coordinator *coordinator;
 
@@ -43,8 +44,20 @@ inputAbsence::inputAbsence(QWidget *parent): ScreenWidget(parent) {
     absenceType->insertItem(absenceTypes::LATE, "Late", *late);
     absenceType->insertItem(absenceTypes::SCHOOL, "School", *school);
 
+    auto absenceDayParam = new IntPostParam();
+
     //will eventualy add some functions just dont have the idea of exactly what
     QObject::connect(addAbsence, &QPushButton::clicked, this, [&](){
+        api->addItemToTable(
+            "Absence",
+            {
+             {"AbsenceDay",},
+             {"AbsenceMonth",},
+             {"AbsenceRow",},
+             {"AbsenceHour",},
+             {"UserID",}
+            }
+            );
         switch(absenceType->currentIndex()){
         case absenceTypes::OK:
             break;
