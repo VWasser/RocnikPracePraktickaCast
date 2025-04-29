@@ -38,7 +38,7 @@ private:
 template<typename T>
 class NumericPostParam: public PostParam {
 public:
-    NumericPostParam(int _value): value(_value) { }
+    NumericPostParam(T _value): value(_value) { }
 
     QString asParam() override {
         return QString::number(value);
@@ -47,6 +47,8 @@ public:
 private:
     T value;
 };
+
+typedef NumericPostParam<int> IntPostParam;
 
 enum class BackendlessErrorCode {
     noError = 0,
