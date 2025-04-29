@@ -1,25 +1,42 @@
-name: CI
- 
-on: push
+name: QT
+
+on:
+  pull_request:
+    branches: [ "main" ]
+
 jobs:
-  build_and_test:
-    name: "Build and test"
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest]
-    runs-on: ${{ matrix.os }}
+  build-mac:
+    runs-on: macos-latest
     steps:
-    - name: Install dependencies (linux)
-      run: sudo apt install ninja-build
-      if: matrix.os == 'ubuntu-latest'
-    - name: Install Ninja (windows)
-      run: choco install ninja
-      if: matrix.os == 'windows-latest'
-    - name: Install Qt
-      uses: jurplel/install-qt-action@v4.0.0
-      with:
-        version: '6.7.1'
-    - uses: ilammy/msvc-dev-cmd@v1
-    - uses: actions/checkout@v4.1.7
-    - name: Build
-      run: cmake -S . -B build -G "Ninja Multi-Config" && cmake --build build --config Debug
+      - name: Checkout repository and submodules
+        uses: actions/checkout@v4
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: '6.9.0'
+          cache: true
+        
+      - name: Compile
+        run: |
+             qmake BackendlessQt.pro
+             make -j12
+
+      - name: Compile and run tests
+        run: |
+             qmake Tests/BackendlessQtTests.pro
+             make -j12
+             open BackendlessQtTests.app --args -o ${{ github.workspace }}/test_report.xml -xml
+         
+      - name: Parse test results
+        id: getxml
+        uses: mavrosxristoforos/get-xml-info@2.0
+        continue-on-error: true
+        with:
+          xml-file: 'test_report.xml'
+          xpath: '/TestCase//TestFunction/Incident[@type=''fail'']'
+
+      - name: Check on failures
+        if: steps.getxml.outcome == 'success'
+        run: |
+             exit 1
