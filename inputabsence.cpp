@@ -21,16 +21,19 @@ inputAbsence::inputAbsence(QWidget *parent): ScreenWidget(parent) {
     setLayout(mainLayout);
     nameLine->addWidget(nameLabel);
     nameLine->addWidget(nameBox);
+    nameLine->addWidget(userIdBox);
+
 
     dateLine->addWidget(dateLabel);
-    dateLine->addWidget(dateBox);
+    dateLine->addWidget(dayBox);
+    dateLine->addWidget(monthBox);
 
     classLine->addWidget(classLabel);
     classLine->addWidget(classBox);
 
     dayAndHourLine->addWidget(dayAndHourLabel);
-    dayAndHourLine->addWidget(dayBox);
-    dayAndHourLine->addWidget(hourBox);
+    dayAndHourLine->addWidget(rowBox);
+    dayAndHourLine->addWidget(collumnBox);
 
     mainLayout->addLayout(nameLine);
     mainLayout->addLayout(dateLine);
@@ -44,20 +47,27 @@ inputAbsence::inputAbsence(QWidget *parent): ScreenWidget(parent) {
     absenceType->insertItem(absenceTypes::LATE, "Late", *late);
     absenceType->insertItem(absenceTypes::SCHOOL, "School", *school);
 
-    auto absenceDayParam = new IntPostParam();
+    //i know i dont have to do the .toInt() it is just a meassure to know what is a number
+    //and what is a string etc.
+    auto DayParam = new IntPostParam(dayBox-text().toInt);
+    auto HourParam = new IntPostParam(monthBox-text().toInt());
+    auto RowParam = new IntPostParam(rowBox->text().toInt() - 1);
+    auto CollumnParam = new IntPostParam(collumnBox->text().toInt() - 1);
+    auto UserIdParam = new StringPostParam(userIdBox->text());
 
-    //will eventualy add some functions just dont have the idea of exactly what
     QObject::connect(addAbsence, &QPushButton::clicked, this, [&](){
         api->addItemToTable(
             "Absence",
             {
-             {"AbsenceDay",},
-             {"AbsenceMonth",},
-             {"AbsenceRow",},
-             {"AbsenceHour",},
-             {"UserID",}
+             {"AbsenceDay", DayParam},
+             {"AbsenceMonth", HourParam},
+             {"AbsenceRow", RowParam},
+             {"AbsenceHour", CollumnParam},
+             {"UserID", UserIdParam}
             }
             );
+
+        //will eventualy add some functions just dont have the idea of exactly what
         switch(absenceType->currentIndex()){
         case absenceTypes::OK:
             break;
@@ -79,6 +89,6 @@ inputAbsence::~inputAbsence(){}
 void inputAbsence::configure(QSharedPointer<ShowBasicData> data) {
     InputAbsenceData* passedData = (InputAbsenceData*)data.get();
 
-    hourBox->setText(QString::number(passedData->hour +1));
-    dayBox->setText(QString::number(passedData->day +1));
+    collumnBox->setText(QString::number(passedData->hour +1));
+    rowBox->setText(QString::number(passedData->day +1));
 }
