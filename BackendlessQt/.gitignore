@@ -5,3 +5,4 @@ BackendlessQt.xcodeproj
 .qmake.stash
 Debug
 Release
+build/
