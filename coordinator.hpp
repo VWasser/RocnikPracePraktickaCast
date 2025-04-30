@@ -22,6 +22,13 @@ enum class Screen {
     Settings
 };
 
+enum class absenceTypes {
+    OK = 0,
+    UNSOLVED = 1,
+    MISSED = 2,
+    LATE = 3,
+    SCHOOL = 4
+};
 class InputAbsenceData: public ShowBasicData {
     Q_OBJECT
 
@@ -38,6 +45,7 @@ class Coordinator : public QObject {
 public:
     explicit Coordinator(QObject *parent = nullptr);
     ~Coordinator();
+    absenceTypes getAbsenceType(int) const;
 
     void showSignInScreen();
     void showMenuWindow();
@@ -53,6 +61,8 @@ public:
         QSharedPointer<ShowBasicData> data = QSharedPointer<ShowBasicData>(new ShowBasicData())
     );
     void implementMenuBar(QBoxLayout *layout);
+
+
 
 private:
     QMap<Screen, ScreenWidget*>windows;

@@ -4,19 +4,13 @@
 
 extern Coordinator *coordinator;
 
-enum absenceTypes {
-    OK = 0,
-    UNSOLVED = 1,
-    MISSED = 2,
-    LATE = 3,
-    SCHOOL = 4
-};
-
 inputAbsence::inputAbsence(QWidget *parent): ScreenWidget(parent) {
 
     QObject::connect(addAbsence, &QPushButton::clicked,this, [](){
         coordinator->showAbsenceWindow();
     });
+
+
 
     setLayout(mainLayout);
     nameLine->addWidget(nameLabel);
@@ -35,17 +29,21 @@ inputAbsence::inputAbsence(QWidget *parent): ScreenWidget(parent) {
     dayAndHourLine->addWidget(rowBox);
     dayAndHourLine->addWidget(collumnBox);
 
+    absenceTypeLine->addWidget(absenceTypeLabel);
+    absenceTypeLine->addWidget(absenceType);
+
     mainLayout->addLayout(nameLine);
     mainLayout->addLayout(dateLine);
-    mainLayout->addLayout(classLine);
     mainLayout->addLayout(dayAndHourLine);
+    mainLayout->addLayout(absenceTypeLine);
+    mainLayout->addLayout(classLine);
     mainLayout->addWidget(addAbsence);
 
-    absenceType->insertItem(absenceTypes::OK, "Ok", *ok);
-    absenceType->insertItem(absenceTypes::UNSOLVED, "Unsolved", *unsolved);
-    absenceType->insertItem(absenceTypes::MISSED, "Missed", *missed);
-    absenceType->insertItem(absenceTypes::LATE, "Late", *late);
-    absenceType->insertItem(absenceTypes::SCHOOL, "School", *school);
+    absenceType->insertItem(0, "Ok", *ok);
+    absenceType->insertItem(1, "Unsolved", *unsolved);
+    absenceType->insertItem(2, "Missed", *missed);
+    absenceType->insertItem(3, "Late", *late);
+    absenceType->insertItem(5, "School", *school);
 
     QObject::connect(addAbsence, &QPushButton::clicked, this, [&](){
         //i know i dont have to do the .toInt() it is just a meassure to know what is a number
@@ -55,6 +53,7 @@ inputAbsence::inputAbsence(QWidget *parent): ScreenWidget(parent) {
         auto RowParam = new IntPostParam(rowBox->text().toInt() - 1);
         auto CollumnParam = new IntPostParam(collumnBox->text().toInt() - 1);
         auto UserIdParam = new StringPostParam(userIdBox->text());
+        auto currentIndexParam = new IntPostParam(absenceType->currentIndex());
 
         api->addItemToTable(
             "Absences",
@@ -63,23 +62,11 @@ inputAbsence::inputAbsence(QWidget *parent): ScreenWidget(parent) {
              {"AbsenceMonth", HourParam},
              {"AbsenceRow", RowParam},
              {"AbsenceHour", CollumnParam},
-             {"UserID", UserIdParam}
+             {"UserID", UserIdParam},
+             {"Kind", currentIndexParam}
             }
         );
 
-        //will eventualy add some functions just dont have the idea of exactly what
-        switch(absenceType->currentIndex()){
-        case absenceTypes::OK:
-            break;
-        case absenceTypes::UNSOLVED:
-            break;
-        case absenceTypes::MISSED:
-            break;
-        case absenceTypes::LATE:
-            break;
-        case absenceTypes::SCHOOL:
-            break;
-        }
     });
 
 
