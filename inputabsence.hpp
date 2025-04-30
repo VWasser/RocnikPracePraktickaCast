@@ -42,10 +42,12 @@ private:
 
 private:
     QLineEdit *nameBox = new QLineEdit;
-    QLineEdit *dateBox = new QLineEdit;
+    QLineEdit *rowBox = new QLineEdit;
+    QLineEdit *collumnBox = new QLineEdit;
     QLineEdit *classBox = new QLineEdit;
     QLineEdit *dayBox = new QLineEdit;
-    QLineEdit *hourBox = new QLineEdit;
+    QLineEdit *monthBox = new QLineEdit;
+    QLineEdit *userIdBox = new QLineEdit;
 
     QPushButton *addAbsence = new QPushButton(inputAbsence::tr("addAbsence"));
 
