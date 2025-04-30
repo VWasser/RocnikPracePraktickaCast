@@ -83,3 +83,23 @@ void Coordinator::implementMenuBar(QBoxLayout *layout){
     auto bar = new menuBar();
     bar->menuBarStup(layout);
 }
+absenceTypes Coordinator::getAbsenceType(int abscType) const{
+    //will eventualy add some functions just dont have the idea of exactly what
+    switch(abscType){
+    case (0):
+        return absenceTypes::OK;
+        break;
+    case (1):
+        return absenceTypes::UNSOLVED;
+        break;
+    case (2):
+        return absenceTypes::MISSED;
+        break;
+    case (3):
+        return absenceTypes::LATE;
+        break;
+    case (4):
+        return absenceTypes::SCHOOL;
+        break;
+    }
+}
