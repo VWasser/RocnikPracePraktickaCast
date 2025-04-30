@@ -35,17 +35,20 @@ private:
     QString value;
 };
 
-class IntPostParam: public PostParam {
+template<typename T>
+class NumericPostParam: public PostParam {
 public:
-    IntPostParam(int _value): value(_value) { }
+    NumericPostParam(T _value): value(_value) { }
 
     QString asParam() override {
         return QString::number(value);
     }
 
 private:
-    int value;
+    T value;
 };
+
+typedef NumericPostParam<int> IntPostParam;
 
 enum class BackendlessErrorCode {
     noError = 0,
