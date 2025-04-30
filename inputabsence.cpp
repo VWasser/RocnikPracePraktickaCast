@@ -15,7 +15,7 @@ enum absenceTypes {
 inputAbsence::inputAbsence(QWidget *parent): ScreenWidget(parent) {
 
     QObject::connect(addAbsence, &QPushButton::clicked,this, [](){
-        coordinator->showSchedule();
+        coordinator->showAbsenceWindow();
     });
 
     setLayout(mainLayout);
@@ -47,17 +47,17 @@ inputAbsence::inputAbsence(QWidget *parent): ScreenWidget(parent) {
     absenceType->insertItem(absenceTypes::LATE, "Late", *late);
     absenceType->insertItem(absenceTypes::SCHOOL, "School", *school);
 
-    //i know i dont have to do the .toInt() it is just a meassure to know what is a number
-    //and what is a string etc.
-    auto DayParam = new IntPostParam(dayBox->text().toInt());
-    auto HourParam = new IntPostParam(monthBox->text().toInt());
-    auto RowParam = new IntPostParam(rowBox->text().toInt() - 1);
-    auto CollumnParam = new IntPostParam(collumnBox->text().toInt() - 1);
-    auto UserIdParam = new StringPostParam(userIdBox->text());
-
     QObject::connect(addAbsence, &QPushButton::clicked, this, [&](){
+        //i know i dont have to do the .toInt() it is just a meassure to know what is a number
+        //and what is a string etc.
+        auto DayParam = new IntPostParam(dayBox->text().toInt());
+        auto HourParam = new IntPostParam(monthBox->text().toInt());
+        auto RowParam = new IntPostParam(rowBox->text().toInt() - 1);
+        auto CollumnParam = new IntPostParam(collumnBox->text().toInt() - 1);
+        auto UserIdParam = new StringPostParam(userIdBox->text());
+
         api->addItemToTable(
-            "Absence",
+            "Absences",
             {
              {"AbsenceDay", DayParam},
              {"AbsenceMonth", HourParam},
@@ -65,7 +65,7 @@ inputAbsence::inputAbsence(QWidget *parent): ScreenWidget(parent) {
              {"AbsenceHour", CollumnParam},
              {"UserID", UserIdParam}
             }
-            );
+        );
 
         //will eventualy add some functions just dont have the idea of exactly what
         switch(absenceType->currentIndex()){

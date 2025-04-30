@@ -250,7 +250,7 @@ void Schedule::setupUI() {
 Schedule::~Schedule(){}
 
 void Schedule::updateData() {
-    api->loadTableItems("Schedules");
+    api->loadTableItems("Schedules", 100, 0, "classid%20%3D%20'7D'");
 }
 
 void Schedule::deleteItemFunc(){
