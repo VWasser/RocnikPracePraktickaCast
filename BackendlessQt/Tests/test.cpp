@@ -1,6 +1,7 @@
 #include <QtTest>
 #include <QSignalSpy>
 #include "../BasicAPI.hpp"
+#include "../BackendlessUserAPI.hpp"
 #include "../BackendlessUser.hpp"
 
 class BackendlessQtTests: public QObject {
@@ -12,7 +13,8 @@ public:
 
 private slots:
     void initTestCase();
-    void test1();
+    void testGetAllParams();
+    void testDisk();
     void cleanupTestCase();
 };
 
@@ -28,7 +30,7 @@ void BackendlessQtTests::initTestCase() {
 
 }
 
-void BackendlessQtTests::test1() {
+void BackendlessQtTests::testGetAllParams() {
     // Given
     QString email = "email@email.com";
     QString password = "somePassword";
@@ -41,6 +43,20 @@ void BackendlessQtTests::test1() {
     // Then
     QCOMPARE(emailAsParam, "\"" + email + "\"");
     QCOMPARE(passwordAsParams, "\"" + password + "\"");
+}
+
+void BackendlessQtTests::testDisk() {
+    // Given
+    auto token = "Hello";
+    BackendlessUserAPI userAPI(nullptr, "", "", "");
+
+    // When
+    userAPI.removeTokenFromDisk();
+    userAPI.saveTokenOnDisk(token);
+    userAPI.readTokenFromDisk();
+
+    // Then
+    QCOMPARE(userAPI.user()->userToken, token);
 }
 
 void BackendlessQtTests::cleanupTestCase() {

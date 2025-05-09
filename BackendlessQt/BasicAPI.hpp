@@ -74,7 +74,8 @@ struct BackendlessError {
 template<typename T>
 void extractResult(
     QByteArray replyValue,
-    std::function<void(T)> const& onSuccess,
+    std::function<T*(QJsonObject)> const& decoder,
+    std::function<void(T*)> const& onSuccess,
     std::function<void(BackendlessError)> const& onBEError,
     std::function<void(QJsonParseError)> const& onJSONError
 ) {
@@ -93,11 +94,14 @@ void extractResult(
     auto code = static_cast<BackendlessErrorCode>(jsonObject["code"].toInt());
     switch (code) {
     case BackendlessErrorCode::noError:
-        onSuccess(
-            T(
-                jsonObject
-            )
+        {
+        auto decoded = decoder(
+            jsonObject
         );
+        onSuccess(
+            (T*)(decoded)
+        );
+        }
         break;
     default:
         onBEError(BackendlessError(

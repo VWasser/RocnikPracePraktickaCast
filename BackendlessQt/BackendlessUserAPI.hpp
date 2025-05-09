@@ -23,20 +23,23 @@ class AnyNetworkAccessManager;
 class BackendlessUserAPI: public QObject, public BasicAPI {
     Q_OBJECT
 
+    friend class BackendlessQtTests;
+
 public:
     BackendlessUserAPI(AnyNetworkAccessManager*, QString _appId, QString _apiKey, QString _endpoint = "https://eu-api.backendless.com/");
+    ~BackendlessUserAPI();
 
     void registerUser(BackendlessRegisterUserRepresentable&);
-    void signInUser(QString, QString);
+    void signInUser(QString, QString, std::function<BackendlessSignInUser*(QJsonObject)> const&);
     void validateUserToken();
     void restorePassword(QString);
     void logout();
-    QString userToken();
+    BackendlessSignInUser* user();
 
 private:
     QString tokenFilePath();
     void readTokenFromDisk();
-    void saveTokenOnDisk();
+    void saveTokenOnDisk(QString additionalValue = "");
     void removeTokenFromDisk();
 
 signals:
@@ -45,7 +48,7 @@ signals:
 #ifdef BACKENDLESS_VARIANT_RESPONSE
     void signInUserResult(std::variant<BackendlessSignInUser, BackendlessError, QJsonParseError>);
 #else
-    void signInUserSuccess(BackendlessSignInUser);
+    void signInUserSuccess(BackendlessSignInUser*);
     void signInUserErrorBackendless(BackendlessError);
     void signInUserErrorJson(QJsonParseError);
 #endif
@@ -58,13 +61,14 @@ signals:
 #endif
 
     void restorePasswordSuccess(QString);
+    void logoutSuccess();
 
 private:
     AnyNetworkAccessManager* networkAccessManager;
     QString appId;
     QString apiKey;
     QString endpoint;
-    QString userTokenValue;
+    BackendlessSignInUser* userValue;
 };
 
 #endif
