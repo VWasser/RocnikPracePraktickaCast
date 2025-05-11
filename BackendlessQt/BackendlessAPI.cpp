@@ -15,8 +15,8 @@
 #include "BackendlessAPI.hpp"
 
 BackendlessAPI::BackendlessAPI(AnyNetworkAccessManager* _networkAccessManager, QString _appId, QString _apiKey, QString _endpoint): QObject(),
-    networkAccessManager(_networkAccessManager),
     userAPI(_networkAccessManager, _appId, _apiKey, _endpoint),
+    networkAccessManager(_networkAccessManager),
     appId(_appId),
     apiKey(_apiKey),
     endpoint(_endpoint) {
@@ -52,6 +52,9 @@ void BackendlessAPI::deleteItemFromTable(QString tableName, QString objectId) {
             qDebug() << replyValue;
             extractResult<DeletionResult>(
                 replyValue,
+                [](auto obj){
+                    return new DeletionResult(obj);
+                },
                 [&](auto result) {
                     emit deleteItemFromTableSuccess(result);
                 },

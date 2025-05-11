@@ -91,7 +91,13 @@ SignInScreen::SignInScreen(QWidget *parent): ScreenWidget(parent),
 
         qDebug() << "SIGN IN email " << signInValue;
 
-        api->userAPI.signInUser(signInValue, password->text());
+        api->userAPI.signInUser(
+            signInValue,
+            password->text(),
+            [](auto obj){
+                return new BackendlessSignInUser(obj);
+            }
+        );
     });
 
     signInLayout.addStretch();
