@@ -8,6 +8,7 @@
 #include <QBoxLayout>
 #include <QCheckBox>
 #include "BackendlessQt/BackendlessUser.hpp"
+#include "screenwidget.hpp"
 
 struct BackendlessRegisterUser: BasicBackendlessRegisterUser {
 public:
@@ -34,12 +35,14 @@ protected:
     StringPostParam* teacher;
 };
 
-class registerscreen : public QWidget
+class registerscreen : public ScreenWidget
 {
     Q_OBJECT
 public:
     registerscreen(QWidget *parent = nullptr);
     ~registerscreen();
+
+    void configure(QSharedPointer<ShowBasicData>) override;
 
 private:
 

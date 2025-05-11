@@ -20,20 +20,21 @@ void BasicAPI::request(
     QString urlString,
     PostParams customParams,
     BERequestMethod method,
+    QMap<QString, QString> headers,
     std::function<void(QByteArray)> const& handleRequest
 ) {
     switch (method) {
     case BERequestMethod::get:
-        networkAccessManager->get(urlString, context, handleRequest);
+        networkAccessManager->get(urlString, headers, context, handleRequest);
         break;
     case BERequestMethod::post:
-        networkAccessManager->post(urlString, customParams, context, handleRequest);
+        networkAccessManager->post(urlString, headers, customParams, context, handleRequest);
         break;
     case BERequestMethod::deleteResource:
-        networkAccessManager->deleteResource(urlString, context, handleRequest);
+        networkAccessManager->deleteResource(urlString, headers, context, handleRequest);
         break;
     case BERequestMethod::put:
-        networkAccessManager->put(urlString, customParams, context, handleRequest);
+        networkAccessManager->put(urlString, headers, customParams, context, handleRequest);
         break;
     }
 }

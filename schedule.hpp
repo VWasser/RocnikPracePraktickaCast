@@ -8,28 +8,51 @@
 #include <QHeaderView>
 #include <QCalendarWidget>
 #include "BackendlessQt/BackendlessAPI.hpp"
-#include "editmodescreen.hpp"
+#include "inputabsence.hpp"
 #include "qlabel.h"
 #include "qmessagebox.h"
 #include <ctime>
+#include <QComboBox>
+#include "screenwidget.hpp"
 
 extern BackendlessAPI* api;
-extern editModeScreen* popUpWindow;
 
-class Schedule : public QWidget
+struct ScheduleItem {
+    QString objectId;
+    QString desc;
+    int dayOfWeek;
+    int hourStart;
+
+    ScheduleItem(QJsonObject lessonObject) {
+        objectId = lessonObject["objectId"].toString();
+        desc = lessonObject["lessonDescription"].toString();
+        dayOfWeek = lessonObject["dayOfWeek"].toInt();
+        hourStart = lessonObject["hourStart"].toInt();
+    }
+};
+
+class Schedule : public ScreenWidget
 {
     Q_OBJECT
 
 public:
+    friend class Coordinator;
     Schedule(QWidget *parent = nullptr);
     ~Schedule();
     void updateData();
+    void configure(QSharedPointer<ShowBasicData>) override;
 
 private:
     void setupUI();
 
 private:
+    int hourStart;
+    int dayOfWeek;
     bool isUpdating = true;
+    bool isAbsenceMode = false;
+
+    //bool isTaken = true;
+    QList<ScheduleItem> cachedSchedule;
     QTableWidget* calendar = new QTableWidget(5,10);
 
     QPushButton *deleteItemButton = new QPushButton;
@@ -39,7 +62,21 @@ private:
     QVector<QPushButton*> dayButtons;
     QVector<QTableWidgetItem*>dayItems;
     QVector<QTableWidgetItem*>classItems;
+    QComboBox *editFunctions = new QComboBox;
+    QVariant *viewingMode = new QVariant;
+    QVariant *editItem = new QVariant;
+    QVariant *deleteItem = new QVariant;
+    QVariant *addItem = new QVariant;
 
+    void deleteItemFunc();
+    void editItemFunc();
+    void addItemFunc(int predefinedColumnValue = -1, int predefinedRowValue = -1);
+    bool exeptionForAdd();
+    void onSomething();
+signals:
+    void sendImputAbsenceData();
+
+private:
     QMessageBox notDeletable;
 
     QLabel* date = new QLabel;
@@ -68,6 +105,11 @@ private:
 
 
 };
+
+template<class T, class UnaryPred>
+bool myFindIf(typename QList<T>::Iterator begin, typename QList<T>::Iterator end, UnaryPred isWhatWeAreSearchingFor) {
+    return false;
+}
 
 #endif // SCHEDULE_H
 

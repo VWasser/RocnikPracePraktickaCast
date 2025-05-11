@@ -1,20 +1,25 @@
-#include "client.hpp"
+#include "httpclient.hpp"
 
-static inline qint32 ArrayToInt(QByteArray source);
-static inline QByteArray IntToArray(qint32 source);
-
-Client::Client(QObject *parent) : QObject(parent)
-{
+HttpClient::HttpClient(QObject *parent) : QObject(parent) {
     socket = new QTcpSocket(this);
+    connect(socket, &QIODevice::readyRead, this, [&](){
+        auto receivedData = socket->readAll();
+        qDebug() << "I WAS THERE";
+        qDebug() << QString(receivedData);
+    });
 }
 
-bool Client::connectToHost(QString host)
-{
-    socket->connectToHost(QHostAddress("172.64.155.249"), 443);
-    return socket->waitForConnected();
+bool HttpClient::connectToHost(QString host) {
+    socket->connectToHost(QHostAddress(host), 80);
+    auto result = socket->waitForConnected();
+    if (!result) {
+        qDebug() << socket->errorString();
+        exit(100);
+    }
+    return result;
 }
 
-bool Client::writeData(QByteArray data)
+bool HttpClient::writeData(QByteArray data)
 {
     if(socket->state() == QAbstractSocket::ConnectedState)
     {
@@ -27,7 +32,7 @@ bool Client::writeData(QByteArray data)
         return false;
 }
 
-void Client::readyRead()
+void HttpClient::readyRead()
 {
     QTcpSocket *socket = static_cast<QTcpSocket*>(sender());
     QByteArray *buffer = new QByteArray();
@@ -38,7 +43,7 @@ void Client::readyRead()
         QString data = socket->readAll();
         qDebug() << data;
         buffer->append(socket->readAll());
-        while ((size == 0 && buffer->size() >= 4) || (size > 0 && buffer->size() >= size)) //While can process data, process it
+        /*while ((size == 0 && buffer->size() >= 4) || (size > 0 && buffer->size() >= size)) //While can process data, process it
         {
             if (size == 0 && buffer->size() >= 4) //if size of data has received completely, then store it on our global variable
             {
@@ -54,23 +59,6 @@ void Client::readyRead()
                 *s = size;
                 // emit dataReceived(data);
             }
-        }
+        }*/
     }
-}
-
-QByteArray IntToArray(qint32 source) //Use qint32 to ensure that the number have 4 bytes
-{
-    //Avoid use of cast, this is the Qt way to serialize objects
-    QByteArray temp;
-    QDataStream data(&temp, QIODevice::ReadWrite);
-    data << source;
-    return temp;
-}
-
-qint32 ArrayToInt(QByteArray source)
-{
-    qint32 temp;
-    QDataStream data(&source, QIODevice::ReadWrite);
-    data >> temp;
-    return temp;
 }

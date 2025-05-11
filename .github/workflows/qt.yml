@@ -1,0 +1,22 @@
+name: QT
+
+on:
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository and submodules
+        uses: actions/checkout@v4
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: '6.8.2'
+
+      - name: Compile
+        run: |
+             qmake MyBachelor.pro
+             make -j12

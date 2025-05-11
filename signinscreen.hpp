@@ -6,22 +6,19 @@
 #include <QLineEdit>
 #include <QLabel>
 #include <QMessageBox>
-#include "BackendlessQt/BackendlessAPI.hpp"
+#include <QCheckBox>
 #include "qboxlayout.h"
-#include "registerscreen.hpp"
-#include "schedule.hpp"
-#include "client.hpp"
+#include "screenwidget.hpp"
 
-extern registerscreen* myWindow2;
-extern Schedule* myWindow3;
-
-class SignInScreen: public QWidget
+class SignInScreen: public ScreenWidget
 {
     Q_OBJECT
 
 public:
     SignInScreen(QWidget *parent = nullptr);
     ~SignInScreen();
+
+    void configure(QSharedPointer<ShowBasicData>) override;
 
 private:
     //UI
@@ -43,9 +40,8 @@ private:
     QVBoxLayout signInLayout;
 private:
     void passwordShow(auto type);
-
-private:
-    Client client;
 };
+
+extern SignInScreen* myWindow;
 
 #endif

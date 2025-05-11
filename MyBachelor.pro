@@ -1,14 +1,24 @@
-QT += core gui widgets network
+QT += core gui widgets network quick
 
 CONFIG += c++20
 
 SOURCES += \
+    addgrades.cpp \
+    absencewindow.cpp \
+    coordinator.cpp \
+    gradeswindow.cpp \
+    inputabsence.cpp \
     main.cpp \
+    menubar.cpp \
+    menuwindow.cpp \
     registerscreen.cpp \
     schedule.cpp \
+    settingsWindow.cpp \
     signinscreen.cpp \
-    editmodescreen.cpp \
-    client.cpp \
+    httpclient.cpp \
+    mocknetworkmanager.cpp \
+    screenwidget.cpp \
+    # client.cpp \
     # Backendless
     BackendlessQt/BasicAPI.cpp \
     BackendlessQt/BackendlessAPI.cpp \
@@ -17,11 +27,21 @@ SOURCES += \
     BackendlessQt/StandardNetworkManager.cpp
 
 HEADERS += \
+    addgrades.hpp \
+    absencewindow.hpp \
+    coordinator.hpp \
+    gradeswindow.hpp \
+    inputabsence.hpp \
+    menubar.hpp \
+    menuwindow.hpp \
     registerscreen.hpp \
     schedule.hpp \
+    settingsWindow.hpp \
     signinscreen.hpp \
-    editmodescreen.hpp \
-    client.hpp \
+    httpclient.hpp \
+    mocknetworkmanager.hpp \
+    screenwidget.hpp \
+    # client.hpp \
     # Backendless
     BackendlessQt/BasicAPI.hpp \
     BackendlessQt/BackendlessAPI.hpp \
