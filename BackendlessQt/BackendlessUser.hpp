@@ -37,13 +37,19 @@ protected:
 };
 
 struct BackendlessSignInUser {
+    QString name;
+    QString email;
     QString userToken;
 
     BackendlessSignInUser(
         QJsonObject jsonObject
-    ): userToken(jsonObject["user-token"].toString()) {
+    ): name(jsonObject["name"].toString()),
+       email(jsonObject["email"].toString()),
+       userToken(jsonObject["user-token"].toString()) {
 
     }
+
+    BackendlessSignInUser() {}
 };
 
 #endif
