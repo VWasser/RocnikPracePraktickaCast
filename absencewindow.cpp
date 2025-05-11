@@ -1,19 +1,19 @@
 #include "absencewindow.hpp"
 #include "BackendlessQt/BackendlessAPI.hpp"
+#include "coordinator.hpp"
 
 extern BackendlessAPI* api;
+extern Coordinator* coordinator;
 
-absenceWindow::absenceWindow(QWidget *parent): QWidget(parent) {
+absenceWindow::absenceWindow(QWidget *parent): ScreenWidget(parent) {
     QObject::connect(addAbsence, &QPushButton::clicked, this, [&](){
-        myWindow3->show();
-        if(myWindow3->isVisible() == true){
-            emit scheduleAbsenceOpened();
-            hide();
-        }
+        coordinator->showSchedule();
+        emit scheduleAbsenceOpened();
+        // This SHOULD be hidden, but not sure, if I break something here now(
+        // hide();
     });
     absenceLayout->setFixedSize(315, 600);
 
-    absenceLayout->setRowCount(ammountOfDays);
     absenceLayout->setColumnCount(6);
     for(int i =0;i < 6;i++){
         absenceLayout->setColumnWidth(i,50);
@@ -26,6 +26,8 @@ absenceWindow::absenceWindow(QWidget *parent): QWidget(parent) {
     absenceLayout->setHorizontalHeaderItem(3,missed);
     absenceLayout->setHorizontalHeaderItem(4,late);
     absenceLayout->setHorizontalHeaderItem(5,school);
+
+    coordinator->implementMenuBar(mainLayout);
 
 
     mainLayout->addWidget(addAbsence);
@@ -46,16 +48,30 @@ absenceWindow::absenceWindow(QWidget *parent): QWidget(parent) {
         }
         auto jsonObject = jsonResponse.array();
 
+        auto i = 0;
         for (const auto& item : jsonObject) {
             auto absenceObject = item.toObject();
             AbsenceItem absenceItem(absenceObject);
             cachedItems.push_back(absenceItem);
+<<<<<<< HEAD
+=======
+
+            QTableWidgetItem* someItem = new QTableWidgetItem(QString::number(absenceItem.absenceDay), QTableWidgetItem::Type);
+            absenceLayout->setItem(i, 1, someItem);
+            ammountOfDays++;
+            ++i;
+>>>>>>> 64b889a6c55df94b419d8cfb2c4d08b7747827db
         }
+        absenceLayout->setRowCount(ammountOfDays);
     });
 
 
-    api->loadTableItems("Absences");
+    api->loadTableItems("Absences"); // , 100, 0, "UserID%20%3D%20'my_user_id'");
 }
 
 
 absenceWindow::~absenceWindow(){}
+
+void absenceWindow::configure(QSharedPointer<ShowBasicData>) {
+
+}

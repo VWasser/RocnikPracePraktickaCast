@@ -13,9 +13,9 @@
 #include "qmessagebox.h"
 #include <ctime>
 #include <QComboBox>
+#include "screenwidget.hpp"
 
 extern BackendlessAPI* api;
-extern inputAbsence* absencePopUp;
 
 struct ScheduleItem {
     QString objectId;
@@ -31,21 +31,26 @@ struct ScheduleItem {
     }
 };
 
-class Schedule : public QWidget
+class Schedule : public ScreenWidget
 {
     Q_OBJECT
 
 public:
+    friend class Coordinator;
     Schedule(QWidget *parent = nullptr);
     ~Schedule();
     void updateData();
+    void configure(QSharedPointer<ShowBasicData>) override;
 
 private:
     void setupUI();
 
 private:
+    int hourStart;
+    int dayOfWeek;
     bool isUpdating = true;
     bool isAbsenceMode = false;
+
     //bool isTaken = true;
     QList<ScheduleItem> cachedSchedule;
     QTableWidget* calendar = new QTableWidget(5,10);
@@ -67,6 +72,9 @@ private:
     void editItemFunc();
     void addItemFunc(int predefinedColumnValue = -1, int predefinedRowValue = -1);
     bool exeptionForAdd();
+    void onSomething();
+signals:
+    void sendImputAbsenceData();
 
 private:
     QMessageBox notDeletable;

@@ -3,11 +3,14 @@
 #include <QBoxLayout>
 #include <QPushButton>
 #include "BackendlessQt/BackendlessAPI.hpp"
+#include "coordinator.hpp"
 #include "schedule.hpp"
 #include "signinscreen.hpp"
 
+extern Coordinator* coordinator;
 
-registerscreen::registerscreen(QWidget *parent): QWidget(parent),
+
+registerscreen::registerscreen(QWidget *parent): ScreenWidget(parent),
      regist(this), logIn(this), logInLabel(this)
 {
 
@@ -24,7 +27,7 @@ registerscreen::registerscreen(QWidget *parent): QWidget(parent),
             }
     });
     QObject::connect(&logIn, &QPushButton::clicked, this, [&]() {
-        myWindow->show();
+        coordinator->showSignInScreen();
         hide();
     });
 
@@ -62,4 +65,14 @@ registerscreen::registerscreen(QWidget *parent): QWidget(parent),
     setFixedSize(640, 400);
 #endif
 }
-registerscreen::~registerscreen(){}
+
+registerscreen::~registerscreen(){
+    delete name;
+    delete password;
+    delete password2;
+    delete email;
+}
+
+void registerscreen::configure(QSharedPointer<ShowBasicData>) {
+
+}

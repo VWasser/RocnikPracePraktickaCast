@@ -20,9 +20,9 @@ BackendlessUserAPI::BackendlessUserAPI(AnyNetworkAccessManager* _networkAccessMa
     networkAccessManager(_networkAccessManager),
     appId(_appId),
     apiKey(_apiKey),
-    endpoint(_endpoint) {
+    endpoint(_endpoint),
+    userValue(nullptr) {
     readTokenFromDisk();
-    qDebug() << userTokenValue;
 }
 
 void BackendlessUserAPI::registerUser(BackendlessRegisterUserRepresentable& user) {
@@ -32,6 +32,7 @@ void BackendlessUserAPI::registerUser(BackendlessRegisterUserRepresentable& user
         endpoint + appId + "/" + apiKey + "/users/register",
         user.getAllParams(),
         BERequestMethod::post,
+        {},
         [&](auto replyValue){
             qDebug() << replyValue;
 
@@ -40,19 +41,20 @@ void BackendlessUserAPI::registerUser(BackendlessRegisterUserRepresentable& user
     );
 }
 
-void BackendlessUserAPI::signInUser(QString login, QString password) {
+void BackendlessUserAPI::signInUser(QString login, QString password, std::function<BackendlessSignInUser*(QJsonObject)> const& decoder) {
+    auto loginParam = QSharedPointer<StringPostParam>(new StringPostParam(login));
+    auto passwordParam = QSharedPointer<StringPostParam>(new StringPostParam(password));
     request(
         networkAccessManager,
         this,
         endpoint + appId + "/" + apiKey + "/users/login",
         {
-            {"login", new StringPostParam(login)},
-            {"password", new StringPostParam(password)}
+            {"login", loginParam.get()},
+            {"password", passwordParam.get()}
         },
         BERequestMethod::post,
-        [&](auto replyValue){
-            qDebug() << replyValue;
-
+        {},
+        [this, decoder](auto replyValue){            
             #ifdef BACKENDLESS_VARIANT_RESPONSE
             extractResult(
                 replyValue,
@@ -69,8 +71,9 @@ void BackendlessUserAPI::signInUser(QString login, QString password) {
             #else
             extractResult<BackendlessSignInUser>(
                 replyValue,
+                decoder,
                 [&](auto user) {
-                    userTokenValue = user.userToken;
+                    userValue = QSharedPointer<BackendlessSignInUser>(user);
                     saveTokenOnDisk();
                     emit signInUserSuccess(user);
                 },
@@ -95,29 +98,36 @@ void BackendlessUserAPI::readTokenFromDisk() {
     QFile file(tokenFilePath());
     if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         QTextStream stream(&file);
-        stream >> userTokenValue;
+        userValue = QSharedPointer<BackendlessSignInUser>(new BackendlessSignInUser());
+        stream >> userValue->userToken;
     }
     file.close();
 }
 
-void BackendlessUserAPI::saveTokenOnDisk() {
+void BackendlessUserAPI::saveTokenOnDisk(QString additionalValue) {
     QFile file(tokenFilePath());
     if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
         QTextStream stream(&file);
-        stream << userTokenValue;
+        stream << (additionalValue.isEmpty() ? userValue->userToken : additionalValue);
     }
     file.close();
+}
+
+void BackendlessUserAPI::removeTokenFromDisk() {
+    QFile file(tokenFilePath());
+    file.remove();
 }
 
 void BackendlessUserAPI::validateUserToken() {
     request(
         networkAccessManager,
         this,
-        endpoint + appId + "/" + apiKey + "/users/isvalidusertoken/" + userTokenValue,
+        endpoint + appId + "/" + apiKey + "/users/isvalidusertoken/" + userValue->userToken,
         {
 
         },
         BERequestMethod::get,
+        {},
         [&](auto replyValue) {
             qDebug() << replyValue;
 
@@ -151,6 +161,7 @@ void BackendlessUserAPI::restorePassword(QString email) {
 
         },
         BERequestMethod::get,
+        {},
         [&](auto replyValue){
             qDebug() << replyValue;
 
@@ -159,6 +170,26 @@ void BackendlessUserAPI::restorePassword(QString email) {
     );
 }
 
-QString BackendlessUserAPI::userToken() {
-    return userTokenValue;
+void BackendlessUserAPI::logout() {
+    if (!userValue) {
+        return;
+    }
+    request(
+        networkAccessManager,
+        this,
+        endpoint + appId + "/" + apiKey + "/users/logout",
+        {
+
+        },
+        BERequestMethod::get,
+        {{"user-token", userValue->userToken}},
+        [&](auto replyValue){
+            qDebug() << replyValue;
+
+            userValue.reset();
+            removeTokenFromDisk();
+
+            emit logoutSuccess();
+        }
+    );
 }

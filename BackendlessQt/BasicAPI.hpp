@@ -35,17 +35,20 @@ private:
     QString value;
 };
 
-class IntPostParam: public PostParam {
+template<typename T>
+class NumericPostParam: public PostParam {
 public:
-    IntPostParam(int _value): value(_value) { }
+    NumericPostParam(T _value): value(_value) { }
 
     QString asParam() override {
         return QString::number(value);
     }
 
 private:
-    int value;
+    T value;
 };
+
+typedef NumericPostParam<int> IntPostParam;
 
 enum class BackendlessErrorCode {
     noError = 0,
@@ -71,7 +74,8 @@ struct BackendlessError {
 template<typename T>
 void extractResult(
     QByteArray replyValue,
-    std::function<void(T)> const& onSuccess,
+    std::function<T*(QJsonObject)> const& decoder,
+    std::function<void(T*)> const& onSuccess,
     std::function<void(BackendlessError)> const& onBEError,
     std::function<void(QJsonParseError)> const& onJSONError
 ) {
@@ -90,11 +94,14 @@ void extractResult(
     auto code = static_cast<BackendlessErrorCode>(jsonObject["code"].toInt());
     switch (code) {
     case BackendlessErrorCode::noError:
-        onSuccess(
-            T(
-                jsonObject
-            )
+        {
+        auto decoded = decoder(
+            jsonObject
         );
+        onSuccess(
+            (T*)(decoded)
+        );
+        }
         break;
     default:
         onBEError(BackendlessError(
@@ -113,10 +120,10 @@ enum class BERequestMethod {
 
 class AnyNetworkAccessManager {
 public:
-    virtual void get(QString, const QObject*, std::function<void(QByteArray)> const&) = 0;
-    virtual void post(QString, PostParams, const QObject*, std::function<void(QByteArray)> const&) = 0;
-    virtual void put(QString, PostParams, const QObject*, std::function<void(QByteArray)> const&) = 0;
-    virtual void deleteResource(QString, const QObject*, std::function<void(QByteArray)> const&) = 0;
+    virtual void get(QString, QMap<QString, QString>, const QObject*, std::function<void(QByteArray)> const&) = 0;
+    virtual void post(QString, QMap<QString, QString>, PostParams, const QObject*, std::function<void(QByteArray)> const&) = 0;
+    virtual void put(QString, QMap<QString, QString>, PostParams, const QObject*, std::function<void(QByteArray)> const&) = 0;
+    virtual void deleteResource(QString, QMap<QString, QString>, const QObject*, std::function<void(QByteArray)> const&) = 0;
 };
 
 class BasicAPI {
@@ -127,6 +134,7 @@ protected:
         QString,
         PostParams,
         BERequestMethod,
+        QMap<QString, QString>,
         std::function<void(QByteArray)> const&
     );
 };

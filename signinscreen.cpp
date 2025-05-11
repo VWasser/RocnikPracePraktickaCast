@@ -1,23 +1,22 @@
 #include "signinscreen.hpp"
+#include "coordinator.hpp"
 #include "registerscreen.hpp"
 #include <QApplication>
 #include <QBoxLayout>
+#include <QQuickView>
+#include <QQuickItem>
+#include <QQmlProperty>
 
-SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
+extern Coordinator* coordinator;
+
+
+SignInScreen::SignInScreen(QWidget *parent): ScreenWidget(parent),
     signInButton(this), registerButton(this), resetPasswordButton(this),
     errorWin(this), signInLayout(this)
 {
-    // Sign in screen should not register a new user, we already have registerscreen.cpp for it
-    /*QObject::connect(&api.userAPI, &BackendlessUserAPI::registerUserResult, this, [&](){
-        api.userAPI.signInUser("something@new.com", "Password");
-        qDebug() << "Signing in";
-        myWindow3->show();
-        hide();
-    });*/
     QObject::connect(&(api->userAPI), &BackendlessUserAPI::signInUserSuccess, this, [&](){
         // api.userAPI.validateUserToken();
-
-        myWindow3->show();
+        coordinator->showMenuWindow();
         hide();
     });
     QObject::connect(&(api->userAPI), &BackendlessUserAPI::signInUserErrorBackendless, this, [&](auto error){
@@ -41,11 +40,9 @@ SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
     QObject::connect(&(api->userAPI), &BackendlessUserAPI::restorePasswordSuccess, this, [&](auto response){
         qDebug() << "email sent";
     });
-    QObject::connect(&signInButton, &QPushButton::clicked, this, [&]() {
-        api->userAPI.signInUser(email->text(), password->text());
-    });
+
     QObject::connect(&registerButton, &QPushButton::clicked, this, [&]() {
-        myWindow2->show();
+        coordinator->showRegisterScreen();
         hide();
     });
     QObject::connect(&showPassword, &QCheckBox::clicked, this, [&]() {
@@ -65,13 +62,44 @@ SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
     showPasswordLayout.addWidget(&showPasswordLabel);
     showPasswordLayout.addStretch();
 
+#if defined(Q_OS_ANDROID) // Or you can use it for any other platform if you like QML, but for Android it is essential
+    auto view = new QQuickView();
+    view->setSource(QUrl("qrc:/qml/example.qml"));
 
+    auto qmlWrapper = this->createWindowContainer(view);
+    qmlWrapper->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
+    qmlWrapper->setMaximumHeight(30);
+    signInLayout.addWidget(qmlWrapper);
+#else
     signInLayout.addWidget(email);
+#endif
+
     signInLayout.addWidget(password);
     signInLayout.addLayout(&showPasswordLayout);
     signInLayout.addWidget(&signInButton);
     signInLayout.addWidget(&registerButton);
     signInLayout.addWidget(&resetPasswordButton);
+
+    QObject::connect(&signInButton, &QPushButton::clicked, this, [=]() {
+        QString signInValue;
+        #if defined(Q_OS_ANDROID)
+        auto signInTextFieldObject = view->rootObject();
+        signInValue = signInTextFieldObject->property("text").toString();
+        #else
+        signInValue = email->text();
+        #endif
+
+        qDebug() << "SIGN IN email " << signInValue;
+
+        api->userAPI.signInUser(
+            signInValue,
+            password->text(),
+            [](auto obj){
+                return new BackendlessSignInUser(obj);
+            }
+        );
+    });
+
     signInLayout.addStretch();
 
     setLayout(&signInLayout);
@@ -86,6 +114,10 @@ SignInScreen::SignInScreen(QWidget *parent): QWidget(parent),
 }
 
 SignInScreen::~SignInScreen() {
+
+}
+
+void SignInScreen::configure(QSharedPointer<ShowBasicData>) {
 
 }
 

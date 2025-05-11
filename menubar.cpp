@@ -1,5 +1,9 @@
 #include "menubar.hpp"
+#include "coordinator.hpp"
 #include "menuwindow.hpp"
+
+extern Coordinator* coordinator;
+
 
 menuBar::menuBar() {
 
@@ -9,25 +13,25 @@ void menuBar::menuBarStup(QBoxLayout *layout){
 
     layout->addWidget(quickAcces);
 
-
+    //TODO: Actions dont hide the current window that the action was clicked from, i will solve it
     //QMenuBar Actions
     QObject::connect(scheduleAction, &QAction::triggered, this, [&](){
-        myWindow3->show();
-        hide();
+        coordinator->showSchedule();
+         hide();
 
     });
     QObject::connect(gradesAction, &QAction::triggered, this, [&](){
-        gradeWin->show();
+        coordinator->showGradesWindow();
         hide();
 
     });
     QObject::connect(absenceAction, &QAction::triggered, this, [&](){
-        abscWin->show();
+        coordinator->showAbsenceWindow();
         hide();
 
     });
     QObject::connect(settingsAction, &QAction::triggered, this, [&](){
-        popUpWindow->show();
+        coordinator->showSettingsWindow();
         hide();
 
     });
@@ -39,7 +43,7 @@ void menuBar::menuBarStup(QBoxLayout *layout){
 
     });
     QObject::connect(logOutAction, &QAction::triggered, this, [&](){
-        myWindow->show();
+        coordinator->showSignInScreen();
         hide();
 
     });

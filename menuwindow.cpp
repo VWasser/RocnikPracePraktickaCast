@@ -1,43 +1,44 @@
 #include "menuwindow.hpp"
-#include "schedule.hpp"
-#include "signinscreen.hpp"
 #include <QGridLayout>
 #include <QMenuBar>
 #include <QAction>
 #include "menubar.hpp"
+#include "coordinator.hpp"
 
-menuWindow::menuWindow(QWidget*parent): QWidget(parent)  {
+extern Coordinator* coordinator;
+
+menuWindow::menuWindow(QWidget*parent): ScreenWidget(parent)  {
 
     QObject::connect(gradesButton, &QPushButton::clicked, this, [&](){
-        gradeWin->show();
-        hide();
+        emit gradesPressed();
+        coordinator->showGradesWindow();
     });
     QObject::connect(absenceButton, &QPushButton::clicked, this, [&](){
-        abscWin->show();
-        hide();
-
+        emit absencePressed();
+        coordinator->showAbsenceWindow();
     });
     QObject::connect(scheduleButton, &QPushButton::clicked, this, [&](){
-        myWindow3->show();
-        hide();
-
+        emit schedulePressed();
+        coordinator->showSchedule();
     });
     QObject::connect(settingsButton, &QPushButton::clicked, this, [&](){
-        popUpWindow->show();
-        hide();
-
+        emit settingsPressed();
+        coordinator->showSettingsWindow();
     });
 
     row1->addWidget(scheduleButton);
     row1->addWidget(gradesButton);
     row2->addWidget(absenceButton);
-    auto bar = new menuBar();
-    bar->menuBarStup(mainLayout);
+    coordinator->implementMenuBar(mainLayout);
+    //auto bar = new menuBar();
+    //bar->menuBarStup(mainLayout);
     mainLayout->addLayout(row1);
     mainLayout->addLayout(row2);
     setLayout(mainLayout);
 }
 
-
-
 menuWindow::~menuWindow(){};
+
+void menuWindow::configure(QSharedPointer<ShowBasicData>) {
+
+}

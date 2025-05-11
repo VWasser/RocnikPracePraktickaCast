@@ -1,10 +1,16 @@
 #include "settingsWindow.hpp"
 #include "schedule.hpp"
+#include "coordinator.hpp"
 
-extern Schedule* myWindow3;
+extern Coordinator *coordinator;
 
-settingsWindow::settingsWindow(QWidget* parent): QWidget(parent) {
-
+settingsWindow::settingsWindow(QWidget* parent): ScreenWidget(parent) {
+    coordinator->implementMenuBar(mainLayout);
+    setLayout(mainLayout);
 }
 
 settingsWindow::~settingsWindow() {}
+
+void settingsWindow::configure(QSharedPointer<ShowBasicData>) {
+
+}
