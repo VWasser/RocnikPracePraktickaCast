@@ -35,7 +35,7 @@ public:
 
 signals:
     void itemAdded();
-    void deleteItemFromTableSuccess(DeletionResult);
+    void deleteItemFromTableSuccess(DeletionResult*);
     void deleteItemFromTableError(BackendlessError);
 #ifdef BACKENDLESS_VARIANT_RESPONSE
 
