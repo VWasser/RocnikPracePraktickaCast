@@ -25,10 +25,6 @@ BackendlessUserAPI::BackendlessUserAPI(AnyNetworkAccessManager* _networkAccessMa
     readTokenFromDisk();
 }
 
-BackendlessUserAPI::~BackendlessUserAPI() {
-    delete userValue;
-}
-
 void BackendlessUserAPI::registerUser(BackendlessRegisterUserRepresentable& user) {
     request(
         networkAccessManager,
@@ -46,19 +42,19 @@ void BackendlessUserAPI::registerUser(BackendlessRegisterUserRepresentable& user
 }
 
 void BackendlessUserAPI::signInUser(QString login, QString password, std::function<BackendlessSignInUser*(QJsonObject)> const& decoder) {
+    auto loginParam = QSharedPointer<StringPostParam>(new StringPostParam(login));
+    auto passwordParam = QSharedPointer<StringPostParam>(new StringPostParam(password));
     request(
         networkAccessManager,
         this,
         endpoint + appId + "/" + apiKey + "/users/login",
         {
-            {"login", new StringPostParam(login)},
-            {"password", new StringPostParam(password)}
+            {"login", loginParam.get()},
+            {"password", passwordParam.get()}
         },
         BERequestMethod::post,
         {},
-        [this, decoder](auto replyValue){
-            qDebug() << replyValue;
-
+        [this, decoder](auto replyValue){            
             #ifdef BACKENDLESS_VARIANT_RESPONSE
             extractResult(
                 replyValue,
@@ -77,7 +73,7 @@ void BackendlessUserAPI::signInUser(QString login, QString password, std::functi
                 replyValue,
                 decoder,
                 [&](auto user) {
-                    userValue = user;
+                    userValue = QSharedPointer<BackendlessSignInUser>(user);
                     saveTokenOnDisk();
                     emit signInUserSuccess(user);
                 },
@@ -102,7 +98,7 @@ void BackendlessUserAPI::readTokenFromDisk() {
     QFile file(tokenFilePath());
     if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         QTextStream stream(&file);
-        userValue = new BackendlessSignInUser();
+        userValue = QSharedPointer<BackendlessSignInUser>(new BackendlessSignInUser());
         stream >> userValue->userToken;
     }
     file.close();
@@ -175,6 +171,9 @@ void BackendlessUserAPI::restorePassword(QString email) {
 }
 
 void BackendlessUserAPI::logout() {
+    if (!userValue) {
+        return;
+    }
     request(
         networkAccessManager,
         this,
@@ -187,15 +186,10 @@ void BackendlessUserAPI::logout() {
         [&](auto replyValue){
             qDebug() << replyValue;
 
-            delete userValue;
-            userValue = nullptr;
+            userValue.reset();
             removeTokenFromDisk();
 
             emit logoutSuccess();
         }
     );
-}
-
-BackendlessSignInUser* BackendlessUserAPI::user() {
-    return userValue;
 }

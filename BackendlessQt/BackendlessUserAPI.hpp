@@ -27,14 +27,15 @@ class BackendlessUserAPI: public QObject, public BasicAPI {
 
 public:
     BackendlessUserAPI(AnyNetworkAccessManager*, QString _appId, QString _apiKey, QString _endpoint = "https://eu-api.backendless.com/");
-    ~BackendlessUserAPI();
 
     void registerUser(BackendlessRegisterUserRepresentable&);
     void signInUser(QString, QString, std::function<BackendlessSignInUser*(QJsonObject)> const&);
     void validateUserToken();
     void restorePassword(QString);
     void logout();
-    BackendlessSignInUser* user();
+    BackendlessSignInUser* user() const {
+        return userValue.get();
+    }
 
 private:
     QString tokenFilePath();
@@ -68,7 +69,7 @@ private:
     QString appId;
     QString apiKey;
     QString endpoint;
-    BackendlessSignInUser* userValue;
+    QSharedPointer<BackendlessSignInUser> userValue;
 };
 
 #endif
