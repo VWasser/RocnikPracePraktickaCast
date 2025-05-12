@@ -43,9 +43,7 @@ void menuBar::menuBarStup(QBoxLayout *layout){
 
     });
     QObject::connect(logOutAction, &QAction::triggered, this, [&](){
-        coordinator->showSignInScreen();
-        hide();
-
+        api->userAPI.logout();
     });
 
     quickAcces->addMenu(functions);
@@ -55,7 +53,7 @@ void menuBar::menuBarStup(QBoxLayout *layout){
     functions->addAction(absenceAction);
     functions->addAction(gradesAction);
     functions->addAction(menuAction);
-
+    functions->addAction(logOutAction);
 
     languages->addAction(czLanguageAction);
     languages->addAction(engLanguageAction);

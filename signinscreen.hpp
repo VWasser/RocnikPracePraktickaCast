@@ -9,6 +9,18 @@
 #include <QCheckBox>
 #include "qboxlayout.h"
 #include "screenwidget.hpp"
+#include "BackendlessQt/BackendlessUser.hpp"
+
+struct BachelorSignInUser: BackendlessSignInUser {
+    bool isTeacher;
+
+    BachelorSignInUser(
+        QJsonObject jsonObject
+    ): BackendlessSignInUser(jsonObject),
+    isTeacher(jsonObject["isTeacher"].toBool()) {
+
+    }
+};
 
 class SignInScreen: public ScreenWidget
 {

@@ -48,7 +48,7 @@ inputAbsence::inputAbsence(QWidget *parent): ScreenWidget(parent) {
     QObject::connect(addAbsence, &QPushButton::clicked, this, [&](){
         //i know i dont have to do the .toInt() it is just a meassure to know what is a number
         //and what is a string etc.
-        auto DayParam = new IntPostParam(dayBox->text().toInt());
+        auto DayParam = new IntPostParam(dayBox->text().toInt()); // Refactor
         auto HourParam = new IntPostParam(monthBox->text().toInt());
         auto RowParam = new IntPostParam(rowBox->text().toInt() - 1);
         auto CollumnParam = new IntPostParam(collumnBox->text().toInt() - 1);

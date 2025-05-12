@@ -10,6 +10,12 @@ HttpClient* customHttpClient;
 Coordinator* coordinator;
 
 void reloadScreen() {
+    auto onLogoutSuccess = [](){
+        reloadScreen();
+    };
+    QtFuture::connect(&api->userAPI, &BackendlessUserAPI::logoutSuccess)
+        .then(onLogoutSuccess);
+
     auto user = api->userAPI.user();
     if (!user || user->userToken.isEmpty()) {
         coordinator->showSignInScreen();
