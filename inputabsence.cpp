@@ -48,22 +48,22 @@ inputAbsence::inputAbsence(QWidget *parent): ScreenWidget(parent) {
     QObject::connect(addAbsence, &QPushButton::clicked, this, [&](){
         //i know i dont have to do the .toInt() it is just a meassure to know what is a number
         //and what is a string etc.
-        auto DayParam = new IntPostParam(dayBox->text().toInt()); // Refactor
-        auto HourParam = new IntPostParam(monthBox->text().toInt());
-        auto RowParam = new IntPostParam(rowBox->text().toInt() - 1);
-        auto CollumnParam = new IntPostParam(collumnBox->text().toInt() - 1);
-        auto UserIdParam = new StringPostParam(userIdBox->text());
-        auto currentIndexParam = new IntPostParam(absenceType->currentIndex());
+        auto DayParam = QSharedPointer<IntPostParam>(new IntPostParam(dayBox->text().toInt()));
+        auto HourParam = QSharedPointer<IntPostParam>(new IntPostParam(monthBox->text().toInt()));
+        auto RowParam = QSharedPointer<IntPostParam>(new IntPostParam(rowBox->text().toInt() - 1));
+        auto CollumnParam = QSharedPointer<IntPostParam>(new IntPostParam(collumnBox->text().toInt() - 1));
+        auto UserIdParam = QSharedPointer<StringPostParam>(new StringPostParam(userIdBox->text()));
+        auto currentIndexParam = QSharedPointer<IntPostParam>(new IntPostParam(absenceType->currentIndex()));
 
         api->addItemToTable(
             "Absences",
             {
-             {"AbsenceDay", DayParam},
-             {"AbsenceMonth", HourParam},
-             {"AbsenceRow", RowParam},
-             {"AbsenceHour", CollumnParam},
-             {"UserID", UserIdParam},
-             {"Kind", currentIndexParam}
+             {"AbsenceDay", DayParam.get()},
+             {"AbsenceMonth", HourParam.get()},
+             {"AbsenceRow", RowParam.get()},
+             {"AbsenceHour", CollumnParam.get()},
+             {"UserID", UserIdParam.get()},
+             {"Kind", currentIndexParam.get()}
             }
         );
 
