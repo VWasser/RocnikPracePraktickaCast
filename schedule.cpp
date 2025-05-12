@@ -180,9 +180,12 @@ Schedule::Schedule(QWidget*parent): ScreenWidget(parent) {
     notDeletable.setInformativeText(Schedule::tr("CanNotDelete"));
 
     editFunctions->insertItem(Action::VIEW, "Viewing", *viewingMode);
-    editFunctions->insertItem(Action::ADD, "Add", *addItem);
-    editFunctions->insertItem(Action::DELETE, "Delete", *deleteItem);
-    editFunctions->insertItem(Action::EDIT, "Edit", *editItem);
+    auto currentUser = static_cast<BachelorSignInUser*>(api->userAPI.user());
+    if (currentUser->isTeacher) {
+        editFunctions->insertItem(Action::ADD, "Add", *addItem);
+        editFunctions->insertItem(Action::DELETE, "Delete", *deleteItem);
+        editFunctions->insertItem(Action::EDIT, "Edit", *editItem);
+    }
 
 
     dateLay->addSpacing(calendar->width()/2);
@@ -250,7 +253,7 @@ void Schedule::setupUI() {
 Schedule::~Schedule(){}
 
 void Schedule::updateData() {
-    api->loadTableItems("Schedules", 100, 0, "classid%20%3D%20'7D'");
+    api->loadTableItems("Schedules");
 }
 
 void Schedule::deleteItemFunc(){

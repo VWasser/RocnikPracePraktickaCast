@@ -95,7 +95,7 @@ SignInScreen::SignInScreen(QWidget *parent): ScreenWidget(parent),
             signInValue,
             password->text(),
             [](auto obj){
-                return new BackendlessSignInUser(obj);
+                return new BachelorSignInUser(obj);
             }
         );
     });
