@@ -55,9 +55,9 @@ absenceWindow::absenceWindow(QWidget *parent): ScreenWidget(parent) {
             cachedItems.push_back(absenceItem);
 
             QTableWidgetItem* someItem = new QTableWidgetItem("X", QTableWidgetItem::Type);
-            auto collumType = item["Kind"];
-            auto date = QString::number(item["AbsenceDay"]) + ". " + QString::number(item["AbsenceMonth"] + ".");
-            absenceLayout->setItem(i, collumType+1, someItem);
+            //auto collumType = item["Kind"];
+            //auto date = QString::number(item["AbsenceDay"]) + ". " + QString::number(item["AbsenceMonth"] + ".");
+            //absenceLayout->setItem(i, collumType+1, someItem);
             absenceLayout->setItem(i, 1, date);
             ammountOfDays++;
             ++i;
