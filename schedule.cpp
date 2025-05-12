@@ -311,7 +311,7 @@ void Schedule::addItemFunc(int predefinedColumnValue, int predefinedRowValue){
         return;
     }
 
-    if (std::find_if(cachedSchedule.cbegin(), cachedSchedule.constEnd(), [=](ScheduleItem item){ // = means COPY all what we need
+    if (std::find_if(cachedSchedule.cbegin(), cachedSchedule.cend(), [=](ScheduleItem item){ // = means COPY all what we need
         return item.dayOfWeek == rowValue && item.hourStart == columnValue;
     }) != cachedSchedule.constEnd()) {
         // TODO ALERT WINDOW
