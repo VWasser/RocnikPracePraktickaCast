@@ -48,6 +48,8 @@ void menuBar::menuBarStup(QBoxLayout *layout){
 
     quickAcces->addMenu(functions);
     quickAcces->addMenu(options);
+    quickAcces->addAction(logOutAction);
+
 
     functions->addAction(scheduleAction);
     functions->addAction(absenceAction);
