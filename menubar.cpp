@@ -44,12 +44,15 @@ void menuBar::menuBarStup(QBoxLayout *layout){
     });
     QObject::connect(logOutAction, &QAction::triggered, this, [&](){
         coordinator->showSignInScreen();
+
         hide();
 
     });
 
     quickAcces->addMenu(functions);
     quickAcces->addMenu(options);
+    quickAcces->addAction(logOutAction);
+
 
     functions->addAction(scheduleAction);
     functions->addAction(absenceAction);
