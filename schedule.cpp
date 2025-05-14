@@ -8,7 +8,6 @@
 
 #include "schedule.hpp"
 #include "coordinator.hpp"
-#include "menubar.hpp"
 #include "absencewindow.hpp"
 #include "httpclient.hpp"
 #include <QJsonDocument>
