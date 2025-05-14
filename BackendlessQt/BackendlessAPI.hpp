@@ -15,7 +15,7 @@
 #include <QNetworkAccessManager>
 #include "BackendlessUserAPI.hpp"
 
-struct DeletionResult {
+struct DeletionResult: public Codable {
     long deletionTime;
 
     DeletionResult(QJsonObject jsonObject): deletionTime(jsonObject["deletionTime"].toInteger()) { }
@@ -27,7 +27,13 @@ class BackendlessAPI: public QObject, public BasicAPI {
     Q_OBJECT
 
 public:
-    BackendlessAPI(AnyNetworkAccessManager* _networkAccessManager, QString _appId, QString _apiKey, QString _endpoint = "https://eu-api.backendless.com/");
+    BackendlessAPI(
+        AnyNetworkAccessManager*,
+        QSharedPointer<BackendlessSignInUserCoder>,
+        QString,
+        QString,
+        QString _endpoint = "https://eu-api.backendless.com/"
+    );
     void addItemToTable(QString, PostParams);
     void deleteItemFromTable(QString, QString);
     void loadTableItems(QString tableName, int pageSize = 100, int offset = 0, QString whereClause = "");

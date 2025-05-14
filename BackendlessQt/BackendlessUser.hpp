@@ -36,7 +36,11 @@ protected:
     StringPostParam* password;
 };
 
-struct BackendlessSignInUser {
+class Codable {
+
+};
+
+struct BackendlessSignInUser: public Codable {
     QString name;
     QString email;
     QString userToken;
@@ -49,7 +53,60 @@ struct BackendlessSignInUser {
 
     }
 
-    BackendlessSignInUser() {}
+    BackendlessSignInUser(
+        QString _name = "",
+        QString _email = "",
+        QString _userToken = ""
+    ): name(_name), email(_email), userToken(_userToken) {
+
+    }
 };
+
+class Coder {
+public:
+    virtual Codable* decode(QJsonObject) = 0;
+    virtual void write(QTextStream&, QSharedPointer<Codable>, QSharedPointer<Codable>) = 0;
+    virtual Codable* read(QTextStream&) = 0;
+};
+
+template<typename T>
+void extractResult(
+    QByteArray replyValue,
+    Coder* decoder,
+    std::function<void(T*)> const& onSuccess,
+    std::function<void(BackendlessError)> const& onBEError,
+    std::function<void(QJsonParseError)> const& onJSONError
+) {
+    QJsonParseError jsonError;
+    auto jsonResponse = QJsonDocument::fromJson(replyValue, &jsonError);
+
+    switch (jsonError.error) {
+    case QJsonParseError::NoError:
+        break;
+    default:
+        onJSONError(jsonError);
+        return;
+    }
+
+    auto jsonObject = jsonResponse.object();
+    auto code = static_cast<BackendlessErrorCode>(jsonObject["code"].toInt());
+    switch (code) {
+    case BackendlessErrorCode::noError:
+    {
+        auto decoded = decoder->decode(
+            jsonObject
+        );
+        onSuccess(
+            (T*)decoded
+        );
+    }
+    break;
+    default:
+        onBEError(BackendlessError(
+            code,
+            jsonObject["message"].toString()
+        ));
+    }
+}
 
 #endif

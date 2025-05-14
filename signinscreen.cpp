@@ -93,10 +93,7 @@ SignInScreen::SignInScreen(QWidget *parent): ScreenWidget(parent),
 
         api->userAPI.signInUser(
             signInValue,
-            password->text(),
-            [](auto obj){
-                return new BachelorSignInUser(obj);
-            }
+            password->text()
         );
     });
 
