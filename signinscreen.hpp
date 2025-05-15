@@ -24,6 +24,8 @@ struct BachelorSignInUser: BackendlessSignInUser {
     BachelorSignInUser() {}
 };
 
+QTextStream& operator>>(QTextStream &in, bool &var);
+
 struct BachelorSignInUserCoder: BackendlessSignInUserCoder {
     Codable* decode(QJsonObject obj) override {
         return new BachelorSignInUser(obj);
@@ -34,7 +36,7 @@ struct BachelorSignInUserCoder: BackendlessSignInUserCoder {
         stream << userValue->userToken << Qt::endl;
         stream << userValue->email << Qt::endl;
         stream << userValue->name << Qt::endl;
-        stream << userValue->isTeacher << Qt::endl;
+        stream << (userValue->isTeacher ? "YES" : "NO") << Qt::endl;
     }
 
     Codable* read(QTextStream& stream) override {
@@ -42,7 +44,9 @@ struct BachelorSignInUserCoder: BackendlessSignInUserCoder {
         stream >> result->userToken >> Qt::endl;
         stream >> result->email >> Qt::endl;
         stream >> result->name >> Qt::endl;
-        // stream >> result->isTeacher >> Qt::endl;
+        QString isTeacher;
+        stream >> isTeacher >> Qt::endl;
+        result->isTeacher = isTeacher == "YES";
         return result;
     }
 };

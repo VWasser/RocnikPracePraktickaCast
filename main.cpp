@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
 
     customHttpClient = new HttpClient();
     networkManager = new StandardNetworkManager();
-    auto coder = QSharedPointer<BackendlessSignInUserCoder>(new BackendlessSignInUserCoder());
+    auto coder = QSharedPointer<BackendlessSignInUserCoder>(new BachelorSignInUserCoder());
     api = new BackendlessAPI(
         networkManager,
         coder,
