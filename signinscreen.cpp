@@ -8,13 +8,6 @@
 
 extern Coordinator* coordinator;
 
-QTextStream& operator>>(QTextStream &in, bool &var) {
-    char value;
-    in >> value;
-    var = value == '1';
-    return in;
-}
-
 SignInScreen::SignInScreen(QWidget *parent): ScreenWidget(parent),
     signInButton(this), registerButton(this), resetPasswordButton(this),
     errorWin(this), signInLayout(this)

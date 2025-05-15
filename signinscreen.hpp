@@ -24,8 +24,6 @@ struct BachelorSignInUser: BackendlessSignInUser {
     BachelorSignInUser() {}
 };
 
-QTextStream& operator>>(QTextStream &in, bool &var);
-
 struct BachelorSignInUserCoder: BackendlessSignInUserCoder {
     Codable* decode(QJsonObject obj) override {
         return new BachelorSignInUser(obj);
