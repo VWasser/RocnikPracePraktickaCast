@@ -20,16 +20,37 @@
 
 class AnyNetworkAccessManager;
 
+class BackendlessSignInUserCoder: public Coder {
+    Codable* decode(QJsonObject obj) override {
+        return new BackendlessSignInUser(obj);
+    }
+
+    void write(QTextStream& stream, QSharedPointer<Codable> codable, QSharedPointer<Codable> defaultValue) override {
+        auto userValue = (BackendlessSignInUser*)(defaultValue.get() ? defaultValue.get() : codable.get());
+        stream << userValue->userToken << Qt::endl;
+        stream << userValue->email << Qt::endl;
+        stream << userValue->name << Qt::endl;
+    }
+
+    Codable* read(QTextStream& stream) override {
+        auto result = new BackendlessSignInUser();
+        stream >> result->userToken >> Qt::endl;
+        stream >> result->email >> Qt::endl;
+        stream >> result->name >> Qt::endl;
+        return result;
+    }
+};
+
 class BackendlessUserAPI: public QObject, public BasicAPI {
     Q_OBJECT
 
     friend class BackendlessQtTests;
 
 public:
-    BackendlessUserAPI(AnyNetworkAccessManager*, QString _appId, QString _apiKey, QString _endpoint = "https://eu-api.backendless.com/");
+    BackendlessUserAPI(AnyNetworkAccessManager*, QSharedPointer<Coder> coder, QString _appId, QString _apiKey, QString _endpoint = "https://eu-api.backendless.com/");
 
     void registerUser(BackendlessRegisterUserRepresentable&);
-    void signInUser(QString, QString, std::function<BackendlessSignInUser*(QJsonObject)> const&);
+    void signInUser(QString, QString);
     void validateUserToken();
     void restorePassword(QString);
     void logout();
@@ -39,9 +60,9 @@ public:
 
 private:
     QString tokenFilePath();
-    void readTokenFromDisk();
-    void saveTokenOnDisk(QString additionalValue = "");
-    void removeTokenFromDisk();
+    void readUserFromDisk();
+    void saveUserOnDisk(QSharedPointer<BackendlessSignInUser> = QSharedPointer<BackendlessSignInUser>(nullptr));
+    void removeUserFromDisk();
 
 signals:
     void registerUserResult();
@@ -66,6 +87,7 @@ signals:
 
 private:
     AnyNetworkAccessManager* networkAccessManager;
+    QSharedPointer<Coder> coder;
     QString appId;
     QString apiKey;
     QString endpoint;
