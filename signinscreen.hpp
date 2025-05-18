@@ -61,8 +61,8 @@ public:
 
 private:
     //UI
-    QLineEdit* email= new QLineEdit;
-    QLineEdit* password = new QLineEdit;
+    QWidget* email;
+    QWidget* password;
 
     QCheckBox showPassword;
     QLabel showPasswordLabel;
@@ -79,6 +79,10 @@ private:
     QVBoxLayout signInLayout;
 private:
     void passwordShow(auto type);
+    QWidget* createEmailField();
+    QWidget* createPasswordField();
+    QString currentEmailValue();
+    QString currentPasswordValue();
 };
 
 extern SignInScreen* myWindow;
