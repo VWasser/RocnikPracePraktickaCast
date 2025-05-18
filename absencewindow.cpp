@@ -49,7 +49,9 @@ absenceWindow::absenceWindow(QWidget *parent): ScreenWidget(parent) {
         auto jsonObject = jsonResponse.array();
 
         cachedItems.clear();
-        absenceLayout->clear();
+        absenceLayout->clearContents();
+
+        absenceLayout->setRowCount(jsonObject.count());
 
         for (const auto& item : jsonObject) {
             auto absenceObject = item.toObject();
@@ -74,7 +76,6 @@ absenceWindow::absenceWindow(QWidget *parent): ScreenWidget(parent) {
             );
             absenceLayout->setItem(cachedItems.size() - 1, absenceItem.kind + 1, crossItem);
         }
-        absenceLayout->setRowCount(cachedItems.size());
     });
 
 
