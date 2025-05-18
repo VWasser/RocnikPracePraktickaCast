@@ -39,11 +39,11 @@ inputAbsence::inputAbsence(QWidget *parent): ScreenWidget(parent) {
     mainLayout->addLayout(classLine);
     mainLayout->addWidget(addAbsence);
 
-    absenceType->insertItem(0, "Ok", *ok);
-    absenceType->insertItem(1, "Unsolved", *unsolved);
-    absenceType->insertItem(2, "Missed", *missed);
-    absenceType->insertItem(3, "Late", *late);
-    absenceType->insertItem(5, "School", *school);
+    absenceType->insertItem(absenceTypes::OK, "Ok", *ok);
+    absenceType->insertItem(absenceTypes::UNSOLVED, "Unsolved", *unsolved);
+    absenceType->insertItem(absenceTypes::MISSED, "Missed", *missed);
+    absenceType->insertItem(absenceTypes::LATE, "Late", *late);
+    absenceType->insertItem(absenceTypes::SCHOOL, "School", *school);
 
     QObject::connect(addAbsence, &QPushButton::clicked, this, [&](){
         //i know i dont have to do the .toInt() it is just a meassure to know what is a number

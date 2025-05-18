@@ -22,7 +22,7 @@ enum class Screen {
     Settings
 };
 
-enum class absenceTypes {
+enum absenceTypes {
     OK = 0,
     UNSOLVED = 1,
     MISSED = 2,
