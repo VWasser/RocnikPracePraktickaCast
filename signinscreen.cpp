@@ -63,9 +63,9 @@ SignInScreen::SignInScreen(QWidget *parent): ScreenWidget(parent),
     showPasswordLayout.addWidget(&showPasswordLabel);
     showPasswordLayout.addStretch();
 
-    this->email = createEmailField();
+    createEmailField();
     signInLayout.addWidget(this->email);
-    this->password = createPasswordField();
+    createPasswordField();
     signInLayout.addWidget(this->password);
     signInLayout.addLayout(&showPasswordLayout);
     signInLayout.addWidget(&signInButton);
@@ -98,15 +98,14 @@ void SignInScreen::configure(QSharedPointer<ShowBasicData>) {
 
 }
 
-QWidget* SignInScreen::createEmailField() {
+void SignInScreen::createEmailField() {
 #if SHOULD_USE_ANDROID_UI_FORCEDLY || defined(Q_OS_ANDROID) // Or you can use it for any other platform if you like QML, but for Android it is essential
-    auto view = new QQuickView();
-    view->setSource(QUrl("qrc:/qml/example.qml"));
+    emailQuickView = new QQuickView();
+    emailQuickView->setSource(QUrl("qrc:/qml/example.qml"));
 
-    auto qmlWrapper = this->createWindowContainer(view);
-    qmlWrapper->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
-    qmlWrapper->setMaximumHeight(30);
-    return qmlWrapper;
+    email = this->createWindowContainer(emailQuickView);
+    email->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
+    email->setMaximumHeight(30);
 #else
     auto result = new QLineEdit;
     result->setPlaceholderText(SignInScreen::tr("email"));
@@ -114,15 +113,14 @@ QWidget* SignInScreen::createEmailField() {
 #endif
 }
 
-QWidget* SignInScreen::createPasswordField() {
+void SignInScreen::createPasswordField() {
 #if SHOULD_USE_ANDROID_UI_FORCEDLY || defined(Q_OS_ANDROID) // Or you can use it for any other platform if you like QML, but for Android it is essential
-    auto view = new QQuickView();
-    view->setSource(QUrl("qrc:/qml/example.qml"));
+    passwordQuickView = new QQuickView();
+    passwordQuickView->setSource(QUrl("qrc:/qml/example.qml"));
 
-    auto qmlWrapper = this->createWindowContainer(view);
-    qmlWrapper->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
-    qmlWrapper->setMaximumHeight(30);
-    return qmlWrapper;
+    password = this->createWindowContainer(passwordQuickView);
+    password->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
+    password->setMaximumHeight(30);
 #else
     auto result = new QLineEdit;
     result->setPlaceholderText(SignInScreen::tr("password"));
@@ -134,7 +132,8 @@ QWidget* SignInScreen::createPasswordField() {
 QString SignInScreen::currentEmailValue() {
     QString value;
 #if SHOULD_USE_ANDROID_UI_FORCEDLY || defined(Q_OS_ANDROID)
-    value = email->property("text").toString();
+    auto textFieldObject = emailQuickView->rootObject();
+    value = textFieldObject->property("text").toString();
 #else
     value = ((QLineEdit*)email)->text();
 #endif
@@ -144,7 +143,8 @@ QString SignInScreen::currentEmailValue() {
 QString SignInScreen::currentPasswordValue() {
     QString value;
 #if SHOULD_USE_ANDROID_UI_FORCEDLY || defined(Q_OS_ANDROID)
-    value = password->property("text").toString();
+    auto textFieldObject = passwordQuickView->rootObject();
+    value = textFieldObject->property("text").toString();
 #else
     value = ((QLineEdit*)password)->text();
 #endif

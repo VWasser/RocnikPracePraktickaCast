@@ -1,6 +1,7 @@
 #ifndef SIGNINSCREEN_HPP
 #define SIGNINSCREEN_HPP
 
+#include <QQuickView>
 #include <QWidget>
 #include <QPushButton>
 #include <QLineEdit>
@@ -61,6 +62,8 @@ public:
 
 private:
     //UI
+    QQuickView* emailQuickView;
+    QQuickView* passwordQuickView;
     QWidget* email;
     QWidget* password;
 
@@ -79,8 +82,8 @@ private:
     QVBoxLayout signInLayout;
 private:
     void passwordShow(auto type);
-    QWidget* createEmailField();
-    QWidget* createPasswordField();
+    void createEmailField();
+    void createPasswordField();
     QString currentEmailValue();
     QString currentPasswordValue();
 };
