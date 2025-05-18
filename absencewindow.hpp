@@ -59,10 +59,6 @@ private:
     QTableWidgetItem *late = new QTableWidgetItem(absenceWindow::tr("Late"));
     QTableWidgetItem *school = new QTableWidgetItem(absenceWindow::tr("School"));
 
-    //when functional the vaiable will be = 0 but for now ill sett it
-    //to random number
-    int ammountOfDays;
-
     //will later be added as a verticalHeaderItem to the
     //absence adding function
     QString dateOfAbsence = "DD:MM";
@@ -70,7 +66,7 @@ private:
     QPushButton *addAbsence = new QPushButton;
 
 private:
-    QList<AbsenceItem> cachedItems;
+    QList<AbsenceItem> cachedItems; // Here you can get current absences count
 };
 
 

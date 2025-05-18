@@ -48,7 +48,9 @@ absenceWindow::absenceWindow(QWidget *parent): ScreenWidget(parent) {
         }
         auto jsonObject = jsonResponse.array();
 
-        ammountOfDays = 0;
+        cachedItems.clear();
+        absenceLayout->clear();
+
         for (const auto& item : jsonObject) {
             auto absenceObject = item.toObject();
             AbsenceItem absenceItem(absenceObject);
@@ -60,17 +62,15 @@ absenceWindow::absenceWindow(QWidget *parent): ScreenWidget(parent) {
                 QString::number(absenceItem.absenceHour),
                 QTableWidgetItem::Type
             );
-            absenceLayout->setItem(ammountOfDays, 0, dateItem);
+            absenceLayout->setItem(cachedItems.size() - 1, 0, dateItem);
 
             QTableWidgetItem* crossItem = new QTableWidgetItem(
                 "X",
                 QTableWidgetItem::Type
             );
-            absenceLayout->setItem(ammountOfDays, absenceItem.kind + 1, crossItem);
-
-            ammountOfDays++;
+            absenceLayout->setItem(cachedItems.size() - 1, absenceItem.kind + 1, crossItem);
         }
-        absenceLayout->setRowCount(ammountOfDays);
+        absenceLayout->setRowCount(cachedItems.size());
     });
 
 
