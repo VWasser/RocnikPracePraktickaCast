@@ -46,18 +46,23 @@ absenceWindow::absenceWindow(QWidget *parent): ScreenWidget(parent) {
         default:
             return;
         }
+
+        if (!jsonResponse.isArray()) {
+            return;
+        }
+
         auto jsonObject = jsonResponse.array();
+
+        if (!jsonObject.empty() && jsonObject[0].toObject()["___class"] != "Absences") {
+            return;
+        }
 
         cachedItems.clear();
         absenceLayout->clearContents();
-
         absenceLayout->setRowCount(jsonObject.count());
 
         for (const auto& item : jsonObject) {
             auto absenceObject = item.toObject();
-            if (absenceObject["___class"] != "Absences") {
-                continue;
-            }
 
             AbsenceItem absenceItem(absenceObject);
             cachedItems.push_back(absenceItem);
