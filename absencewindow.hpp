@@ -44,6 +44,9 @@ public:
     ~absenceWindow();
     void configure(QSharedPointer<ShowBasicData>) override;
 
+private:
+    void updateData();
+
 signals:
     void scheduleAbsenceOpened();
 
