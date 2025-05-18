@@ -87,7 +87,7 @@ absenceWindow::absenceWindow(QWidget *parent): ScreenWidget(parent) {
 }
 
 void absenceWindow::updateData() {
-    api->loadTableItems("Absences"); // , 100, 0, "UserID%20%3D%20'my_user_id'");
+    api->loadTableItems("Absences");
 }
 
 absenceWindow::~absenceWindow(){}

@@ -1,17 +1,11 @@
 #include "inputabsence.hpp"
 #include "coordinator.hpp"
 #include "BackendlessQt/BackendlessAPI.hpp"
+#include <QFuture>
 
 extern Coordinator *coordinator;
 
 inputAbsence::inputAbsence(QWidget *parent): ScreenWidget(parent) {
-
-    QObject::connect(addAbsence, &QPushButton::clicked,this, [](){
-        coordinator->showAbsenceWindow();
-    });
-
-
-
     setLayout(mainLayout);
     nameLine->addWidget(nameLabel);
     nameLine->addWidget(nameBox);
@@ -54,6 +48,11 @@ inputAbsence::inputAbsence(QWidget *parent): ScreenWidget(parent) {
         auto CollumnParam = QSharedPointer<IntPostParam>(new IntPostParam(collumnBox->text().toInt() - 1));
         auto UserIdParam = QSharedPointer<StringPostParam>(new StringPostParam(userIdBox->text()));
         auto currentIndexParam = QSharedPointer<IntPostParam>(new IntPostParam(absenceType->currentIndex()));
+
+        auto itemAddedFuture = QtFuture::connect(api, &BackendlessAPI::itemAdded);
+        itemAddedFuture.then([&](){
+            coordinator->showAbsenceWindow();
+        });
 
         api->addItemToTable(
             "Absences",
