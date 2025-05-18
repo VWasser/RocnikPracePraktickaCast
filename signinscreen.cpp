@@ -63,14 +63,18 @@ SignInScreen::SignInScreen(QWidget *parent): ScreenWidget(parent),
     showPasswordLayout.addWidget(&showPasswordLabel);
     showPasswordLayout.addStretch();
 
-    signInLayout.addWidget(createEmailField());
-    signInLayout.addWidget(createPasswordField());
+    this->email = createEmailField();
+    signInLayout.addWidget(this->email);
+    this->password = createPasswordField();
+    signInLayout.addWidget(this->password);
     signInLayout.addLayout(&showPasswordLayout);
     signInLayout.addWidget(&signInButton);
     signInLayout.addWidget(&registerButton);
     signInLayout.addWidget(&resetPasswordButton);
 
     QObject::connect(&signInButton, &QPushButton::clicked, this, [&]() {
+        qDebug() << "HELE " << currentEmailValue() << currentPasswordValue();
+
         api->userAPI.signInUser(
             currentEmailValue(),
             currentPasswordValue()
@@ -130,8 +134,7 @@ QWidget* SignInScreen::createPasswordField() {
 QString SignInScreen::currentEmailValue() {
     QString value;
 #if SHOULD_USE_ANDROID_UI_FORCEDLY || defined(Q_OS_ANDROID)
-    auto textFieldObject = ((QQuickView*)email)->rootObject();
-    value = textFieldObject->property("text").toString();
+    value = email->property("text").toString();
 #else
     value = ((QLineEdit*)email)->text();
 #endif
@@ -141,8 +144,7 @@ QString SignInScreen::currentEmailValue() {
 QString SignInScreen::currentPasswordValue() {
     QString value;
 #if SHOULD_USE_ANDROID_UI_FORCEDLY || defined(Q_OS_ANDROID)
-    auto fieldObject = ((QQuickView*)password)->rootObject();
-    value = fieldObject->property("text").toString();
+    value = password->property("text").toString();
 #else
     value = ((QLineEdit*)password)->text();
 #endif
