@@ -22,13 +22,6 @@ enum class Screen {
     Settings
 };
 
-enum absenceTypes {
-    OK = 0,
-    UNSOLVED = 1,
-    MISSED = 2,
-    LATE = 3,
-    SCHOOL = 4
-};
 class InputAbsenceData: public ShowBasicData {
     Q_OBJECT
 

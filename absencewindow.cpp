@@ -14,18 +14,18 @@ absenceWindow::absenceWindow(QWidget *parent): ScreenWidget(parent) {
     });
     absenceLayout->setFixedSize(315, 600);
 
-    absenceLayout->setColumnCount(6);
+    absenceLayout->setColumnCount(absenceTypes::COUNT + 1);
     for(int i =0;i < 6;i++){
         absenceLayout->setColumnWidth(i,50);
     }
     addAbsence->setText(absenceWindow::tr("addAbsence"));
 
     absenceLayout->setHorizontalHeaderItem(0, date);
-    absenceLayout->setHorizontalHeaderItem(1,ok);
-    absenceLayout->setHorizontalHeaderItem(2,unsolved);
-    absenceLayout->setHorizontalHeaderItem(3,missed);
-    absenceLayout->setHorizontalHeaderItem(4,late);
-    absenceLayout->setHorizontalHeaderItem(5,school);
+    absenceLayout->setHorizontalHeaderItem(absenceTypes::OK + 1,ok);
+    absenceLayout->setHorizontalHeaderItem(absenceTypes::UNSOLVED + 1,unsolved);
+    absenceLayout->setHorizontalHeaderItem(absenceTypes::MISSED + 1,missed);
+    absenceLayout->setHorizontalHeaderItem(absenceTypes::LATE + 1,late);
+    absenceLayout->setHorizontalHeaderItem(absenceTypes::SCHOOL + 1,school);
 
     coordinator->implementMenuBar(mainLayout);
 
@@ -48,19 +48,27 @@ absenceWindow::absenceWindow(QWidget *parent): ScreenWidget(parent) {
         }
         auto jsonObject = jsonResponse.array();
 
-        auto i = 0;
+        ammountOfDays = 0;
         for (const auto& item : jsonObject) {
             auto absenceObject = item.toObject();
             AbsenceItem absenceItem(absenceObject);
             cachedItems.push_back(absenceItem);
 
-            QTableWidgetItem* someItem = new QTableWidgetItem("X", QTableWidgetItem::Type);
-            //auto collumType = item["Kind"];
-            //auto date = QString::number(item["AbsenceDay"]) + ". " + QString::number(item["AbsenceMonth"] + ".");
-            //absenceLayout->setItem(i, collumType+1, someItem);
-            absenceLayout->setItem(i, 1, date);
+            QTableWidgetItem* dateItem = new QTableWidgetItem(
+                QString::number(absenceItem.absenceMonth) + "/" +
+                QString::number(absenceItem.absenceDay) + "/" +
+                QString::number(absenceItem.absenceHour),
+                QTableWidgetItem::Type
+            );
+            absenceLayout->setItem(ammountOfDays, 0, dateItem);
+
+            QTableWidgetItem* crossItem = new QTableWidgetItem(
+                "X",
+                QTableWidgetItem::Type
+            );
+            absenceLayout->setItem(ammountOfDays, absenceItem.kind + 1, crossItem);
+
             ammountOfDays++;
-            ++i;
         }
         absenceLayout->setRowCount(ammountOfDays);
     });
