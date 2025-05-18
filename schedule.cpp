@@ -64,6 +64,10 @@ Schedule::Schedule(QWidget*parent): ScreenWidget(parent) {
 
         for (const auto& item : jsonObject) {
             auto lessonObject = item.toObject();
+            if (lessonObject["___class"] != "Schedules") {
+                continue;
+            }
+
             ScheduleItem scheduleItem(lessonObject);
             cachedSchedule.push_back(scheduleItem);
             auto oldItem = calendar->item(scheduleItem.dayOfWeek, scheduleItem.hourStart);

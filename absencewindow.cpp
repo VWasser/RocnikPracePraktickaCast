@@ -15,7 +15,7 @@ absenceWindow::absenceWindow(QWidget *parent): ScreenWidget(parent) {
     absenceLayout->setFixedSize(315, 600);
 
     absenceLayout->setColumnCount(absenceTypes::COUNT + 1);
-    for(int i =0;i < 6;i++){
+    for(int i =0;i < absenceTypes::COUNT + 1;i++){
         absenceLayout->setColumnWidth(i,50);
     }
     addAbsence->setText(absenceWindow::tr("addAbsence"));
@@ -53,6 +53,10 @@ absenceWindow::absenceWindow(QWidget *parent): ScreenWidget(parent) {
 
         for (const auto& item : jsonObject) {
             auto absenceObject = item.toObject();
+            if (absenceObject["___class"] != "Absences") {
+                continue;
+            }
+
             AbsenceItem absenceItem(absenceObject);
             cachedItems.push_back(absenceItem);
 
