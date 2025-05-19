@@ -14,7 +14,6 @@ SignInScreen::SignInScreen(QWidget *parent): ScreenWidget(parent),
 {
     QObject::connect(&(api->userAPI), &BackendlessUserAPI::signInUserSuccess, this, [&](){
         coordinator->showMenuWindow();
-        // TODO: check if hide() is needed here
     });
     QObject::connect(&(api->userAPI), &BackendlessUserAPI::signInUserErrorBackendless, this, [&](auto error){
         qDebug() << "Error!!!";
@@ -33,8 +32,6 @@ SignInScreen::SignInScreen(QWidget *parent): ScreenWidget(parent),
 
     QObject::connect(&registerButton, &QPushButton::clicked, this, [&]() {
         coordinator->showRegisterScreen();
-        // TODO: Check if needed
-        //hide();
     });
     QObject::connect(&showPassword, &QCheckBox::clicked, this, [&]() {
         passwordShow(password->echoMode());
