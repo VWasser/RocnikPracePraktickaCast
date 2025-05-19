@@ -8,7 +8,7 @@
 
 extern Coordinator* coordinator;
 
-#define SHOULD_USE_ANDROID_UI_FORCEDLY true
+// #define SHOULD_USE_ANDROID_UI_FORCEDLY true
 
 SignInScreen::SignInScreen(QWidget *parent): ScreenWidget(parent),
     signInButton(this), registerButton(this), resetPasswordButton(this),
@@ -46,8 +46,7 @@ SignInScreen::SignInScreen(QWidget *parent): ScreenWidget(parent),
         hide();
     });
     QObject::connect(&showPassword, &QCheckBox::clicked, this, [&]() {
-        // TODO
-        //passwordShow(password->echoMode());
+        // passwordShow(password->echoMode());
     });
     ///UI
     signInButton.setText(SignInScreen::tr("signIn"));
@@ -107,9 +106,8 @@ void SignInScreen::createEmailField() {
     email->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
     email->setMaximumHeight(30);
 #else
-    auto result = new QLineEdit;
-    result->setPlaceholderText(SignInScreen::tr("email"));
-    return result;
+    email = new QLineEdit;
+    ((QLineEdit*)email)->setPlaceholderText(SignInScreen::tr("email"));
 #endif
 }
 
@@ -122,10 +120,9 @@ void SignInScreen::createPasswordField() {
     password->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
     password->setMaximumHeight(30);
 #else
-    auto result = new QLineEdit;
-    result->setPlaceholderText(SignInScreen::tr("password"));
-    result->setEchoMode(QLineEdit::Password);
-    return result;
+    password = new QLineEdit;
+    ((QLineEdit*)password)->setPlaceholderText(SignInScreen::tr("password"));
+    ((QLineEdit*)password)->setEchoMode(QLineEdit::Password);
 #endif
 }
 
@@ -151,7 +148,7 @@ QString SignInScreen::currentPasswordValue() {
     return value;
 }
 
-void SignInScreen::passwordShow(auto type){
+void SignInScreen::passwordShow(auto type) {
     // TODO
     /*if(type == QLineEdit::Password){
         password->setEchoMode(QLineEdit::Normal);
