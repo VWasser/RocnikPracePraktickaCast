@@ -262,7 +262,6 @@ void Schedule::deleteItemFunc(){
     }, Qt::SingleShotConnection);
 }
 
-// TODO: Put or just no QFuture
 void Schedule::editItemFunc(){
     auto dayOfWeek = calendar->currentRow();
     auto hourStart = calendar->currentColumn();
