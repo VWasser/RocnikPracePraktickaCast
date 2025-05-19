@@ -39,6 +39,10 @@ inputAbsence::inputAbsence(QWidget *parent): ScreenWidget(parent) {
     absenceType->insertItem(absenceTypes::LATE, "Late", *late);
     absenceType->insertItem(absenceTypes::SCHOOL, "School", *school);
 
+    QObject::connect(api, &BackendlessAPI::itemAdded, this, [&](){
+        coordinator->showAbsenceWindow();
+    });
+
     QObject::connect(addAbsence, &QPushButton::clicked, this, [&](){
         //i know i dont have to do the .toInt() it is just a meassure to know what is a number
         //and what is a string etc.
@@ -48,11 +52,6 @@ inputAbsence::inputAbsence(QWidget *parent): ScreenWidget(parent) {
         auto CollumnParam = QSharedPointer<IntPostParam>(new IntPostParam(collumnBox->text().toInt() - 1));
         auto UserIdParam = QSharedPointer<StringPostParam>(new StringPostParam(userIdBox->text()));
         auto currentIndexParam = QSharedPointer<IntPostParam>(new IntPostParam(absenceType->currentIndex()));
-
-        auto itemAddedFuture = QtFuture::connect(api, &BackendlessAPI::itemAdded);
-        itemAddedFuture.then([&](){
-            coordinator->showAbsenceWindow();
-        });
 
         api->addItemToTable(
             "Absences",
