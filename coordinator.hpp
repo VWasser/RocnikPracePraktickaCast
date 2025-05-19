@@ -38,6 +38,7 @@ class Coordinator : public QObject {
 public:
     explicit Coordinator(QObject *parent = nullptr);
     ~Coordinator();
+    absenceTypes getAbsenceType(int) const;
 
     void showSignInScreen();
     void showMenuWindow();
@@ -53,6 +54,8 @@ public:
         QSharedPointer<ShowBasicData> data = QSharedPointer<ShowBasicData>(new ShowBasicData())
     );
     void implementMenuBar(QBoxLayout *layout);
+
+
 
 private:
     QMap<Screen, ScreenWidget*>windows;

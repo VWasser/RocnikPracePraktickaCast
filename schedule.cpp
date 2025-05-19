@@ -8,7 +8,6 @@
 
 #include "schedule.hpp"
 #include "coordinator.hpp"
-#include "menubar.hpp"
 #include "absencewindow.hpp"
 #include "httpclient.hpp"
 #include <QJsonDocument>
@@ -59,12 +58,21 @@ Schedule::Schedule(QWidget*parent): ScreenWidget(parent) {
         default:
             return;
         }
+        if (!jsonResponse.isArray()) {
+            return;
+        }
+
         auto jsonObject = jsonResponse.array();
+
+        if (!jsonObject.empty() && jsonObject[0].toObject()["___class"] != "Schedules") {
+            return;
+        }
 
         calendar->clearContents();
 
         for (const auto& item : jsonObject) {
             auto lessonObject = item.toObject();
+
             ScheduleItem scheduleItem(lessonObject);
             cachedSchedule.push_back(scheduleItem);
             auto oldItem = calendar->item(scheduleItem.dayOfWeek, scheduleItem.hourStart);
@@ -180,9 +188,12 @@ Schedule::Schedule(QWidget*parent): ScreenWidget(parent) {
     notDeletable.setInformativeText(Schedule::tr("CanNotDelete"));
 
     editFunctions->insertItem(Action::VIEW, "Viewing", *viewingMode);
-    editFunctions->insertItem(Action::ADD, "Add", *addItem);
-    editFunctions->insertItem(Action::DELETE, "Delete", *deleteItem);
-    editFunctions->insertItem(Action::EDIT, "Edit", *editItem);
+    auto currentUser = static_cast<BachelorSignInUser*>(api->userAPI.user());
+    if (currentUser->isTeacher) {
+        editFunctions->insertItem(Action::ADD, "Add", *addItem);
+        editFunctions->insertItem(Action::DELETE, "Delete", *deleteItem);
+        editFunctions->insertItem(Action::EDIT, "Edit", *editItem);
+    }
 
 
     dateLay->addSpacing(calendar->width()/2);
@@ -250,7 +261,7 @@ void Schedule::setupUI() {
 Schedule::~Schedule(){}
 
 void Schedule::updateData() {
-    api->loadTableItems("Schedules", 100, 0, "classid%20%3D%20'7D'");
+    api->loadTableItems("Schedules");
 }
 
 void Schedule::deleteItemFunc(){
@@ -377,5 +388,5 @@ bool Schedule::exeptionForAdd(){
 }
 
 void Schedule::configure(QSharedPointer<ShowBasicData>) {
-
+    updateData();
 }

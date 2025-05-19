@@ -14,8 +14,34 @@
 #include <QJsonObject>
 #include "BackendlessAPI.hpp"
 
-BackendlessAPI::BackendlessAPI(AnyNetworkAccessManager* _networkAccessManager, QString _appId, QString _apiKey, QString _endpoint): QObject(),
-    userAPI(_networkAccessManager, _appId, _apiKey, _endpoint),
+class DeletionResultCoder: public Coder {
+    Codable* decode(QJsonObject obj) override {
+        return new DeletionResult(obj);
+    }
+
+    void write(QTextStream&, QSharedPointer<Codable>, QSharedPointer<Codable>) override {
+
+    }
+
+    Codable* read(QTextStream&) override {
+        return nullptr;
+    }
+};
+
+BackendlessAPI::BackendlessAPI(
+    AnyNetworkAccessManager* _networkAccessManager,
+    QSharedPointer<BackendlessSignInUserCoder> _coder,
+    QString _appId,
+    QString _apiKey,
+    QString _endpoint
+): QObject(),
+    userAPI(
+        _networkAccessManager,
+        _coder,
+        _appId,
+        _apiKey,
+        _endpoint
+    ),
     networkAccessManager(_networkAccessManager),
     appId(_appId),
     apiKey(_apiKey),
@@ -52,9 +78,7 @@ void BackendlessAPI::deleteItemFromTable(QString tableName, QString objectId) {
             qDebug() << replyValue;
             extractResult<DeletionResult>(
                 replyValue,
-                [](auto obj){
-                    return new DeletionResult(obj);
-                },
+                new DeletionResultCoder(),
                 [&](auto result) {
                     emit deleteItemFromTableSuccess(result);
                 },

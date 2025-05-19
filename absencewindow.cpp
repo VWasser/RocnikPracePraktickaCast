@@ -14,18 +14,18 @@ absenceWindow::absenceWindow(QWidget *parent): ScreenWidget(parent) {
     });
     absenceLayout->setFixedSize(315, 600);
 
-    absenceLayout->setColumnCount(6);
-    for(int i =0;i < 6;i++){
+    absenceLayout->setColumnCount(absenceTypes::COUNT + 1);
+    for(int i =0;i < absenceTypes::COUNT + 1;i++){
         absenceLayout->setColumnWidth(i,50);
     }
     addAbsence->setText(absenceWindow::tr("addAbsence"));
 
     absenceLayout->setHorizontalHeaderItem(0, date);
-    absenceLayout->setHorizontalHeaderItem(1,ok);
-    absenceLayout->setHorizontalHeaderItem(2,unsolved);
-    absenceLayout->setHorizontalHeaderItem(3,missed);
-    absenceLayout->setHorizontalHeaderItem(4,late);
-    absenceLayout->setHorizontalHeaderItem(5,school);
+    absenceLayout->setHorizontalHeaderItem(absenceTypes::OK + 1,ok);
+    absenceLayout->setHorizontalHeaderItem(absenceTypes::UNSOLVED + 1,unsolved);
+    absenceLayout->setHorizontalHeaderItem(absenceTypes::MISSED + 1,missed);
+    absenceLayout->setHorizontalHeaderItem(absenceTypes::LATE + 1,late);
+    absenceLayout->setHorizontalHeaderItem(absenceTypes::SCHOOL + 1,school);
 
     coordinator->implementMenuBar(mainLayout);
 
@@ -46,29 +46,52 @@ absenceWindow::absenceWindow(QWidget *parent): ScreenWidget(parent) {
         default:
             return;
         }
+
+        if (!jsonResponse.isArray()) {
+            return;
+        }
+
         auto jsonObject = jsonResponse.array();
 
-        auto i = 0;
+        if (!jsonObject.empty() && jsonObject[0].toObject()["___class"] != "Absences") {
+            return;
+        }
+
+        cachedItems.clear();
+        absenceLayout->clearContents();
+        absenceLayout->setRowCount(jsonObject.count());
+
         for (const auto& item : jsonObject) {
             auto absenceObject = item.toObject();
+
             AbsenceItem absenceItem(absenceObject);
             cachedItems.push_back(absenceItem);
 
-            QTableWidgetItem* someItem = new QTableWidgetItem(QString::number(absenceItem.absenceDay), QTableWidgetItem::Type);
-            absenceLayout->setItem(i, 1, someItem);
-            ammountOfDays++;
-            ++i;
+            QTableWidgetItem* dateItem = new QTableWidgetItem(
+                QString::number(absenceItem.absenceMonth) + "/" +
+                QString::number(absenceItem.absenceDay) + "/" +
+                QString::number(absenceItem.absenceHour),
+                QTableWidgetItem::Type
+            );
+            absenceLayout->setItem(cachedItems.size() - 1, 0, dateItem);
+
+            QTableWidgetItem* crossItem = new QTableWidgetItem(
+                "X",
+                QTableWidgetItem::Type
+            );
+            absenceLayout->setItem(cachedItems.size() - 1, absenceItem.kind + 1, crossItem);
         }
-        absenceLayout->setRowCount(ammountOfDays);
     });
 
-
-    api->loadTableItems("Absences"); // , 100, 0, "UserID%20%3D%20'my_user_id'");
+    updateData();
 }
 
+void absenceWindow::updateData() {
+    api->loadTableItems("Absences");
+}
 
 absenceWindow::~absenceWindow(){}
 
 void absenceWindow::configure(QSharedPointer<ShowBasicData>) {
-
+    updateData();
 }

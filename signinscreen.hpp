@@ -9,6 +9,45 @@
 #include <QCheckBox>
 #include "qboxlayout.h"
 #include "screenwidget.hpp"
+#include "BackendlessQt/BackendlessUserAPI.hpp"
+
+struct BachelorSignInUser: BackendlessSignInUser {
+    bool isTeacher;
+
+    BachelorSignInUser(
+        QJsonObject jsonObject
+    ): BackendlessSignInUser(jsonObject),
+        isTeacher(jsonObject["isTeacher"].toBool()) {
+
+    }
+
+    BachelorSignInUser() {}
+};
+
+struct BachelorSignInUserCoder: BackendlessSignInUserCoder {
+    Codable* decode(QJsonObject obj) override {
+        return new BachelorSignInUser(obj);
+    }
+
+    void write(QTextStream& stream, QSharedPointer<Codable> codable, QSharedPointer<Codable> defaultValue) override {
+        auto userValue = (BachelorSignInUser*)(defaultValue.get() ? defaultValue.get() : codable.get());
+        stream << userValue->userToken << Qt::endl;
+        stream << userValue->email << Qt::endl;
+        stream << userValue->name << Qt::endl;
+        stream << (userValue->isTeacher ? "YES" : "NO") << Qt::endl;
+    }
+
+    Codable* read(QTextStream& stream) override {
+        auto result = new BachelorSignInUser();
+        stream >> result->userToken >> Qt::endl;
+        stream >> result->email >> Qt::endl;
+        stream >> result->name >> Qt::endl;
+        QString isTeacher;
+        stream >> isTeacher >> Qt::endl;
+        result->isTeacher = isTeacher == "YES";
+        return result;
+    }
+};
 
 class SignInScreen: public ScreenWidget
 {

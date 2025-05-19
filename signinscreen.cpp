@@ -1,6 +1,5 @@
 #include "signinscreen.hpp"
 #include "coordinator.hpp"
-#include "registerscreen.hpp"
 #include <QApplication>
 #include <QBoxLayout>
 #include <QQuickView>
@@ -8,7 +7,6 @@
 #include <QQmlProperty>
 
 extern Coordinator* coordinator;
-
 
 SignInScreen::SignInScreen(QWidget *parent): ScreenWidget(parent),
     signInButton(this), registerButton(this), resetPasswordButton(this),
@@ -93,10 +91,7 @@ SignInScreen::SignInScreen(QWidget *parent): ScreenWidget(parent),
 
         api->userAPI.signInUser(
             signInValue,
-            password->text(),
-            [](auto obj){
-                return new BackendlessSignInUser(obj);
-            }
+            password->text()
         );
     });
 
