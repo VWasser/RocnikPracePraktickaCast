@@ -60,48 +60,25 @@ SignInScreen::SignInScreen(QWidget *parent): ScreenWidget(parent),
     showPasswordLayout.addWidget(&showPasswordLabel);
     showPasswordLayout.addStretch();
 
-#if defined(Q_OS_ANDROID) // Or you can use it for any other platform if you like QML, but for Android it is essential
-    auto view = new QQuickView();
-    view->setSource(QUrl("qrc:/qml/example.qml"));
-
-    auto qmlWrapper = this->createWindowContainer(view);
-    qmlWrapper->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
-    qmlWrapper->setMaximumHeight(30);
-    signInLayout.addWidget(qmlWrapper);
-#else
-    signInLayout.addWidget(email);
-#endif
-
-    signInLayout.addWidget(password);
+    createEmailField();
+    signInLayout.addWidget(this->email);
+    createPasswordField();
+    signInLayout.addWidget(this->password);
     signInLayout.addLayout(&showPasswordLayout);
     signInLayout.addWidget(&signInButton);
     signInLayout.addWidget(&registerButton);
     signInLayout.addWidget(&resetPasswordButton);
 
-    QObject::connect(&signInButton, &QPushButton::clicked, this, [=]() {
-        QString signInValue;
-        #if defined(Q_OS_ANDROID)
-        auto signInTextFieldObject = view->rootObject();
-        signInValue = signInTextFieldObject->property("text").toString();
-        #else
-        signInValue = email->text();
-        #endif
-
-        qDebug() << "SIGN IN email " << signInValue;
-
+    QObject::connect(&signInButton, &QPushButton::clicked, this, [&]() {
         api->userAPI.signInUser(
-            signInValue,
-            password->text()
+            currentEmailValue(),
+            currentPasswordValue()
         );
     });
 
     signInLayout.addStretch();
 
     setLayout(&signInLayout);
-
-    email->setPlaceholderText(SignInScreen::tr("email"));
-    password->setPlaceholderText(SignInScreen::tr("password"));
-    password->setEchoMode(QLineEdit::Password);
 
 #if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS)
     setFixedSize(640, 480);
@@ -116,7 +93,30 @@ void SignInScreen::configure(QSharedPointer<ShowBasicData>) {
 
 }
 
-void SignInScreen::passwordShow(auto type){
+void SignInScreen::createEmailField() {
+    email = new QLineEdit;
+    email->setPlaceholderText(SignInScreen::tr("email"));
+}
+
+void SignInScreen::createPasswordField() {
+    password = new QLineEdit;
+    password->setPlaceholderText(SignInScreen::tr("password"));
+    password->setEchoMode(QLineEdit::Password);
+}
+
+QString SignInScreen::currentEmailValue() {
+    QString value;
+    value = email->text();
+    return value;
+}
+
+QString SignInScreen::currentPasswordValue() {
+    QString value;
+    value = password->text();
+    return value;
+}
+
+void SignInScreen::passwordShow(auto type) {
     if(type == QLineEdit::Password){
         password->setEchoMode(QLineEdit::Normal);
     }else{
