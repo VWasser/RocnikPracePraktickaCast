@@ -70,8 +70,6 @@ SignInScreen::SignInScreen(QWidget *parent): ScreenWidget(parent),
     signInLayout.addWidget(&resetPasswordButton);
 
     QObject::connect(&signInButton, &QPushButton::clicked, this, [&]() {
-        qDebug() << "HELE " << currentEmailValue() << currentPasswordValue();
-
         api->userAPI.signInUser(
             currentEmailValue(),
             currentPasswordValue()
