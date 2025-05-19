@@ -1,17 +1,11 @@
 #include "inputabsence.hpp"
 #include "coordinator.hpp"
 #include "BackendlessQt/BackendlessAPI.hpp"
+#include <QFuture>
 
 extern Coordinator *coordinator;
 
 inputAbsence::inputAbsence(QWidget *parent): ScreenWidget(parent) {
-
-    QObject::connect(addAbsence, &QPushButton::clicked,this, [](){
-        coordinator->showAbsenceWindow();
-    });
-
-
-
     setLayout(mainLayout);
     nameLine->addWidget(nameLabel);
     nameLine->addWidget(nameBox);
@@ -39,11 +33,11 @@ inputAbsence::inputAbsence(QWidget *parent): ScreenWidget(parent) {
     mainLayout->addLayout(classLine);
     mainLayout->addWidget(addAbsence);
 
-    absenceType->insertItem(0, "Ok", *ok);
-    absenceType->insertItem(1, "Unsolved", *unsolved);
-    absenceType->insertItem(2, "Missed", *missed);
-    absenceType->insertItem(3, "Late", *late);
-    absenceType->insertItem(5, "School", *school);
+    absenceType->insertItem(absenceTypes::OK, "Ok", *ok);
+    absenceType->insertItem(absenceTypes::UNSOLVED, "Unsolved", *unsolved);
+    absenceType->insertItem(absenceTypes::MISSED, "Missed", *missed);
+    absenceType->insertItem(absenceTypes::LATE, "Late", *late);
+    absenceType->insertItem(absenceTypes::SCHOOL, "School", *school);
 
     QObject::connect(addAbsence, &QPushButton::clicked, this, [&](){
         //i know i dont have to do the .toInt() it is just a meassure to know what is a number
@@ -54,6 +48,11 @@ inputAbsence::inputAbsence(QWidget *parent): ScreenWidget(parent) {
         auto CollumnParam = QSharedPointer<IntPostParam>(new IntPostParam(collumnBox->text().toInt() - 1));
         auto UserIdParam = QSharedPointer<StringPostParam>(new StringPostParam(userIdBox->text()));
         auto currentIndexParam = QSharedPointer<IntPostParam>(new IntPostParam(absenceType->currentIndex()));
+
+        auto itemAddedFuture = QtFuture::connect(api, &BackendlessAPI::itemAdded);
+        itemAddedFuture.then([&](){
+            coordinator->showAbsenceWindow();
+        });
 
         api->addItemToTable(
             "Absences",

@@ -35,6 +35,11 @@ void menuBar::menuBarStup(QBoxLayout *layout){
         hide();
 
     });
+    QObject::connect(menuAction, &QAction::triggered, this, [&](){
+        coordinator->showMenuWindow();
+        hide();
+
+    });
     QObject::connect(czLanguageAction, &QAction::triggered, this, [&](){
 
 

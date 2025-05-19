@@ -58,12 +58,21 @@ Schedule::Schedule(QWidget*parent): ScreenWidget(parent) {
         default:
             return;
         }
+        if (!jsonResponse.isArray()) {
+            return;
+        }
+
         auto jsonObject = jsonResponse.array();
+
+        if (!jsonObject.empty() && jsonObject[0].toObject()["___class"] != "Schedules") {
+            return;
+        }
 
         calendar->clearContents();
 
         for (const auto& item : jsonObject) {
             auto lessonObject = item.toObject();
+
             ScheduleItem scheduleItem(lessonObject);
             cachedSchedule.push_back(scheduleItem);
             auto oldItem = calendar->item(scheduleItem.dayOfWeek, scheduleItem.hourStart);
@@ -379,5 +388,5 @@ bool Schedule::exeptionForAdd(){
 }
 
 void Schedule::configure(QSharedPointer<ShowBasicData>) {
-
+    updateData();
 }
