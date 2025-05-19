@@ -257,13 +257,9 @@ void Schedule::deleteItemFunc(){
     qDebug() << "objectId" << objectId;
 
     api->deleteItemFromTable("Schedules", objectId.toString());
-
-    // TODO: No QFuture
-    auto itemDeleteFuture = QtFuture::connect(api, &BackendlessAPI::deleteItemFromTableSuccess)
-    .then([=, this](const auto &result) {
+    QObject::connect(api, &BackendlessAPI::deleteItemFromTableSuccess, this, [&](const auto &result) {
         updateData();
-    });
-
+    }, Qt::SingleShotConnection);
 }
 
 // TODO: Put or just no QFuture
