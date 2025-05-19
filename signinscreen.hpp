@@ -62,10 +62,8 @@ public:
 
 private:
     //UI
-    QQuickView* emailQuickView;
-    QQuickView* passwordQuickView;
-    QWidget* email;
-    QWidget* password;
+    QLineEdit* email;
+    QLineEdit* password;
 
     QCheckBox showPassword;
     QLabel showPasswordLabel;
