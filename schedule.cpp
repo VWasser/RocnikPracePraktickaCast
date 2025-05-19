@@ -30,19 +30,10 @@ enum Action {
 };
 
 Schedule::Schedule(QWidget*parent): ScreenWidget(parent) {
-    customHttpClient->connectToHost("178.32.127.114");
-    auto dataToSendToServer = QString("GET /7D2C33DB-05E2-4FD9-B26B-46FDB17F56D6/19CB95DB-0235-4134-B1FB-C64750DE49E2/data/Schedules HTTP/1.0\r\nHost: eu-api.backendless.com\r\n\r\n");
-    customHttpClient->writeData(dataToSendToServer.toUtf8());
-    // customHttpClient->readyRead();
-
     auto itemAddedFuture = QtFuture::connect(api, &BackendlessAPI::itemAdded);
     itemAddedFuture.then([&](){
         updateData();
     });
-
-    //QObject::connect(api, &BackendlessAPI::deleteItemFromTableSuccess, this, [&](){
-        //updateData();
-    //});
 
     QObject::connect(api, &BackendlessAPI::loadTableItemsSuccess, this, [&](auto replyValue){
         qDebug() << "Loaded " << replyValue;
@@ -118,25 +109,14 @@ Schedule::Schedule(QWidget*parent): ScreenWidget(parent) {
     QObject::connect(editMode, &QPushButton::clicked, this, [&](){
          coordinator->showSettingsWindow();
     });
-    /*QObject::connect(calendar, &QTableWidget::cellClicked, this, [&](){
-        if(exeptionForAdd() == true){
-            isTaken = true;
-        }else{
-            isTaken = false;
-        }
-    });*/
 
     QObject::connect(calendar, &QTableWidget::cellChanged, this, [&](){
         switch(editFunctions->currentIndex()){
             case Action::VIEW:
                 break;
             case Action::ADD:
-                /*if(isTaken == true){
-                    break;
-                }else{*/
-                    addItemFunc();
-                    break;
-                //}
+                addItemFunc();
+                break;
             case Action::DELETE:
                 break;
             case Action::EDIT:
@@ -176,7 +156,6 @@ Schedule::Schedule(QWidget*parent): ScreenWidget(parent) {
         }
         qDebug() << "ROW " << i <<" SET";
     }
-    // void scheduleAbsenceOpened();
 
     deleteItemButton->hide();
 
@@ -279,14 +258,15 @@ void Schedule::deleteItemFunc(){
 
     api->deleteItemFromTable("Schedules", objectId.toString());
 
+    // TODO: No QFuture
     auto itemDeleteFuture = QtFuture::connect(api, &BackendlessAPI::deleteItemFromTableSuccess)
     .then([=, this](const auto &result) {
-    updateData();
+        updateData();
     });
 
 }
 
-
+// TODO: Put or just no QFuture
 void Schedule::editItemFunc(){
     auto dayOfWeek = calendar->currentRow();
     auto hourStart = calendar->currentColumn();
@@ -330,22 +310,6 @@ void Schedule::addItemFunc(int predefinedColumnValue, int predefinedRowValue){
         return;
     }
 
-    /*QList arr = {1, 2, 3, 4};
-    myFindIf<int, std::function<bool(int)>>(arr, [](int a) {
-        return a > 0;
-    });*/
-
-    /*auto iterator = std::find_if(
-        cachedSchedule.begin(),
-        cachedSchedule.end(),
-        [rowValue, columnValue](ScheduleItem scheduleItem) {
-            return scheduleItem.dayOfWeek == rowValue && scheduleItem.hourStart == columnValue;
-        }
-    );
-    if (iterator != cachedSchedule.end()) {
-        return;
-    }*/
-
     auto row =  new IntPostParam(rowValue);
     auto collumn = new IntPostParam(columnValue);
     auto item = new StringPostParam(calendarItem->text());
@@ -353,7 +317,6 @@ void Schedule::addItemFunc(int predefinedColumnValue, int predefinedRowValue){
     if(item->asParam() == ""){
         close();
     }else{
-    //
         api->addItemToTable(
             "Schedules",
             {
@@ -368,11 +331,6 @@ void Schedule::addItemFunc(int predefinedColumnValue, int predefinedRowValue){
     delete row;
     delete collumn;
 }
-
-/*void Schedule::scheduleAbsenceOpened(){
-    calendar->hide();
-}*/
-
 
 bool Schedule::exeptionForAdd(){
         auto dayOfWeek = calendar->currentRow();
