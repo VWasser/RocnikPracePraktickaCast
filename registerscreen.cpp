@@ -5,7 +5,6 @@
 #include "BackendlessQt/BackendlessAPI.hpp"
 #include "coordinator.hpp"
 #include "schedule.hpp"
-#include "signinscreen.hpp"
 
 extern Coordinator* coordinator;
 
@@ -18,9 +17,7 @@ registerscreen::registerscreen(QWidget *parent): ScreenWidget(parent),
             if(password->text() != password2->text()){
                 password->clear();
                 password2->clear();
-
-            }else{
-                // TODO: implement your own BackendlessRegisterUser, see https://github.com/RomanPodymov/FinanceTracker/blob/main/App/registerscreen.hpp
+            } else{
                 currentUser = new BackendlessRegisterUser(email->text(), password->text(),name->text(), isTeacher.isChecked());
                 api->userAPI.registerUser(*currentUser);
                 coordinator->showSignInScreen();

@@ -13,9 +13,8 @@ SignInScreen::SignInScreen(QWidget *parent): ScreenWidget(parent),
     errorWin(this), signInLayout(this)
 {
     QObject::connect(&(api->userAPI), &BackendlessUserAPI::signInUserSuccess, this, [&](){
-        // api.userAPI.validateUserToken();
         coordinator->showMenuWindow();
-        hide();
+        // TODO: check if hide() is needed here
     });
     QObject::connect(&(api->userAPI), &BackendlessUserAPI::signInUserErrorBackendless, this, [&](auto error){
         qDebug() << "Error!!!";
@@ -28,20 +27,14 @@ SignInScreen::SignInScreen(QWidget *parent): ScreenWidget(parent),
     QObject::connect(&(api->userAPI), &BackendlessUserAPI::restorePasswordSuccess, this, [&](auto reply){
         qDebug() << reply;
     });
-    // For now commented, later you can use it to load schedule
-    /*QObject::connect(&api, &BackendlessAPI::itemAdded, this, [&](){
-        api.loadTableItems("Product");
-    });
-    QObject::connect(&api, &BackendlessAPI::tableItemsLoaded, this, [&](auto response){
-        qDebug() << "Loaded " << response;
-    });*/
     QObject::connect(&(api->userAPI), &BackendlessUserAPI::restorePasswordSuccess, this, [&](auto response){
         qDebug() << "email sent";
     });
 
     QObject::connect(&registerButton, &QPushButton::clicked, this, [&]() {
         coordinator->showRegisterScreen();
-        hide();
+        // TODO: Check if needed
+        //hide();
     });
     QObject::connect(&showPassword, &QCheckBox::clicked, this, [&]() {
         passwordShow(password->echoMode());
