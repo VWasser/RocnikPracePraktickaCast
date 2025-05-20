@@ -64,6 +64,25 @@ void BackendlessAPI::addItemToTable(QString tableName, PostParams params) {
     );
 }
 
+void BackendlessAPI::editTableItem(QString tableName, QString whereClause, PostParams params) {
+    auto requestURL = endpoint + appId + "/" + apiKey + "/data/" + tableName;
+    if (!whereClause.isEmpty()) {
+        requestURL += "?where=" + whereClause;
+    }
+    request(
+        networkAccessManager,
+        this,
+        requestURL,
+        params,
+        BERequestMethod::put,
+        {},
+        [&](auto replyValue){
+            qDebug() << replyValue;
+            emit itemEdited();
+        }
+    );
+}
+
 void BackendlessAPI::deleteItemFromTable(QString tableName, QString objectId) {
     request(
         networkAccessManager,
