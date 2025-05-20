@@ -274,18 +274,37 @@ void Schedule::editItemFunc(){
 
     qDebug() << "objectId" << objectId;
 
-    auto itemDeleteFuture = QtFuture::connect(api, &BackendlessAPI::deleteItemFromTableSuccess);
-    itemDeleteFuture
-        .then([=, this](auto result){
-            addItemFunc(hourStart, dayOfWeek);
-            return QtFuture::connect(api, &BackendlessAPI::itemAdded);
-        })
-        .unwrap()
-        .then([&]() {
-            updateData();
-        });
+    if (std::find_if(cachedSchedule.cbegin(), cachedSchedule.cend(), [=](ScheduleItem item){ // = means COPY all what we need
+        return item.dayOfWeek == dayOfWeek && item.hourStart == hourStart;
+    }) != cachedSchedule.constEnd()) {
+        // TODO ALERT WINDOW
+        qDebug() << "Lesson was already added there";
+        return;
+    }
 
-    api->deleteItemFromTable("Schedules", objectId.toString());
+    auto rowParam = QSharedPointer<IntPostParam>(new IntPostParam(dayOfWeek));
+    auto collumnParam = QSharedPointer<IntPostParam>(new IntPostParam(hourStart));
+    auto itemParam = QSharedPointer<StringPostParam>(new StringPostParam(item->text()));
+
+    QObject::connect(
+        api,
+        &BackendlessAPI::itemEdited,
+        this,
+        [&](){
+            updateData();
+        },
+        Qt::SingleShotConnection
+    );
+
+    api->editTableItem(
+        "Schedules",
+        QString("objectId") + QString("%20%3D%20") + objectId.toString(),
+        {
+            {"lessonDescription", itemParam.get()},
+            {"dayOfWeek", rowParam.get()},
+            {"hourStart", collumnParam.get()}
+        }
+    );
 }
 
 void Schedule::addItemFunc(int predefinedColumnValue, int predefinedRowValue){
