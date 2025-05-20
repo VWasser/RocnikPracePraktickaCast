@@ -277,7 +277,6 @@ void Schedule::editItemFunc(){
     if (std::find_if(cachedSchedule.cbegin(), cachedSchedule.cend(), [=](ScheduleItem item){ // = means COPY all what we need
         return item.dayOfWeek == dayOfWeek && item.hourStart == hourStart;
     }) != cachedSchedule.constEnd()) {
-        // TODO ALERT WINDOW
         qDebug() << "Lesson was already added there";
         return;
     }
